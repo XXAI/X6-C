@@ -1,0 +1,361 @@
+<menu-programacion></menu-programacion>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column is-one-quarter is-hidden-mobile">
+        <programacion-menu-aside></programacion-menu-aside>
+    </div>
+    <div class="column" style="padding:2em; overflow:auto;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero" [ngClass] = " {'is-dark': busquedaActivada, 'is-primary': !busquedaActivada } " >
+                
+                <div class="hero-body" style="position:relative;">
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="busquedaActivada=false;searchBox.value='';resultadosBusqueda=[]"><span class="icon "><i class="fa fa-close"></i></span></a>
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:3.5em;" (click)="listarBusqueda(searchBox.value,1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <a class="button  is-primary" *ngIf="!busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="listar(1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title" *ngIf="!busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-user"></i></span> Programación de Metas
+                        </h1>
+                        <h1 class="title" *ngIf="busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
+                        </h1>
+                        <div class="columns">
+                            <div class="column"  [ngClass]="{'is-three-quarters': filter }">
+                                <label class="label" style="color: #FFF">Buscar Tema</label>
+                                <input class="input is-medium" type="text" placeholder="Buscar" #searchBox id="search-box" (keyup)="buscar(searchBox.value)">
+                            </div>
+                            
+                            <div class="column" *ngIf="!filter">
+                                <label class="label" style="color: #FFF">JURISDICCIONES</label>
+                                <select class="select redondear" #jurisdiccion (change)='filtro(1, jurisdiccion.value)'>
+                                    <option value="0">- JURISDICCIONES -</option>
+                                    <option  *ngFor="let item of catalogo_jurisdicciones; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                                </select>
+                            </div>
+                            <div class="column" *ngIf="!filter">
+                                <label class="label" style="color: #FFF">TIPO</label>
+                                <select class="select redondear" #tipo (change)='filtro(2, tipo.value)'>
+                                        <option value="0">- TIPO PROGRAMACIÓN -</option>
+                                    <option  *ngFor="let item of tipoProgramacion; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                                </select>
+                            </div>
+                            <div class="column" align='right'>
+                                <a class="button is-medium is-primary is-inverted " (click)='crear_nuevo()'>
+                                    <span class="icon"><i class="fa fa-plus"></i></span><span>Nuevo</span>
+                                </a>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+            <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                <table class="table" *ngIf="!cargando">
+                    <thead>
+                        <tr>
+                            <!--<th rowspan="2"><abbr title="ID">ID</abbr></th>-->
+                            <th rowspan="2">Jurisdicción / Tema / Tipo</th>
+                            <!--<th rowspan="2">Tema</th>
+                            <th rowspan="2">Tipo</th>-->
+                            <th colspan="3">1re. Timestre</th>
+                            <th colspan="3">2do. Timestre</th>
+                            <th colspan="3">3er. Timestre</th>
+                            <th colspan="3">4to. Timestre</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th>ENE</th>
+                            <th>FEB</th>
+                            <th>MAR</th>
+                            <th>ABR</th>
+                            <th>MAY</th>
+                            <th>JUN</th>
+                            <th>JUL</th>
+                            <th>AGO</th>
+                            <th>SEP</th>
+                            <th>OCT</th>
+                            <th>NOV</th>
+                            <th>DIC</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody  *ngIf="!busquedaActivada">
+                        <tr *ngFor="let item of programacion_jurisdiccion; let i=index">
+                            <!--<th>{{ item.id }}</th>-->
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.jurisdiccion.descripcion }}<br> {{ item.tipo_programacion.descripcion }}<br>{{ item.tema.descripcion }} </th>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.enero }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.febrero }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.marzo }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.abril }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.mayo }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.junio }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.julio }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.agosto }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.septiembre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.octubre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.noviembre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.diciembre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.total }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_programacion(item.id)"></i></td>
+                            
+                        </tr>
+                        <tr *ngIf="programacion_jurisdiccion.length == 0">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="busquedaActivada">
+                        <tr *ngFor="let item of resultadosBusqueda; let i=index">
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.jurisdiccion.descripcion }}<br> {{ item.tipo_programacion.descripcion }}<br>{{ item.tema.descripcion }} </th>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.enero }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.febrero }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.marzo }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.abril }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.mayo }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.junio }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.julio }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.agosto }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.septiembre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.octubre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.noviembre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.diciembre }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.total }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_programacion(item.id)"></i></td>
+                        </tr>
+
+                        <tr *ngIf="resultadosBusqueda.length == 0 && busquedaActivada">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">No se encontraron resultados.</td>                    
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Paginación para la lista  -->
+            <paginacion 
+                [total]="total" 
+                [paginasTotales]="paginasTotales" 
+                [resultadosPorPagina]="resultadosPorPagina" 
+                [paginaActual]="paginaActual" 
+                [indicePaginas]="indicePaginas"
+                (onSiguiente)="paginaSiguiente()" 
+                (onAnterior)="paginaAnterior()" 
+                (onListar)="listar($event)" 
+                *ngIf="total>0 && total > resultadosPorPagina && !busquedaActivada"></paginacion>
+            <paginacion 
+                [total]="totalBusqueda" 
+                [paginasTotales]="paginasTotalesBusqueda" 
+                [resultadosPorPagina]="resultadosPorPaginaBusqueda" 
+                [paginaActual]="paginaActualBusqueda" 
+                [indicePaginas]="indicePaginasBusqueda"
+                (onSiguiente)="paginaSiguienteBusqueda(searchBox.value)" 
+                (onAnterior)="paginaAnteriorBusqueda(searchBox.value)" 
+                (onListar)="listarBusqueda(searchBox.value,$event)" 
+                *ngIf="totalBusqueda > 0 && totalBusqueda > resultadosPorPaginaBusqueda && busquedaActivada"></paginacion>
+           
+           
+            
+        </div>
+        
+    </div>
+</div>
+
+<div id="modal-programacion" class="modal is-active" [ngClass]="{'is-active': showAgregarProgramacion}">
+    <div class="modal-background"  (click)="showDialog = !showAgregarTema"></div>
+    <div class="modal-card" style="width:60%; height: auto;">
+      <header class="modal-card-head" style="background-color: #00d1b2" >
+        <div class="container is-fluid"  style="width:100%;">
+            <h1 class="title" style="color:#FFF;">
+              <span class="icon is-medium"><i class="fa fa-user"></i></span> Agregar Programación
+            </h1>
+        </div>            
+        <a class="button  is-primary" style="position:absolute; top:1em; right:1em;" (click)="showAgregarProgramacion = !showAgregarProgramacion"><span class="icon "><i class="fa fa-close"></i></span></a>
+      </header>
+      <section class="section">
+          
+          <form name="form" [formGroup]="programacion_jurisdiccional"   (ngSubmit)="agregar_programacion()" style="overflow:hidden">   
+              <section class="section" style="padding: 1rem 1.5rem; background-color: #EFEFEF">
+                  <div class="container">
+                    <div class="heading">
+                      <h1 class="title">Programación Por Tema</h1>
+                    </div>
+                  </div>
+              </section> 
+                <div class="control is-grouped">
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Año</label>
+                      <input class="input"  type="text"  placeholder="Año" formControlName="anio" readonly='readonly'>
+                      <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('anio').hasError('required') && programacion_jurisdiccional.get('anio').touched">
+                        <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('anio').hasError('required') && programacion_jurisdiccional.get('anio').touched">Este campo es requerido.</span>
+                    </p>
+                    
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Jurisdicción</label>
+                        <select class="select" formControlName="id_jurisdiccion">
+                          <option  *ngFor="let item of catalogo_jurisdicciones; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                        </select>
+                        <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('id_jurisdiccion').hasError('required') && programacion_jurisdiccional.get('id_jurisdiccion').touched">
+                            <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('id_jurisdiccion').hasError('required') && programacion_jurisdiccional.get('id_jurisdiccion').touched">Este campo es requerido.</span>
+                    </p>
+
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Tema</label>
+                          <select class="select" formControlName="id_tema">
+                            <option  *ngFor="let item of tema; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                          </select>
+                          <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('id_tema').hasError('required') && programacion_jurisdiccional.get('id_tema').touched">
+                              <i class="fa fa-warning"></i>
+                          </span>
+                          <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('id_tema').hasError('required') && programacion_jurisdiccional.get('id_tema').touched">Este campo es requerido.</span>
+                      </p>
+
+                      <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Tipo de Programación</label>
+                          <select class="select" formControlName="id_tipo_programacion">
+                            <option  *ngFor="let item of tipoProgramacion; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                          </select>
+                          <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('id_tipo_programacion').hasError('required') && programacion_jurisdiccional.get('id_tipo_programacion').touched">
+                              <i class="fa fa-warning"></i>
+                          </span>
+                          <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('id_tipo_programacion').hasError('required') && programacion_jurisdiccional.get('id_tipo_programacion').touched">Este campo es requerido.</span>
+                      </p>
+                </div>
+                
+                <div class="control is-grouped">
+                  <p class="control is-expanded  has-icon has-icon-right">
+                      <label class="label">Enero</label>
+                    <input class="input"  type="text"  placeholder="Enero" formControlName="enero">
+                    <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('enero').hasError('required') && programacion_jurisdiccional.get('enero').touched">
+                      <i class="fa fa-warning"></i>
+                    </span>
+                    <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('enero').hasError('required') && programacion_jurisdiccional.get('enero').touched">Este campo es requerido.</span>
+                  </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Febrero</label>
+                      <input class="input"  type="text"  placeholder="Febrero" formControlName="febrero">
+                      <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('febrero').hasError('required') && programacion_jurisdiccional.get('febrero').touched">
+                        <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('febrero').hasError('required') && programacion_jurisdiccional.get('febrero').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Marzo</label>
+                        <input class="input"  type="text"  placeholder="Marzo" formControlName="marzo">
+                        <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('marzo').hasError('required') && programacion_jurisdiccional.get('marzo').touched">
+                        <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('marzo').hasError('required') && programacion_jurisdiccional.get('marzo').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Abril</label>
+                        <input class="input"  type="text"  placeholder="Abril" formControlName="abril">
+                        <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('abril').hasError('required') && programacion_jurisdiccional.get('abril').touched">
+                        <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('abril').hasError('required') && programacion_jurisdiccional.get('abril').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Mayo</label>
+                        <input class="input"  type="text"  placeholder="Mayo" formControlName="mayo">
+                        <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('mayo').hasError('required') && programacion_jurisdiccional.get('mayo').touched">
+                        <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('mayo').hasError('required') && programacion_jurisdiccional.get('mayo').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Junio</label>
+                        <input class="input"  type="text"  placeholder="Junio" formControlName="junio">
+                        <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('junio').hasError('required') && programacion_jurisdiccional.get('junio').touched">
+                        <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('junio').hasError('required') && programacion_jurisdiccional.get('junio').touched">Este campo es requerido.</span>
+                    </p>
+                  
+                </div>
+                <div class="control is-grouped">
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">Julio</label>
+                          <input class="input"  type="text"  placeholder="Julio" formControlName="julio">
+                          <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('julio').hasError('required') && programacion_jurisdiccional.get('julio').touched">
+                            <i class="fa fa-warning"></i>
+                          </span>
+                          <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('julio').hasError('required') && programacion_jurisdiccional.get('julio').touched">Este campo es requerido.</span>
+                        </p>
+                          <p class="control is-expanded  has-icon has-icon-right">
+                              <label class="label">Agosto</label>
+                            <input class="input"  type="text"  placeholder="Agosto" formControlName="agosto">
+                            <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('agosto').hasError('required') && programacion_jurisdiccional.get('agosto').touched">
+                              <i class="fa fa-warning"></i>
+                            </span>
+                            <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('agosto').hasError('required') && programacion_jurisdiccional.get('agosto').touched">Este campo es requerido.</span>
+                          </p>
+                          <p class="control is-expanded  has-icon has-icon-right">
+                              <label class="label">Septiembre</label>
+                              <input class="input"  type="text"  placeholder="Septiembre" formControlName="septiembre">
+                              <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('septiembre').hasError('required') && programacion_jurisdiccional.get('septiembre').touched">
+                              <i class="fa fa-warning"></i>
+                              </span>
+                              <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('septiembre').hasError('required') && programacion_jurisdiccional.get('septiembre').touched">Este campo es requerido.</span>
+                          </p>
+                          <p class="control is-expanded  has-icon has-icon-right">
+                              <label class="label">Octubre</label>
+                              <input class="input"  type="text"  placeholder="Octubre" formControlName="octubre">
+                              <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('octubre').hasError('required') && programacion_jurisdiccional.get('octubre').touched">
+                              <i class="fa fa-warning"></i>
+                              </span>
+                              <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('octubre').hasError('required') && programacion_jurisdiccional.get('octubre').touched">Este campo es requerido.</span>
+                          </p>
+                          <p class="control is-expanded  has-icon has-icon-right">
+                              <label class="label">Noviembre</label>
+                              <input class="input"  type="text"  placeholder="Noviembre" formControlName="noviembre">
+                              <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('noviembre').hasError('required') && programacion_jurisdiccional.get('noviembre').touched">
+                              <i class="fa fa-warning"></i>
+                              </span>
+                              <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('noviembre').hasError('required') && programacion_jurisdiccional.get('noviembre').touched">Este campo es requerido.</span>
+                          </p>
+                          <p class="control is-expanded  has-icon has-icon-right">
+                              <label class="label">Diciembre</label>
+                              <input class="input"  type="text"  placeholder="Diciembre" formControlName="diciembre">
+                              <span class="icon is-small" *ngIf="programacion_jurisdiccional.get('diciembre').hasError('required') && programacion_jurisdiccional.get('diciembre').touched">
+                              <i class="fa fa-warning"></i>
+                              </span>
+                              <span class="help is-danger" *ngIf="programacion_jurisdiccional.get('diciembre').hasError('required') && programacion_jurisdiccional.get('diciembre').touched">Este campo es requerido.</span>
+                          </p>
+                        
+                      </div>
+            <br>
+            <div class="control is-grouped">
+              <p class="control">
+                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="programacion_jurisdiccional.invalid">Guardar</button>
+              </p>
+            </div>
+        </form>
+      </section>
+      <footer class="" style="position:relative; padding:1em;background: #FFF; border-top:0px solid #EEE; border-radius:0 0 0.8em 0.8em " >
+      </footer>
+    </div>
+  </div>
+
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>

@@ -1,0 +1,551 @@
+<menu-programacion></menu-programacion>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column is-one-quarter is-hidden-mobile">
+        <programacion-menu-aside></programacion-menu-aside>
+    </div>
+    <div class="column" style="padding:2em; overflow:auto;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero" [ngClass] = " {'is-dark': busquedaActivada, 'is-primary': !busquedaActivada } " >
+                
+                <div class="hero-body" style="position:relative;">
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="busquedaActivada=false;searchBox.value='';resultadosBusqueda=[]"><span class="icon "><i class="fa fa-close"></i></span></a>
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:3.5em;" (click)="listarBusqueda(searchBox.value,1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <a class="button  is-primary" *ngIf="!busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="listar(1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title" *ngIf="!busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-edit"></i></span> Registros de Dictamen
+                        </h1>
+                        <h1 class="title" *ngIf="busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
+                        </h1>
+                        <div class="columns">
+                            <div class="column">
+                                <a class="button is-medium is-primary is-inverted  is-pulled-right"(click)='crear_nuevo()'>
+                                    <span class="icon"><i class="fa fa-plus"></i></span><span>Nuevo</span>
+                                </a>
+                                <p class="control is-pulled-right">
+                                    <a class="button is-medium is-primary is-inverted " style="margin-right:5px"  (click)='regresar()'>
+                                    <span>Regresar</span>
+                                    </a>
+                                </p>  
+                                
+                            </div>
+                        </div>    
+                       
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+            <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                <table class="table" *ngIf="!cargando">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Mes</th>
+                            <th>Tema</th>
+                            <th>Archivo</th>
+                            <th></th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody  *ngIf="!busquedaActivada">
+                        <tr *ngFor="let item of registros; let i=index">
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.oficio }}</th>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ arreglo_meses[item.mes - 1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.tema.descripcion }}</td>
+                            
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="descargar(item)"><i style="color:blue">{{ item.archivo }}</i></td>
+                            <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar(item.id)"></i></td>
+                        </tr>
+                        <tr *ngIf="registros.length == 0">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="busquedaActivada">
+                        <tr *ngFor="let item of resultadosBusqueda; let i=index">
+                                <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.oficio }}</th>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ arreglo_meses[item.mes - 1] }}</td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.tema.descripcion }}</td>
+                                
+                                <td style="vertical-align: middle;cursor:pointer;"(click)="descargar(item)"><i style="color:blue">{{ item.archivo }}</i></td>
+                                <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar(item.id)"></i></td>
+                        </tr>
+
+                        <tr *ngIf="resultadosBusqueda.length == 0 && busquedaActivada">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">No se encontraron resultados.</td>                    
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Paginación para la lista  -->
+            <paginacion 
+                [total]="total" 
+                [paginasTotales]="paginasTotales" 
+                [resultadosPorPagina]="resultadosPorPagina" 
+                [paginaActual]="paginaActual" 
+                [indicePaginas]="indicePaginas"
+                (onSiguiente)="paginaSiguiente()" 
+                (onAnterior)="paginaAnterior()" 
+                (onListar)="listar($event)" 
+                *ngIf="total>0 && total > resultadosPorPagina && !busquedaActivada"></paginacion>
+            <paginacion 
+                [total]="totalBusqueda" 
+                [paginasTotales]="paginasTotalesBusqueda" 
+                [resultadosPorPagina]="resultadosPorPaginaBusqueda" 
+                [paginaActual]="paginaActualBusqueda" 
+                [indicePaginas]="indicePaginasBusqueda"
+                (onSiguiente)="paginaSiguienteBusqueda(searchBox.value)" 
+                (onAnterior)="paginaAnteriorBusqueda(searchBox.value)" 
+                (onListar)="listarBusqueda(searchBox.value,$event)" 
+                *ngIf="totalBusqueda > 0 && totalBusqueda > resultadosPorPaginaBusqueda && busquedaActivada"></paginacion>
+            
+            
+            
+        </div>
+        
+    </div>
+</div>
+
+<div id="modal-registro" class="modal is-active" [ngClass]="{'is-active': showregistro}">
+    <div class="modal-background"  (click)="showDialog = !showAgregarTema"></div>
+    <div class="modal-card" style="width:60%; height: auto;">
+      <header class="modal-card-head" style="background-color: #00d1b2" >
+        <div class="container is-fluid"  style="width:100%;">
+            <h1 class="title" style="color:#FFF;">
+              <span class="icon is-medium"><i class="fa fa-user"></i></span> Agregar Registro Dictamen
+            </h1>
+        </div>            
+        <a class="button  is-primary" style="position:absolute; top:1em; right:1em;" (click)="showregistro = !showregistro"><span class="icon "><i class="fa fa-close"></i></span></a>
+      </header>
+      
+      <section class="section">
+          
+        <div class="tabs">
+            <ul>
+                <li [ngClass] = " {'is-active': verificacion(1)}"><a (click)='tabulaciones(1)'>Datos del Dictamen</a></li>
+                <li [ngClass] = " {'is-active': verificacion(2)}" *ngIf="(mostrar_pestana)"><a (click)='tabulaciones(2)'>Notificaciones</a></li>
+                <li [ngClass] = " {'is-active': verificacion(3)}" *ngIf="(mostrar_pestana)"><a (click)='tabulaciones(3)'>Citatorios</a></li>
+                <li [ngClass] = " {'is-active': verificacion(4)}" *ngIf="(mostrar_pestana)"><a (click)='tabulaciones(4)'>Resoluciones</a></li>
+                <li [ngClass] = " {'is-active': verificacion(5)}" *ngIf="(mostrar_pestana)"><a (click)='tabulaciones(5)'>Amonestaciones</a></li>
+                <li [ngClass] = " {'is-active': verificacion(6)}" *ngIf="(mostrar_pestana)"><a (click)='tabulaciones(6)'>Multas</a></li>
+            </ul>
+        </div>
+        <form name="form" [formGroup]="registrosModule"   (ngSubmit)="agregar()" style="overflow:hidden">   
+            <div class="tab-content">
+                <div id="datos" *ngIf="(pestanas == 1)">
+                    <div class="control is-grouped">
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">No verificación</label>
+                            <input class="input"  type="text"  placeholder="No Verificacion" formControlName="no_verificacion" readonly='readonly'>
+                        </p>
+                        <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">Lugar o institución</label>
+                                <input class="input"  type="text"  placeholder="Lugar o institucion" formControlName="institucion" readonly='readonly'>
+                            </p>
+                        <p class="control is-1  has-icon has-icon-right">
+                            <br>
+                            <button type="button" class="button is-primary" (click)='showbuscador=!showbuscador' style="margin-top:7px"><i class="fa fa-search"></i></button>
+                        </p>
+                    </div>        
+                    <div class="control is-grouped">
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">Jurisdicción</label>
+                            <input class="input"  type="text"  placeholder="Jurisdiccion" formControlName="jurisdiccion" readonly='readonly'>
+                            <span class="icon is-small" *ngIf="registrosModule.get('jurisdiccion').hasError('required') && registrosModule.get('jurisdiccion').touched">
+                            <i class="fa fa-warning"></i>
+                            </span>
+                            <span class="help is-danger" *ngIf="registrosModule.get('jurisdiccion').hasError('required') && registrosModule.get('jurisdiccion').touched">Este campo es requerido.</span>
+                        </p>
+
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">Tema</label>
+                            <input class="input"  type="text"  placeholder="Tema" formControlName="tema">
+                            <span class="icon is-small" *ngIf="registrosModule.get('tema').hasError('required') && registrosModule.get('tema').touched">
+                            <i class="fa fa-warning"></i>
+                            </span>
+                            <span class="help is-danger" *ngIf="registrosModule.get('tema').hasError('required') && registrosModule.get('tema').touched">Este campo es requerido.</span>
+                        </p>
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">Año</label>
+                        <input class="input"  type="text"  placeholder="Año" formControlName="anio" readonly='readonly'>
+                        <span class="icon is-small" *ngIf="registrosModule.get('anio').hasError('required') && registrosModule.get('anio').touched">
+                            <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('anio').hasError('required') && registrosModule.get('anio').touched">Este campo es requerido.</span>
+                        </p>
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">Mes</label>
+                            <select class="select" formControlName="mes">
+                                <option value='1'>Enero</option>
+                                <option value='2'>Febrero</option>
+                                <option value='3'>Marzo</option>
+                                <option value='4'>Abril</option>
+                                <option value='5'>Mayo</option>
+                                <option value='6'>Junio</option>
+                                <option value='7'>Julio</option>
+                                <option value='8'>Agosto</option>
+                                <option value='9'>Septiembre</option>
+                                <option value='10'>Octubre</option>
+                                <option value='11'>Noviembre</option>
+                                <option value='12'>Diciembre</option>
+                            </select>
+                            <span class="icon is-small" *ngIf="registrosModule.get('mes').hasError('required') && registrosModule.get('mes').touched">
+                                <i class="fa fa-warning"></i>
+                            </span>
+                            <span class="help is-danger" *ngIf="registrosModule.get('mes').hasError('required') && registrosModule.get('mes').touched">Este campo es requerido.</span>
+                        </p>
+                        
+                    </div>
+                    <div class="control is-grouped">
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">No oficio</label>
+                            <input class="input"  type="text"  placeholder="No oficio" formControlName="oficio">
+                            <span class="icon is-small" *ngIf="registrosModule.get('oficio').hasError('required') && registrosModule.get('oficio').touched">
+                            <i class="fa fa-warning"></i>
+                            </span>
+                            <span class="help is-danger" *ngIf="registrosModule.get('oficio').hasError('required') && registrosModule.get('oficio').touched">Este campo es requerido.</span>
+                        </p>
+                    
+                    </div>
+                    
+                    <div class="control is-grouped">    
+                        <p class="control is-expanded  has-icon has-icon-right">
+                            <label class="label">Subir Archivo </label>
+                            <input type="file" (change)="fileChanged($event)" formControlName="archivo" accept="application/pdf">
+                        </p>
+                    </div>
+                    <div class="control is-grouped">
+                        <p class="control">
+                        <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosModule.invalid">Guardar</button>
+                        </p>
+                    </div>
+                </div>  
+                <div *ngIf="(pestanas == 2)">
+                    <form name="form" [formGroup]="registrosNotificacionModule"   (ngSubmit)="agregar_archivo(1)" style="overflow:hidden">   
+                        <div class="control is-grouped">    
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">Subir Archivo </label>
+                                <input type="file" (change)="fileArchivo($event)" formControlName="archivo" accept="application/pdf">
+                            </p>
+                        
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">No de oficio de Notificación</label>
+                                <input class="input"  type="text"  placeholder="No de Oficio" formControlName="oficio_notificacion">
+                                <span class="icon is-small" *ngIf="registrosNotificacionModule.get('oficio_notificacion').hasError('required') && registrosNotificacionModule.get('oficio_notificacion').touched">
+                                <i class="fa fa-warning"></i>
+                                </span>
+                                <span class="help is-danger" *ngIf="registrosNotificacionModule.get('oficio_notificacion').hasError('required') && registrosNotificacionModule.get('oficio_notificacion').touched">Este campo es requerido.</span>
+                            </p>
+                        </div>
+                        <div class="control is-grouped">    
+                            
+                            <p class="control is-expanded ">
+                                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosNotificacionModule.invalid">Agregar Notificación</button>
+                            </p>
+                        </div>
+                        <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <!--<th rowspan="2"><abbr title="ID">ID</abbr></th>-->
+                                        <th>No de Notificación</th>
+                                        <th>Archivo</th>
+                                        <th></th>                                        
+                                    </tr>                                    
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lista_notificaciones; let i=index">
+                                        <th style="vertical-align: middle;cursor:pointer;" ><a>{{ item.oficio }} </a></th>
+                                        <td style="vertical-align: middle;cursor:pointer;" (click)="ver_archivo(1, item)"><a>{{ item.archivo }}</a></td>
+                                        <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_archivo(1, item.id)"></i></td>
+                                        
+                                    </tr>
+                                    <tr *ngIf="lista_notificaciones.length == 0">
+                                        <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>                            
+                </div>   
+                <div *ngIf="(pestanas == 3)">
+                    <form name="form" [formGroup]="registrosCitatorioModule"   (ngSubmit)="agregar_archivo(2)" style="overflow:hidden">   
+                        <div class="control is-grouped">    
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">Subir Archivo </label>
+                                <input type="file" (change)="fileArchivo($event)" formControlName="archivo" accept="application/pdf">
+                            </p>
+                        
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">No de oficio de Citatario</label>
+                                <input class="input"  type="text"  placeholder="No de Oficio" formControlName="oficio_citatorio">
+                                <span class="icon is-small" *ngIf="registrosCitatorioModule.get('oficio_citatorio').hasError('required') && registrosCitatorioModule.get('oficio_citatorio').touched">
+                                <i class="fa fa-warning"></i>
+                                </span>
+                                <span class="help is-danger" *ngIf="registrosCitatorioModule.get('oficio_citatorio').hasError('required') && registrosCitatorioModule.get('oficio_citatorio').touched">Este campo es requerido.</span>
+                            </p>
+                        </div>
+                        <div class="control is-grouped">    
+                            
+                            <p class="control is-expanded ">
+                                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosCitatorioModule.invalid">Agregar Citatorio</button>
+                            </p>
+                        </div>
+                        <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No de Citatorio</th>
+                                        <th>Archivo</th>
+                                        <th></th>                                        
+                                    </tr>                                    
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lista_citatorios; let i=index">
+                                        <th style="vertical-align: middle;cursor:pointer;" ><a>{{ item.oficio }} </a></th>
+                                        <td style="vertical-align: middle;cursor:pointer;"  (click)="ver_archivo(2, item)"><a>{{ item.archivo }}</a></td>
+                                        <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_archivo(1, item.id)"></i></td>
+                                        
+                                    </tr>
+                                    <tr *ngIf="lista_citatorios.length == 0">
+                                        <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>                            
+                </div>
+                <div *ngIf="(pestanas == 4)">
+                    <form name="form" [formGroup]="registrosResolucionModule"   (ngSubmit)="agregar_archivo(3)" style="overflow:hidden">   
+                    
+                        <div class="control is-grouped">    
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">Subir Archivo </label>
+                                <input type="file" (change)="fileArchivo($event)" formControlName="archivo" accept="application/pdf">
+                            </p>
+                        
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">No de oficio de Resolución</label>
+                                <input class="input"  type="text"  placeholder="No de Oficio" formControlName="oficio_resolucion">
+                                <span class="icon is-small" *ngIf="registrosResolucionModule.get('oficio_resolucion').hasError('required') && registrosResolucionModule.get('oficio_resolucion').touched">
+                                <i class="fa fa-warning"></i>
+                                </span>
+                                <span class="help is-danger" *ngIf="registrosResolucionModule.get('oficio_resolucion').hasError('required') && registrosResolucionModule.get('oficio_resolucion').touched">Este campo es requerido.</span>
+                            </p>
+                        </div>
+                        <div class="control is-grouped">    
+                            
+                            <p class="control is-expanded ">
+                                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosResolucionModule.invalid">Agregar Resolución</button>
+                            </p>
+                        </div>
+                        <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <!--<th rowspan="2"><abbr title="ID">ID</abbr></th>-->
+                                        <th>No de Resolución</th>
+                                        <th>Archivo</th>
+                                        <th></th>                                        
+                                    </tr>                                    
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lista_resoluciones; let i=index">
+                                        <th style="vertical-align: middle;cursor:pointer;" ><a>{{ item.oficio }} </a></th>
+                                        <td style="vertical-align: middle;cursor:pointer;"  (click)="ver_archivo(3, item)"><a>{{ item.archivo }}</a></td>
+                                        <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_archivo(1, item.id)"></i></td>
+                                        
+                                    </tr>
+                                    <tr *ngIf="lista_resoluciones.length == 0">
+                                        <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>                            
+                </div>
+                <div *ngIf="(pestanas == 5)">
+                    <form name="form" [formGroup]="registrosAmonestacionModule"   (ngSubmit)="agregar_archivo(4)" style="overflow:hidden">   
+                        <div class="control is-grouped">    
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">Subir Archivo </label>
+                                <input type="file" (change)="fileArchivo($event)" formControlName="archivo" accept="application/pdf">
+                            </p>
+                        
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">No de oficio de Amonestación</label>
+                                <input class="input"  type="text"  placeholder="No de Oficio" formControlName="oficio_amonestacion">
+                                <span class="icon is-small" *ngIf="registrosAmonestacionModule.get('oficio_amonestacion').hasError('required') && registrosAmonestacionModule.get('oficio_amonestacion').touched">
+                                <i class="fa fa-warning"></i>
+                                </span>
+                                <span class="help is-danger" *ngIf="registrosAmonestacionModule.get('oficio_amonestacion').hasError('required') && registrosAmonestacionModule.get('oficio_amonestacion').touched">Este campo es requerido.</span>
+                            </p>
+                        </div>
+                        <div class="control is-grouped">    
+                            
+                            <p class="control is-expanded ">
+                                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosAmonestacionModule.invalid">Agregar Amonestación</button>
+                            </p>
+                        </div>
+                        <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <!--<th rowspan="2"><abbr title="ID">ID</abbr></th>-->
+                                        <th>No de Amonestación</th>
+                                        <th>Archivo</th>
+                                        <th></th>                                        
+                                    </tr>                                    
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lista_amonestaciones; let i=index">
+                                        <th style="vertical-align: middle;cursor:pointer;" ><a>{{ item.oficio }} </a></th>
+                                        <td style="vertical-align: middle;cursor:pointer;"  (click)="ver_archivo(4, item)"><a>{{ item.archivo }}</a></td>
+                                        <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_archivo(1, item.id)"></i></td>
+                                        
+                                    </tr>
+                                    <tr *ngIf="lista_amonestaciones.length == 0">
+                                        <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>                            
+                </div>
+                <div *ngIf="(pestanas == 6)">
+                    <form name="form" [formGroup]="registrosMultaModule"   (ngSubmit)="agregar_archivo(5)" style="overflow:hidden">   
+                        <div class="control is-grouped">    
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">Subir Archivo </label>
+                                <input type="file" (change)="fileArchivo($event)" formControlName="archivo" accept="application/pdf">
+                            </p>
+                        
+                            <p class="control is-expanded  has-icon has-icon-right">
+                                <label class="label">No de oficio de Multas</label>
+                                <input class="input"  type="text"  placeholder="No de Oficio" formControlName="oficio_multa">
+                                <span class="icon is-small" *ngIf="registrosMultaModule.get('oficio_multa').hasError('required') && registrosMultaModule.get('oficio_multa').touched">
+                                <i class="fa fa-warning"></i>
+                                </span>
+                                <span class="help is-danger" *ngIf="registrosMultaModule.get('oficio_multa').hasError('required') && registrosMultaModule.get('oficio_multa').touched">Este campo es requerido.</span>
+                            </p>
+                        </div>
+                        <div class="control is-grouped">    
+                            
+                            <p class="control is-expanded ">
+                                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosMultaModule.invalid">Agregar Multa</button>
+                            </p>
+                        </div>
+                        <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <!--<th rowspan="2"><abbr title="ID">ID</abbr></th>-->
+                                        <th>No de Multa</th>
+                                        <th>Archivo</th>
+                                        <th></th>                                        
+                                    </tr>                                    
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lista_multas; let i=index">
+                                        <th style="vertical-align: middle;cursor:pointer;" ><a>{{ item.oficio }} </a></th>
+                                        <td style="vertical-align: middle;cursor:pointer;"  (click)="ver_archivo(5, item)"><a>{{ item.archivo }}</a></td>
+                                        <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_archivo(1, item.id)"></i></td>
+                                        
+                                    </tr>
+                                    <tr *ngIf="lista_multas.length == 0">
+                                        <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>                            
+                </div>  
+            </div>    
+            <br>
+            <!--<div class="control is-grouped">
+                <p class="control">
+                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosModule.invalid">Guardar</button>
+                </p>
+            </div>-->
+        </form>
+      </section>
+      <footer class="" style="position:relative; padding:1em;background: #FFF; border-top:0px solid #EEE; border-radius:0 0 0.8em 0.8em " >
+      </footer>
+    </div>
+  </div>
+
+  <div id="modal-busqueda-verificacion" class="modal is-active" [ngClass]="{'is-active': showbuscador}">
+    <div class="modal-background"  (click)="showDialog = !showAgregarTema"></div>
+    <div class="modal-card" style="width:60%; height: auto;">
+      <header class="modal-card-head" style="background-color: #00d1b2" >
+        <div class="container is-fluid"  style="width:100%;">
+            <h1 class="title" style="color:#FFF;">
+              <span class="icon is-medium"><i class="fa fa-user"></i></span> BUSCAR VERIFICACIÓN
+            </h1>
+        </div>            
+        <a class="button  is-primary" style="position:absolute; top:1em; right:1em;" (click)="showbuscador = !showbuscador"><span class="icon "><i class="fa fa-close"></i></span></a>
+      </header>
+      
+      <section class="section">
+        <div class="control is-grouped">
+            <p class="control is-expanded  has-icon has-icon-right">
+                <label class="label">Buscar</label>
+                <input class="input"  type="text"  placeholder="Buscar"  #busquedaVerificacion (keyup)="verifica_busqueda(busquedaVerificacion.value)">
+            </p>
+            <p class="control is-1  has-icon has-icon-right">
+                <br>
+                <button type="button" class="button is-primary" style="margin-top:7px"><i class="fa fa-search"></i></button>
+            </p>
+        </div>    
+        <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>No de Verificación</th>
+                        <th>Lugar o Institución</th>
+                        <th>Giro</th>
+                        <th>Archivo</th>
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of lista_busqueda_verificacion; let i=index">
+                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.id_tema }}</th>
+                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.folio }}</th>
+                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.establecimiento }}</th>
+                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.giro }}</th>
+                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" ><i>{{ item.archivo }}</i></th>
+                    </tr>
+                    <tr *ngIf="lista_busqueda_verificacion.length == 0">
+                        <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+      </section>
+      <footer class="" style="position:relative; padding:1em;background: #FFF; border-top:0px solid #EEE; border-radius:0 0 0.8em 0.8em " >
+      </footer>
+    </div>
+  </div>
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>

@@ -1,0 +1,198 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpModule,Http }   from '@angular/http';
+
+import { ReporteService } from '../reporte.service';
+import { Mensaje } from '../../mensaje';
+
+@Component({
+  selector: 'app-boletin-ejecutivo',
+  templateUrl: './boletin-ejecutivo.component.html',
+  styleUrls: ['./boletin-ejecutivo.component.css']
+})
+export class BoletinEjecutivoComponent implements OnInit {
+
+  ejecutivo: any[] = [];
+  options_muestra_total: Object = {};
+  options_muestra_especificaciones: Object = {};
+  options_verificacion_total: Object = {};
+  options_capacitacion_total: Object = {};
+  options_dictamen_total: Object = {};
+  options_reaccion_total: Object = {};
+  catalogo_ejecutivo: string[];
+  tamano = document.body.clientHeight;
+  total_graficas:number = 0;
+
+  cargando: boolean = false;
+
+  // # SECCION: Esta sección es para mostrar mensajes
+  mensajeError: Mensaje = new Mensaje();
+  mensajeExito: Mensaje = new Mensaje();
+
+  constructor(
+    private http: Http,
+      private reporteService: ReporteService
+     ) { }
+//options_muestra_total: Object;
+
+  ngOnInit() {
+    this.cargar_catalogos();
+    
+  }
+
+  listar(id_ejecutivo:number):void{
+    //this.options_muestra_total['series'][0]['data'] = Array(50,60);
+    this.cargando = true;
+    this.options_muestra_total = {};
+    this.options_muestra_especificaciones = {};
+    this.options_verificacion_total = {};
+    this.options_capacitacion_total = {};
+    this.options_dictamen_total = {};
+    this.options_reaccion_total = {};
+    this.total_graficas = 0;
+
+    this.reporteService.lista_ejecutivo(id_ejecutivo).subscribe(
+        response => {
+          
+          
+          let i = 0;
+          
+          for(i= 0; i< response.length; i++)
+          {
+            if(response[i].id_tipo_programacion == 1)
+            {
+                this.options_verificacion_total = {
+                    title : { text : response[i].ejecutivo},
+                    subtitle: { text:  response[i].tipo },
+                    chart: { type: 'column' },
+                    yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                    xAxis: { categories: ["Metas", "Acumulado"] },
+                    //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: false, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                    legend: { enabled: false},
+                    plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                    series: [{ name: "Verificaciones", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                }
+                this.total_graficas++;
+            }
+            if(response[i].id_tipo_programacion == 2)
+            {
+              //console.log(response[0].total);
+                this.options_muestra_total = {
+                    title : { text : response[i].ejecutivo},
+                    subtitle: { text:  response[i].tipo },
+                    yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                    chart: { type: 'column' },
+                    xAxis: { categories: ["Meta", "Acumulado"] },
+                    //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: false, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                    legend: { enabled: false},
+                    plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                    series: [{ name: "Muestras", data : [ parseInt(response[i].total) ,  parseInt(response[i].acumulado) ] }]
+                }
+
+                this.options_muestra_especificaciones = {
+                  title : { text : response[i].ejecutivo},
+                  subtitle: { text:  response[i].tipo +" Acumulado" },
+                  chart: { type: 'column' },
+                  yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                  xAxis: { categories: ["Dentro de Especificaciones", "Fuera de Especificaciones"] },
+                  //legend: { align: 'right',x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                  legend: { enabled: false},
+                  plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                  series: [{ name: "Muestras Acumuladas", data : [ parseInt(response[i].dentro_especificaciones),parseInt(response[i].fuera_especificaciones) ] }]
+              }
+              this.total_graficas++;
+            }
+            if(response[i].id_tipo_programacion == 3)
+            {
+              //console.log(response[0].total);
+                this.options_capacitacion_total = {
+                    title : { text : response[i].ejecutivo},
+                    subtitle: { text:  response[i].tipo },
+                    chart: { type: 'column' },
+                    yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                    xAxis: { categories: ["Metas", "Acumulado"] },
+                    //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                    legend: { enabled: false},
+                    plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                    series: [{ name: "Capacitaciones", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                }
+                this.total_graficas++;
+            }
+            if(response[i].id_tipo_programacion == 4)
+            {
+              //console.log(response[0].total);
+                this.options_dictamen_total = {
+                    title : { text : response[i].ejecutivo},
+                    subtitle: { text:  response[i].tipo },
+                    chart: { type: 'column' },
+                    yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                    xAxis: { categories: ["Metas", "Acumulado"] },
+                    //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                    legend: { enabled: false},
+                    plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                    series: [{ name: "Dictamenes", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                }
+                this.total_graficas++;
+            }
+            if(response[i].id_tipo_programacion == 5)
+            {
+              //console.log(response[0].total);
+                this.options_reaccion_total = {
+                    title : { text : response[i].ejecutivo},
+                    chart: { type: 'column' },
+                    subtitle: { text:  response[i].tipo },
+                    yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                    xAxis: { categories: ["Metas", "Acumulado"] },
+                    //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                    legend: { enabled: false},
+                    plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                    series: [{ name: "Reacciones Adversas", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                }
+                this.total_graficas++;
+            }
+            
+          }
+          this.cargando=false;  
+      },
+      error => {
+        this.cargando=false;
+        console.log(error);
+      }
+    );
+    
+    
+  }
+
+  filtro(id_ejecutivo):void
+  {
+    this.listar(id_ejecutivo);
+  }
+
+  cargar_catalogos():void{
+    this.reporteService.carga_catalogos().subscribe(
+        resultado => {
+          
+          this.catalogo_ejecutivo = resultado.ejecutivo;
+        },
+        error => {
+          this.cargando = false;
+          this.mensajeError.mostrar = true;
+          try {
+            let e = error.json();
+            if (error.status == 401 ){
+              this.mensajeError.texto = "No tiene permiso para hacer esta operación.";
+            }
+          } catch(e){
+            console.log("No se puede interpretar el error");
+            
+            if (error.status == 500 ){
+              this.mensajeError.texto = "500 (Error interno del servidor)";
+            } else {
+              this.mensajeError.texto = "No se puede interpretar el error. Por favor contacte con soporte técnico si esto vuelve a ocurrir.";
+            }            
+          }
+
+        }
+      );
+  }
+
+}

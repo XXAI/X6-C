@@ -1,0 +1,279 @@
+<menu-programacion></menu-programacion>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column is-one-quarter is-hidden-mobile">
+        <programacion-menu-aside></programacion-menu-aside>
+    </div>
+    <div class="column" style="padding:2em; overflow:auto;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero" [ngClass] = " {'is-dark': busquedaActivada, 'is-primary': !busquedaActivada } " >
+                
+                <div class="hero-body" style="position:relative;">
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="busquedaActivada=false;searchBox.value='';resultadosBusqueda=[]"><span class="icon "><i class="fa fa-close"></i></span></a>
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:3.5em;" (click)="listarBusqueda(searchBox.value,1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <a class="button  is-primary" *ngIf="!busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="listar(1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title" *ngIf="!busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-edit"></i></span> Registros de Verificaciones
+                        </h1>
+                        <h1 class="title" *ngIf="busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
+                        </h1>
+                        <div class="columns">
+                            <div class="column">
+                                <a class="button is-medium is-primary is-inverted  is-pulled-right"(click)='crear_nuevo()'>
+                                    <span class="icon"><i class="fa fa-plus"></i></span><span>Nuevo</span>
+                                </a>
+                                <p class="control is-pulled-right">
+                                    <a class="button is-medium is-primary is-inverted " style="margin-right:5px"  (click)='regresar()'>
+                                    <span>Regresar</span>
+                                    </a>
+                                </p>  
+                                
+                            </div>
+                        </div>    
+                       
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+            <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                <table class="table" *ngIf="!cargando">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Mes</th>
+                            <th>Tema</th>
+                            <th>Establecimiento</th>
+                            <th>Medida Seguridad</th>
+                            <th>Informativo</th>
+                            <th>Archivo</th>
+                            <th></th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody  *ngIf="!busquedaActivada">
+                        <tr *ngFor="let item of registros; let i=index">
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.folio }}</th>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ arreglo_meses[item.mes - 1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.tema.descripcion }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.establecimiento }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ variable_booleana[item.medida_seguridad] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ variable_booleana[item.informativa] }}</td>
+                            
+                            <td style="vertical-align: middle;cursor:pointer;"(click)="descargar(item)"><i style="color:blue">{{ item.archivo }}</i></td>
+                            <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar(item.id)"></i></td>
+                        </tr>
+                        <tr *ngIf="registros.length == 0">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="busquedaActivada">
+                        <tr *ngFor="let item of resultadosBusqueda; let i=index">
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.folio }}</th>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ arreglo_meses[item.mes - 1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.tema.descripcion }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.establecimiento }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ variable_booleana[item.medida_seguridad] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ variable_booleana[item.informativa] }}</td>
+                            
+                            <td style="vertical-align: middle;cursor:pointer;"(click)="descargar(item)"><i style="color:blue">{{ item.archivo }}</i></td>
+                            <td style="vertical-align: middle;cursor:pointer;"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar(item.id)"></i></td>
+                        </tr>
+
+                        <tr *ngIf="resultadosBusqueda.length == 0 && busquedaActivada">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">No se encontraron resultados.</td>                    
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Paginación para la lista  -->
+            <paginacion 
+                [total]="total" 
+                [paginasTotales]="paginasTotales" 
+                [resultadosPorPagina]="resultadosPorPagina" 
+                [paginaActual]="paginaActual" 
+                [indicePaginas]="indicePaginas"
+                (onSiguiente)="paginaSiguiente()" 
+                (onAnterior)="paginaAnterior()" 
+                (onListar)="listar($event)" 
+                *ngIf="total>0 && total > resultadosPorPagina && !busquedaActivada"></paginacion>
+            <paginacion 
+                [total]="totalBusqueda" 
+                [paginasTotales]="paginasTotalesBusqueda" 
+                [resultadosPorPagina]="resultadosPorPaginaBusqueda" 
+                [paginaActual]="paginaActualBusqueda" 
+                [indicePaginas]="indicePaginasBusqueda"
+                (onSiguiente)="paginaSiguienteBusqueda(searchBox.value)" 
+                (onAnterior)="paginaAnteriorBusqueda(searchBox.value)" 
+                (onListar)="listarBusqueda(searchBox.value,$event)" 
+                *ngIf="totalBusqueda > 0 && totalBusqueda > resultadosPorPaginaBusqueda && busquedaActivada"></paginacion>
+            
+            
+            
+        </div>
+        
+    </div>
+</div>
+
+<div id="modal-registro" class="modal is-active" [ngClass]="{'is-active': showregistro}">
+    <div class="modal-background"  (click)="showDialog = !showAgregarTema"></div>
+    <div class="modal-card" style="width:60%; height: auto;">
+      <header class="modal-card-head" style="background-color: #00d1b2" >
+        <div class="container is-fluid"  style="width:100%;">
+            <h1 class="title" style="color:#FFF;">
+              <span class="icon is-medium"><i class="fa fa-user"></i></span> Agregar Registro Verificación
+            </h1>
+        </div>            
+        <a class="button  is-primary" style="position:absolute; top:1em; right:1em;" (click)="showregistro = !showregistro"><span class="icon "><i class="fa fa-close"></i></span></a>
+      </header>
+      <section class="section">
+          
+          <form name="form" [formGroup]="registrosModule"   (ngSubmit)="agregar()" style="overflow:hidden">   
+             
+                <div class="control is-grouped">
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Jurisdicción</label>
+                        <input class="input"  type="text"  placeholder="Jurisdiccion" formControlName="jurisdiccion" readonly='readonly'>
+                        <span class="icon is-small" *ngIf="registrosModule.get('jurisdiccion').hasError('required') && registrosModule.get('jurisdiccion').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('jurisdiccion').hasError('required') && registrosModule.get('jurisdiccion').touched">Este campo es requerido.</span>
+                    </p>
+
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Tema</label>
+                        <input class="input"  type="text"  placeholder="Tema" formControlName="tema">
+                        <span class="icon is-small" *ngIf="registrosModule.get('tema').hasError('required') && registrosModule.get('tema').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('tema').hasError('required') && registrosModule.get('tema').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Año</label>
+                      <input class="input"  type="text"  placeholder="Año" formControlName="anio" readonly='readonly'>
+                      <span class="icon is-small" *ngIf="registrosModule.get('anio').hasError('required') && registrosModule.get('anio').touched">
+                        <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger" *ngIf="registrosModule.get('anio').hasError('required') && registrosModule.get('anio').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Mes</label>
+                        <select class="select" formControlName="mes">
+                            <option value='1'>Enero</option>
+                            <option value='2'>Febrero</option>
+                            <option value='3'>Marzo</option>
+                            <option value='4'>Abril</option>
+                            <option value='5'>Mayo</option>
+                            <option value='6'>Junio</option>
+                            <option value='7'>Julio</option>
+                            <option value='8'>Agosto</option>
+                            <option value='9'>Septiembre</option>
+                            <option value='10'>Octubre</option>
+                            <option value='11'>Noviembre</option>
+                            <option value='12'>Diciembre</option>
+                          </select>
+                          <span class="icon is-small" *ngIf="registrosModule.get('mes').hasError('required') && registrosModule.get('mes').touched">
+                              <i class="fa fa-warning"></i>
+                          </span>
+                          <span class="help is-danger" *ngIf="registrosModule.get('mes').hasError('required') && registrosModule.get('mes').touched">Este campo es requerido.</span>
+                    </p>
+                    
+                </div>
+                <div class="control is-grouped">
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Folio</label>
+                        <input class="input"  type="text"  placeholder="Folio" formControlName="folio">
+                        <span class="icon is-small" *ngIf="registrosModule.get('folio').hasError('required') && registrosModule.get('folio').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('folio').hasError('required') && registrosModule.get('folio').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Establecimiento</label>
+                        <input class="input"  type="text"  placeholder="Establecimiento" formControlName="establecimiento">
+                        <span class="icon is-small" *ngIf="registrosModule.get('establecimiento').hasError('required') && registrosModule.get('establecimiento').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('establecimiento').hasError('required') && registrosModule.get('establecimiento').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Giro</label>
+                        <input class="input"  type="text"  placeholder="Giro" formControlName="giro">
+                        <span class="icon is-small" *ngIf="registrosModule.get('giro').hasError('required') && registrosModule.get('giro').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('giro').hasError('required') && registrosModule.get('giro').touched">Este campo es requerido.</span>
+                    </p>
+                </div>
+                <div class="control is-grouped">
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Medida de Seguridad</label>
+                        <select class="select" formControlName="medida_seguridad">
+                            <option value='1'>SI</option>
+                            <option value='0'>NO</option>
+                          </select>
+                        <span class="icon is-small" *ngIf="registrosModule.get('medida_seguridad').hasError('required') && registrosModule.get('medida_seguridad').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('medida_seguridad').hasError('required') && registrosModule.get('medida_seguridad').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Descripción Medida Seguridad</label>
+                        <!--<input class="input"  type="text"  placeholder="Descripcion" formControlName="descripcion_medida">-->
+                        <textarea  class="textarea" placeholder="Descripción" formControlName='descripcion_medida'></textarea>
+                        <span class="icon is-small" *ngIf="registrosModule.get('descripcion_medida').hasError('required') && registrosModule.get('descripcion_medida').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('descripcion_medida').hasError('required') && registrosModule.get('descripcion_medida').touched">Este campo es requerido.</span>
+                    </p>
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Verificación informativa</label>
+                        <select class="select" formControlName="informativa">
+                            <option value='1'>SI</option>
+                            <option value='0'>NO</option>
+                          </select>
+                        <span class="icon is-small" *ngIf="registrosModule.get('informativa').hasError('required') && registrosModule.get('informativa').touched">
+                          <i class="fa fa-warning"></i>
+                        </span>
+                        <span class="help is-danger" *ngIf="registrosModule.get('informativa').hasError('required') && registrosModule.get('informativa').touched">Este campo es requerido.</span>
+                    </p>
+                </div>
+                <div class="control is-grouped">    
+                    <p class="control is-expanded  has-icon has-icon-right">
+                          <label class="label">Subir Archivo </label>
+                          <input type="file" (change)="fileChanged($event)" formControlName="archivo" accept="application/pdf">
+                          
+                    </p>   
+                </div>
+            <br>
+            <div class="control is-grouped">
+              <p class="control">
+                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosModule.invalid">Guardar</button>
+              </p>
+            </div>
+        </form>
+      </section>
+      <footer class="" style="position:relative; padding:1em;background: #FFF; border-top:0px solid #EEE; border-radius:0 0 0.8em 0.8em " >
+      </footer>
+    </div>
+  </div>
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>
