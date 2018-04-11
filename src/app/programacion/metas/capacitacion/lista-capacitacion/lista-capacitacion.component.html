@@ -88,23 +88,20 @@
                     </thead>
                     <tbody  *ngIf="!busquedaActivada">
                         <tr *ngFor="let item of programacion_jurisdiccion; let i=index">
-                            <th style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)" >J - {{ item.jurisdiccion.id }} {{item.descripcion}}  </th>
-                            
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.enero }} / {{ item.enero_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.febrero }} / {{ item.febrero_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.marzo }} / {{ item.marzo_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.abril }} / {{ item.abril_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.mayo }} / {{ item.mayo_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.junio }} / {{ item.junio_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.julio }} / {{ item.julio_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.agosto }} / {{ item.agosto_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.septiembre }} / {{ item.septiembre_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.octubre }} / {{ item.acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.noviembre }} / {{ item.noviembre_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.diciembre }} / {{ item.diciembre_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.total_acumulado }} / {{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_programacion(item.id)"></i></td>
-                            
+                                <th style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">J - {{ item.id_jurisdiccion }} {{ item.descripcion }} </th>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.enero }} <br> <p class="acumulado">{{ item.enero_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.febrero }} <br> <p class="acumulado">{{ item.febrero_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.marzo }} <br> <p class="acumulado">{{ item.marzo_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.abril }} <br> <p class="acumulado">{{ item.abril_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.mayo }} <br> <p class="acumulado">{{ item.mayo_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.junio }} <br> <p class="acumulado">{{ item.junio_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.julio }} <br> <p class="acumulado">{{ item.julio_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.agosto }} <br> <p class="acumulado">{{ item.agosto_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.septiembre }} <br> <p class="acumulado">{{ item.septiembre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.octubre }} <br> <p class="acumulado">{{ item.octubre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.noviembre }} <br> <p class="acumulado">{{ item.noviembre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.diciembre }} <br> <p class="acumulado">{{ item.diciembre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.total_acumulado }} <br> ({{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %) </td>  
                         </tr>
                         <tr *ngIf="programacion_jurisdiccion.length == 0">
                             <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
@@ -112,23 +109,20 @@
                     </tbody>
                     <tbody *ngIf="busquedaActivada">
                         <tr *ngFor="let item of resultadosBusqueda; let i=index">
-                            <th style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)" >J - {{ item.jurisdiccion.id }} {{item.descripcion}}  </th>
-                            
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.enero }} / {{ item.enero_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.febrero }} / {{ item.febrero_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.marzo }} / {{ item.marzo_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.abril }} / {{ item.abril_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.mayo }} / {{ item.mayo_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.junio }} / {{ item.junio_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.julio }} / {{ item.julio_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.agosto }} / {{ item.agosto_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.septiembre }} / {{ item.septiembre_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.octubre }} / {{ item.acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.noviembre }} / {{ item.noviembre_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.diciembre }} / {{ item.diciembre_acumulado }}</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.total_acumulado }} / {{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %</td>
-                            <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar_programacion(item.id)"></i></td>
-                            
+                                <th style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">J - {{ item.id_jurisdiccion }} {{ item.descripcion }} </th>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.enero }} <br> <p class="acumulado">{{ item.enero_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.febrero }} <br> <p class="acumulado">{{ item.febrero_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.marzo }} <br> <p class="acumulado">{{ item.marzo_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.abril }} <br> <p class="acumulado">{{ item.abril_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.mayo }} <br> <p class="acumulado">{{ item.mayo_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.junio }} <br> <p class="acumulado">{{ item.junio_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.julio }} <br> <p class="acumulado">{{ item.julio_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.agosto }} <br> <p class="acumulado">{{ item.agosto_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.septiembre }} <br> <p class="acumulado">{{ item.septiembre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.octubre }} <br> <p class="acumulado">{{ item.octubre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.noviembre }} <br> <p class="acumulado">{{ item.noviembre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.diciembre }} <br> <p class="acumulado">{{ item.diciembre_acumulado }}</p></td>
+                                <td style="vertical-align: middle;cursor:pointer;" (click)="editarProgramacion(item)">{{ item.total_acumulado }} <br> ({{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %) </td>  
                         </tr>
 
                         <tr *ngIf="resultadosBusqueda.length == 0 && busquedaActivada">
@@ -346,13 +340,13 @@
     </div>
   </div>
 
-<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+<div class="notification notification_mensaje is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
     <button class="delete" (click)="mensajeError.mostrar = false"></button>        
     <b>Error:</b> {{ mensajeError.texto }}<br><br>
     <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
 </div>
 
-<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+<div class="notification notification_mensaje is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
     <button class="delete" (click)="mensajeExito.mostrar = false"></button>
     <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
     <br>

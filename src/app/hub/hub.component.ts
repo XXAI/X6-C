@@ -26,21 +26,21 @@ export class HubComponent implements OnInit {
       ]
     },
     {
-      title: 'Programación de Metas', routerLink: '/programacion_metas', icono: 'assets/catalogo-pedido.svg',
+      title: 'Programación de Metas', routerLink: '/programacion_metas', icono: 'assets/icono-programacion.svg',
       permisos: [
-        'esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj'//esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj' // Ver usuarios
+        'XWJov5DR90tIuFYeMj3LorKUHVnb2E9D'// Ver usuarios
       ]
     },
     {
-      title: 'Captura de Registros', routerLink: '/captura_registros', icono: 'assets/catalogo-pedido.svg',
+      title: 'Captura de Registros', routerLink: '/captura_registros', icono: 'assets/icono-pagina-lista.svg',
       permisos: [
-        'esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj'//esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj' // Ver usuarios
+        'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'
       ]
     },
     {
-      title: 'Reportes', routerLink: '/reportes/proyecto', icono: 'assets/catalogo-pedido.svg',
+      title: 'Reportes', routerLink: '/reportes/proyecto', icono: 'assets/hub-reportes.svg',
       permisos: [
-        'esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj'//esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj' // Ver usuarios
+        'CHPlR9tEFF69AT5qBHrSW26nDzGlcG4y'//esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj' // Ver usuarios
       ]
     }
   ];

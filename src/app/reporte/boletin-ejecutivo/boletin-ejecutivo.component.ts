@@ -23,6 +23,7 @@ export class BoletinEjecutivoComponent implements OnInit {
   total_graficas:number = 0;
 
   cargando: boolean = false;
+  busquedaActivada:boolean = false;
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();

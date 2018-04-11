@@ -42,7 +42,6 @@ import { ReporteModule } from './reporte/reporte.module';
 
 
 import { CrudModule } from './crud/crud.module';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 

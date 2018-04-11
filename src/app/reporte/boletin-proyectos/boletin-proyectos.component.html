@@ -21,10 +21,7 @@
                             <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
                         </h1>
                         <div class="columns">
-                            <!--<div class="column"  [ngClass]="{'is-three-quarters': filter }">
-                                <label class="label" style="color: #FFF">Buscar Tema</label>
-                                <input class="input is-medium" type="text" placeholder="Buscar" #searchBox id="search-box" (keyup)="buscar(searchBox.value)">
-                            </div>-->
+                           
                             
                             <div class="column">
                                 <label class="label" style="color: #FFF">TEMAS</label>
@@ -44,7 +41,44 @@
                 <br>
                 <br>
             </div>
-            <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+            <div style="overflow:auto; display:block">
+                <table class="table" *ngIf="!cargando">
+                    <thead>
+                        <!--<tr>
+                            <th colspan="13">{{ tema_seleccionado }}</th>
+                        </tr>-->
+                        <tr>
+                            <th>TEMA</th>
+                            <th>VERIFICACIONES</th>
+                            <th>MUESTRAS</th>
+                            <!--<th>MUESTRAS (ACUMULADO)</th>-->
+                            <th>DICTAMENES</th>
+                            <!--<th>NOTIFICACIONES</th>
+                            <th>CITATORIOS</th>
+                            <th>RESOLUCIONES</th>
+                            <th>AMONESTACIONES</th>
+                            <th>MULTAS</th>-->
+                            <th>CAPACITACIONES</th>
+                            <!--<th>MATERIAL DIFUCIÓN</th>-->
+                            <th>REACCIONES ADVERSAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of lista_datos; let i=index">
+                            <td style="vertical-align: middle;cursor:pointer;" > {{ item.tema }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.verificaciones.total }} <br> <p class="acumulado">{{ item.verificaciones.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.muestra.total }} <br> <p class="acumulado">{{ item.muestra.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.dictamen.total }} <br> <p class="acumulado">{{ item.dictamen.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.capacitacion.total }} <br> <p class="acumulado">{{ item.capacitacion.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.reaccion.total }} <br> <p class="acumulado">{{ item.reaccion.acumulado }}</p> </td>
+                            
+                        </tr>
+                        <tr *ngIf="lista_datos.length == 0">
+                            <td colspan="8" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    
+                </table>     
                 <table  class="table">
                     
                     <tbody>
@@ -52,7 +86,7 @@
                             <td>
                             <div class="columns" *ngIf="options_verificacion_total['series']">
                                 <div class="column">
-                                    <chart [options]="options_verificacion_total"></chart>
+                                    <chart [options]="options_verificacion_total" class="is-fullwidth"></chart>
                                 </div>
                                 
                             </div>
@@ -88,13 +122,13 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tbody *ngIf="(total_graficas == 0 && !cargando)">
+                    <!--<tbody *ngIf="(total_graficas == 0 && !cargando)">
                         <tr>
                             <td>
                                 No Existen Datos con las Variables de consulta Ingresados
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody>-->
                 </table>
             </div>
         </div>

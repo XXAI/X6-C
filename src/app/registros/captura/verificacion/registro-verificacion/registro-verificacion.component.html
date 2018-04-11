@@ -61,7 +61,7 @@
                     </thead>
                     <tbody  *ngIf="!busquedaActivada">
                         <tr *ngFor="let item of registros; let i=index">
-                            <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.folio }}</th>
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.folio_completo }}</th>
                             <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ arreglo_meses[item.mes - 1] }}</td>
                             <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.tema.descripcion }}</td>
                             <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.establecimiento }}</td>
@@ -77,7 +77,7 @@
                     </tbody>
                     <tbody *ngIf="busquedaActivada">
                         <tr *ngFor="let item of resultadosBusqueda; let i=index">
-                            <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.folio }}</th>
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.folio_completo }}</th>
                             <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ arreglo_meses[item.mes - 1] }}</td>
                             <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.tema.descripcion }}</td>
                             <td style="vertical-align: middle;cursor:pointer;" (click)="editar(item)" >{{ item.establecimiento }}</td>
@@ -216,7 +216,7 @@
                 <div class="control is-grouped">
                     <p class="control is-expanded  has-icon has-icon-right">
                         <label class="label">Medida de Seguridad</label>
-                        <select class="select" formControlName="medida_seguridad">
+                        <select class="select" formControlName="medida_seguridad" #medida_seguridad (change)='verificar_estado(medida_seguridad.value)'>
                             <option value='1'>SI</option>
                             <option value='0'>NO</option>
                           </select>
@@ -227,8 +227,8 @@
                     </p>
                     <p class="control is-expanded  has-icon has-icon-right">
                         <label class="label">Descripción Medida Seguridad</label>
-                        <!--<input class="input"  type="text"  placeholder="Descripcion" formControlName="descripcion_medida">-->
-                        <textarea  class="textarea" placeholder="Descripción" formControlName='descripcion_medida'></textarea>
+                        
+                        <textarea  class="textarea" placeholder="Descripción" formControlName='descripcion_medida' [readonly]="variable_medida_seguridad"></textarea>
                         <span class="icon is-small" *ngIf="registrosModule.get('descripcion_medida').hasError('required') && registrosModule.get('descripcion_medida').touched">
                           <i class="fa fa-warning"></i>
                         </span>
@@ -265,13 +265,13 @@
       </footer>
     </div>
   </div>
-<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+<div class="notification notification_mensaje is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
     <button class="delete" (click)="mensajeError.mostrar = false"></button>        
     <b>Error:</b> {{ mensajeError.texto }}<br><br>
     <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
 </div>
 
-<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+<div class="notification notification_mensaje is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
     <button class="delete" (click)="mensajeExito.mostrar = false"></button>
     <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
     <br>

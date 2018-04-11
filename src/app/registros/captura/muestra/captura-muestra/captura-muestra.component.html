@@ -76,19 +76,19 @@
                     <tbody  *ngIf="!busquedaActivada">
                         <tr *ngFor="let item of verificacion; let i=index">
                             <th style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">J - {{ item.id_jurisdiccion }} {{ item.descripcion }} </a></th>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.enero }} / {{ item.enero_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.febrero }} / {{ item.febrero_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.marzo }} / {{ item.marzo_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.abril }} / {{ item.abril_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.mayo }} / {{ item.mayo_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.junio }} / {{ item.junio_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.julio }} / {{ item.julio_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.agosto }} / {{ item.agosto_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.septiembre }} / {{ item.septiembre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.octubre }}  / {{ item.octubre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.noviembre }} / {{ item.noviembre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.diciembre }} / {{ item.diciembre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.total_acumulado }} / {{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %</a></td>       
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.enero }} <br> <p class="acumulado">{{ item.enero_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.febrero }} <br> <p class="acumulado">{{ item.febrero_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.marzo }} <br> <p class="acumulado">{{ item.marzo_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.abril }} <br> <p class="acumulado">{{ item.abril_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.mayo }} <br> <p class="acumulado">{{ item.mayo_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.junio }} <br> <p class="acumulado">{{ item.junio_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.julio }} <br> <p class="acumulado">{{ item.julio_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.agosto }} <br> <p class="acumulado">{{ item.agosto_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.septiembre }} <br> <p class="acumulado">{{ item.septiembre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.octubre }} <br> <p class="acumulado">{{ item.octubre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.noviembre }} <br> <p class="acumulado">{{ item.noviembre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.diciembre }} <br> <p class="acumulado">{{ item.diciembre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.total_acumulado }} <br> ({{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %) </a></td>
                         </tr>
                         <tr *ngIf="verificacion.length == 0">
                             <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
@@ -97,19 +97,19 @@
                     <tbody *ngIf="busquedaActivada">
                         <tr *ngFor="let item of resultadosBusqueda; let i=index">
                             <th style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">J - {{ item.id_jurisdiccion }} {{ item.descripcion }} </a></th>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.enero }} / {{ item.enero_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.febrero }} / {{ item.febrero_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.marzo }} / {{ item.marzo_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.abril }} / {{ item.abril_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.mayo }} / {{ item.mayo_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.junio }} / {{ item.junio_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.julio }} / {{ item.julio_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.agosto }} / {{ item.agosto_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.septiembre }} / {{ item.septiembre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.octubre }}  / {{ item.octubre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.noviembre }} / {{ item.noviembre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.diciembre }} / {{ item.diciembre_acumulado }}</a></td>
-                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.total_acumulado }} / {{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %</a></td>       
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.enero }} <br> <p class="acumulado">{{ item.enero_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.febrero }} <br> <p class="acumulado">{{ item.febrero_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.marzo }} <br> <p class="acumulado">{{ item.marzo_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.abril }} <br> <p class="acumulado">{{ item.abril_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.mayo }} <br> <p class="acumulado">{{ item.mayo_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.junio }} <br> <p class="acumulado">{{ item.junio_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.julio }} <br> <p class="acumulado">{{ item.julio_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.agosto }} <br> <p class="acumulado">{{ item.agosto_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.septiembre }} <br> <p class="acumulado">{{ item.septiembre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.octubre }} <br> <p class="acumulado">{{ item.octubre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.noviembre }} <br> <p class="acumulado">{{ item.noviembre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.diciembre }} <br> <p class="acumulado">{{ item.diciembre_acumulado }}</p></a></td>
+                            <td style="vertical-align: middle;cursor:pointer;" ><a routerLink="/captura_registros/muestra/{{item.anio}}/{{item.id_jurisdiccion}}/{{item.id_tema}}">{{ item.total_acumulado }} <br> ({{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %) </a></td>
                             
                         </tr>
 
@@ -148,13 +148,13 @@
     </div>
 </div>
 
-<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+<div class="notification notification_mensaje is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
     <button class="delete" (click)="mensajeError.mostrar = false"></button>        
     <b>Error:</b> {{ mensajeError.texto }}<br><br>
     <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
 </div>
 
-<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+<div class="notification notification_mensaje is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
     <button class="delete" (click)="mensajeExito.mostrar = false"></button>
     <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
     <br>

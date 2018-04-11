@@ -519,8 +519,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of lista_busqueda_verificacion; let i=index">
-                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.id_tema }}</th>
-                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.folio }}</th>
+                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.tema.descripcion }}</th>
+                        <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.folio_completo }}</th>
                         <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.establecimiento }}</th>
                         <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" >{{ item.giro }}</th>
                         <th style="vertical-align: middle;cursor:pointer;" (click)="seleccionar_verificacion(item)" ><i>{{ item.archivo }}</i></th>
@@ -537,13 +537,13 @@
       </footer>
     </div>
   </div>
-<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+<div class="notification notification_mensaje is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
     <button class="delete" (click)="mensajeError.mostrar = false"></button>        
     <b>Error:</b> {{ mensajeError.texto }}<br><br>
     <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
 </div>
 
-<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+<div class="notification notification_mensaje is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
     <button class="delete" (click)="mensajeExito.mostrar = false"></button>
     <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
     <br>

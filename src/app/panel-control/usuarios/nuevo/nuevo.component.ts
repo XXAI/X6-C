@@ -66,7 +66,7 @@ export class NuevoComponent implements OnInit {
     
     this.cargarRoles();
     this.cargarCatalogos();
-    //this.cargarMedicos();
+    
 
     this.usuario = this.fb.group({
       nombre: ['', [Validators.required]],
@@ -166,19 +166,7 @@ export class NuevoComponent implements OnInit {
   );
 }
   
-  /*cargarMedicos(){
-    this.cargandoMedicos = true;
-    this.usuariosService.listaMedicos().subscribe(
-      medicos => {
-        this.medicos = medicos;
-        this.cargandoMedicos = false;
-        console.log("Médicos cargados")
-      }, error => {
-        this.cargandoMedicos = false;
-      }
-
-    )
-  }*/
+  
   cargarRoles() {
     this.cargandoRoles = true;
     this.rolesService.lista().subscribe(

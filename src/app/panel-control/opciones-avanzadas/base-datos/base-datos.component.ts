@@ -24,7 +24,8 @@ export class BaseDatosComponent implements OnInit {
   archivo:File = null;
   archivoSubido:boolean = false;
   enviandoDatos: boolean = false;
-  progreso: number = 0;
+	progreso: number = 0;
+	enviandoDatoss:boolean = false;
 
 
 /*

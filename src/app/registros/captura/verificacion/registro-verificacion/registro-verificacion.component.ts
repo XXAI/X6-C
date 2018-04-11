@@ -30,12 +30,16 @@ export class RegistroVerificacionComponent implements OnInit {
   tamano = document.body.clientHeight;
 
   cargando: boolean = false;
+  showDialog:boolean = false;
+  showAgregarTema:boolean = false;
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();
   mensajeExito: Mensaje = new Mensaje();
   ultimaPeticion:any;
   registrosModule: FormGroup;
+  variable_medida_seguridad:boolean = true;
+
   // # FIN SECCION
 
   // # SECCION: Lista de porgramacion
@@ -102,7 +106,6 @@ export class RegistroVerificacionComponent implements OnInit {
       this.local.tema         = params['id3'];
 
     });
-    //console.log(this.registrosModule.get('anio'));
     this.listar(1);
     this.cargar_catalogos();
   }
@@ -193,8 +196,11 @@ export class RegistroVerificacionComponent implements OnInit {
     cargar_catalogos():void{
       this.registroverificacionService.carga_catalogos().subscribe(
           resultado => {
+            for (let index = 0; index < resultado.jurisdiccion.length; index++) {
+              if(resultado.jurisdiccion[index].id == this.local.jurisdiccion)
+                this.registrosModule.patchValue({jurisdiccion:resultado.jurisdiccion[index].descripcion});
+            }
             
-            this.registrosModule.patchValue({jurisdiccion:resultado.jurisdiccion[this.local.jurisdiccion - 1].descripcion});
             this.registrosModule.patchValue({tema:resultado.tema[this.local.tema - 1].descripcion});
           },
           error => {
@@ -316,17 +322,26 @@ error_descargar(obj)
 }
   error_envio(obj)
   {
-    console.log(obj);
     this.mensajeError = new Mensaje(true);
     this.mensajeError.mostrar = true;
     
     if(obj.status == 500)
-    this.mensajeError.texto = obj.responseText;
-      else
+    {
+      let respuesta = JSON.parse(obj.responseText);
+      this.mensajeError.texto = respuesta.error;
+    }else
     this.mensajeError.texto = "Ha ocurrido un error al enviar el archivo";
   }
 
-  
+  verificar_estado(valor:number):void{
+    if(valor == 1)
+      this.variable_medida_seguridad = false;
+    else
+    {
+      this.registrosModule.patchValue({descripcion_medida:""});
+      this.variable_medida_seguridad = true;
+    }
+  } 
 
     eliminar(id:string):void
     {

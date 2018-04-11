@@ -31,7 +31,9 @@ export class NuevoComponent implements OnInit {
     version : null,
     periodo_sincronizacion : null,
     ip:null,
-    clues:null 
+    clues:null, 
+    descripcion:null,
+    grupo: null 
   }
 
   
@@ -65,7 +67,9 @@ export class NuevoComponent implements OnInit {
 		version : null,
 		periodo_sincronizacion : null,
     ip:null,
-    clues:null 
+    clues:null, 
+    descripcion:null,
+    grupo: null 
     }
 
 

@@ -29,6 +29,9 @@ export class ListaComponent implements OnInit {
   tamano = document.body.clientHeight;
 
   cargando: boolean = false;
+  showDialog:boolean = false;
+  showAgregarTema:boolean = false;
+  filter:boolean = false;
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();

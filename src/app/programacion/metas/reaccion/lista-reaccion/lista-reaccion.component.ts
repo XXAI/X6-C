@@ -29,6 +29,9 @@ export class ListaReaccionComponent implements OnInit {
   id_tipo_programacion:number = 5;
 
   cargando: boolean = false;
+  showDialog:boolean = false;
+  showAgregarTema:boolean = false;
+  filter:boolean = false;
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();
@@ -298,8 +301,8 @@ export class ListaReaccionComponent implements OnInit {
             let aux_tema:number = this.programacion_jurisdiccional.get('id_tema').value;
             this.listar(1);
             this.programacion_jurisdiccional.reset();
-            this.programacion_jurisdiccional.patchValue({id_jurisdiccion: aux_jurisdiccion});
-            this.programacion_jurisdiccional.patchValue({id_tema: aux_tema});
+            this.programacion_jurisdiccional.patchValue({id_jurisdiccion: aux_jurisdiccion, id_tipo_programacion: this.id_tipo_programacion, id_tema: aux_tema});
+            
 
           },
           error => {

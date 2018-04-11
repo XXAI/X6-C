@@ -30,6 +30,8 @@ export class RegistroCapacitacionComponent implements OnInit {
   tamano = document.body.clientHeight;
 
   cargando: boolean = false;
+  showDialog:boolean = false;
+  showAgregarTema:boolean = false;
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();
@@ -197,7 +199,10 @@ export class RegistroCapacitacionComponent implements OnInit {
       this.registrocapacitacionService.carga_catalogos(obj).subscribe(
           resultado => {
             
-            this.registrosModule.patchValue({jurisdiccion:resultado.jurisdiccion[this.local.jurisdiccion - 1].descripcion});
+            for (let index = 0; index < resultado.jurisdiccion.length; index++) {
+              if(resultado.jurisdiccion[index].id == this.local.jurisdiccion)
+                this.registrosModule.patchValue({jurisdiccion:resultado.jurisdiccion[index].descripcion});
+            }
             this.registrosModule.patchValue({tema:resultado.tema[this.local.tema - 1].descripcion});
             this.lista_busqueda_verificacion = resultado.verificaciones;
             this.lista_busqueda_verificacion_completo = resultado.verificaciones;
@@ -322,8 +327,10 @@ error_descargar(obj)
     this.mensajeError.mostrar = true;
     
     if(obj.status == 500)
-    this.mensajeError.texto = obj.responseText;
-      else
+    {
+      let respuesta = JSON.parse(obj.responseText);
+      this.mensajeError.texto = respuesta.error;
+    }else
     this.mensajeError.texto = "Ha ocurrido un error al enviar el archivo";
   }
 
@@ -381,7 +388,7 @@ error_descargar(obj)
 
     seleccionar_verificacion(obj:any):void
     {
-        this.registrosModule.patchValue({no_verificacion: obj.folio, institucion: obj.establecimiento, id_verificacion: obj.id});
+        this.registrosModule.patchValue({no_verificacion: obj.folio_completo, institucion: obj.establecimiento, id_verificacion: obj.id});
         this.showbuscador = false;
     }
 
@@ -410,7 +417,7 @@ error_descargar(obj)
     {
       this.reset_form();
       this.showregistro = true;  
-      this.registrosModule.patchValue({material_difusion:obj.material_difusion, id_verificacion:obj.verificacion.id, no_verificacion:obj.verificacion.folio, institucion: obj.verificacion.establecimiento});
+      this.registrosModule.patchValue({material_difusion:obj.material_difusion, id_verificacion:obj.verificacion.id, no_verificacion:obj.verificacion.folio_completo, institucion: obj.verificacion.establecimiento});
       this.registrosModule.patchValue({ mes: obj.mes, anio: this.local.anio});
       this.id_editar = obj.id;
     }

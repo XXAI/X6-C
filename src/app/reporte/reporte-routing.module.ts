@@ -11,10 +11,10 @@ const routes: Routes = [
   {
     path: 'reportes',
     children: [
-       { path: 'proyecto', component: BoletinProyectosComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'ambito-riesgo', component: BoletinAmbitoRiesgoComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'ejecutivo', component: BoletinEjecutivoComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'jurisdiccion', component: JurisdiccionalComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} }
+       { path: 'proyecto', component: BoletinProyectosComponent, canActivate: [PermisosGuard], data: { key: 'CHPlR9tEFF69AT5qBHrSW26nDzGlcG4y'} },
+       { path: 'ambito-riesgo', component: BoletinAmbitoRiesgoComponent, canActivate: [PermisosGuard], data: { key: 'CHPlR9tEFF69AT5qBHrSW26nDzGlcG4y'} },
+       { path: 'ejecutivo', component: BoletinEjecutivoComponent, canActivate: [PermisosGuard], data: { key: 'CHPlR9tEFF69AT5qBHrSW26nDzGlcG4y'} },
+       { path: 'jurisdiccion', component: JurisdiccionalComponent, canActivate: [PermisosGuard], data: { key: 'CHPlR9tEFF69AT5qBHrSW26nDzGlcG4y'} }
     ],
     canActivate: [AuthGuard]
   }

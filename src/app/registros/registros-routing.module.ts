@@ -17,17 +17,17 @@ const routes: Routes = [
   {
     path: 'captura_registros',
     children: [
-       { path: '', component: CapturaVerificacionComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'verificacion', component: CapturaVerificacionComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'verificacion/:id1/:id2/:id3', component: RegistroVerificacionComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'muestra', component: CapturaMuestraComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'muestra/:id1/:id2/:id3', component: RegistroMuestraComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'capacitacion', component: CapturaCapacitacionComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'capacitacion/:id1/:id2/:id3', component: RegistroCapacitacionComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'dictamen', component: CapturaDictamenComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'dictamen/:id1/:id2/:id3', component: RegistroDictamenComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'reaccion', component: CapturaReaccionComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} },
-       { path: 'reaccion/:id1/:id2/:id3', component: RegistroReaccionComponent, canActivate: [PermisosGuard], data: { key: '4oAw9FnQD7bwB8IrQzccUMTn0wutR1LQ'} }
+       { path: '', component: CapturaVerificacionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'verificacion', component: CapturaVerificacionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'verificacion/:id1/:id2/:id3', component: RegistroVerificacionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'muestra', component: CapturaMuestraComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'muestra/:id1/:id2/:id3', component: RegistroMuestraComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'capacitacion', component: CapturaCapacitacionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'capacitacion/:id1/:id2/:id3', component: RegistroCapacitacionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'dictamen', component: CapturaDictamenComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'dictamen/:id1/:id2/:id3', component: RegistroDictamenComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'reaccion', component: CapturaReaccionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'reaccion/:id1/:id2/:id3', component: RegistroReaccionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} }
     ],
     canActivate: [AuthGuard]
   }

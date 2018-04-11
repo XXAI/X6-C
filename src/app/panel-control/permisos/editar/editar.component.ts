@@ -12,7 +12,7 @@ import { Mensaje } from '../../../mensaje';
 })
 export class EditarComponent implements OnInit {
 
-  private id:number = null;
+  public id:number = null;
   
   enviando: boolean = false;
   cargando: boolean = false;

@@ -33,6 +33,7 @@ export class LocalComponent implements OnInit {
 	mensajeError: Mensaje = new Mensaje();
 	mensajeExito: Mensaje = new Mensaje();
 	ultimaPeticion:any;
+	documentoSubido:boolean = false;
 	// # FIN SECCION
 
 	// # SECCION: Lista 
