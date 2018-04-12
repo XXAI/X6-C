@@ -16,7 +16,7 @@ export class MenuAsideComponent implements OnInit {
     var permisos =  usuario.permisos.split('|');
 
     this.menu = [
-      {
+      /*{
         titulo: 'Sincronización con servidor principal',
         modulos: [
           { permiso: '3DMVRdBv4cLGzdfAqXO7oqTvAMbEdhI7', icono: 'fa-cloud', titulo: 'Servidor central', url: '/panel-control/sync/central' },
@@ -30,7 +30,7 @@ export class MenuAsideComponent implements OnInit {
           { permiso: 'tFcVVgwywaPvfj4ZdOoCZfBpcTtZAST0', icono: 'fa-wrench', titulo: 'Actualizar sistema', url: '/panel-control/opciones-avanzadas/actualizar-sistema' },
           { permiso: 'WcIjPIhPWGJbLyb4OiYe91sRKP7NGTAK', icono: 'fa-database', titulo: 'Base de datos', url: '/panel-control/opciones-avanzadas/base-datos' },
         ]
-      },
+      },*/
       {
         titulo: 'Usuarios y privilegios',
         modulos: [
@@ -41,12 +41,12 @@ export class MenuAsideComponent implements OnInit {
       }
     ],
     this.menuAutorizado = [
-      {
+      /*{
         titulo: 'Sincronización con servidor principal',
         modulos: [
           { icono: 'fa-server', titulo: 'Estatus', url: '/panel-control/sync/estatus' },
         ]
-      },
+      },*/
 
     ];
 
