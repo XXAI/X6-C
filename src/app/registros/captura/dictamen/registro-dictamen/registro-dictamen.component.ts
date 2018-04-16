@@ -32,6 +32,7 @@ export class RegistroDictamenComponent implements OnInit {
   cargando: boolean = false;
   showDialog:boolean = false;
   showAgregarTema:boolean = false;
+  nombre_archivo:string="";
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();
@@ -470,6 +471,12 @@ descargar(obj:any) {
       var download = window.open(`${environment.API_URL}/descargar-dictamen/${obj.id}?${query}`);  
 }
 
+descargar_archivo() {
+  var query = "token="+localStorage.getItem('token');
+  var self = this;
+  var download = window.open(`${environment.API_URL}/descargar-dictamen/${this.id_editar}?${query}`);  
+}
+
 ver_archivo(id:number, obj:any) {
       var query = "token="+localStorage.getItem('token')+"&tipo="+id;
       var self = this;
@@ -645,7 +652,8 @@ error_descargar(obj)
       this.showregistro = true;  
       this.registrosModule.patchValue({reaccion:obj.reaccion, oficio: obj.oficio});
       this.registrosModule.patchValue({ mes: obj.mes, anio: this.local.anio, id_verificacion:obj.verificacion.id, no_verificacion:obj.verificacion.folio_completo, institucion: obj.verificacion.establecimiento});
-      
+      this.nombre_archivo = obj.archivo;
+
       this.tabulaciones(1);
       this.lista_notificaciones = obj.notificaciones;
       this.lista_citatorios = obj.citatorios;

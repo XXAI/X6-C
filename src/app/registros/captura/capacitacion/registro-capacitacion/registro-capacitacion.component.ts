@@ -32,6 +32,7 @@ export class RegistroCapacitacionComponent implements OnInit {
   cargando: boolean = false;
   showDialog:boolean = false;
   showAgregarTema:boolean = false;
+  nombre_archivo:string = "";
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();
@@ -310,6 +311,12 @@ export class RegistroCapacitacionComponent implements OnInit {
       var self = this;
       var download = window.open(`${environment.API_URL}/descargar-capacitacion/${obj.id}?${query}`);  
   }
+
+  descargar_archivo() {
+    var query = "token="+localStorage.getItem('token');
+    var self = this;
+    var download = window.open(`${environment.API_URL}/descargar-capacitacion/${this.id_editar}?${query}`);  
+}
 error_descargar(obj)
 {
   this.mensajeError = new Mensaje(true);
@@ -420,6 +427,7 @@ error_descargar(obj)
       this.registrosModule.patchValue({material_difusion:obj.material_difusion, id_verificacion:obj.verificacion.id, no_verificacion:obj.verificacion.folio_completo, institucion: obj.verificacion.establecimiento});
       this.registrosModule.patchValue({ mes: obj.mes, anio: this.local.anio});
       this.id_editar = obj.id;
+      this.nombre_archivo = obj.archivo;
     }
 
     paginaSiguiente():void {

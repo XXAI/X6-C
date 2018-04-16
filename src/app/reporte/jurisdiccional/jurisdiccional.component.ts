@@ -26,7 +26,7 @@ export class JurisdiccionalComponent implements OnInit {
   options_jurisdiccion_11 = {};
   options_jurisdiccion_12 = {};
   catalogo_tema: string[];
-  lista_jurisdiccional: string[];
+  lista_jurisdiccional: any[] = [];
   tamano = document.body.clientHeight;
   total_graficas:number = 0;
 
@@ -45,7 +45,7 @@ export class JurisdiccionalComponent implements OnInit {
 
   ngOnInit() {
     this.cargar_catalogos();
-    
+    console.log(this.lista_jurisdiccional.length);
   }
 
   listar(id_tema:number):void{
@@ -65,6 +65,7 @@ export class JurisdiccionalComponent implements OnInit {
     this.options_jurisdiccion_11 = {};
     this.options_jurisdiccion_12 = {};
     this.total_graficas = 0;
+    this.lista_jurisdiccional = [];
 
     this.reporteService.lista_jurisdiccion(id_tema).subscribe(
         response => {

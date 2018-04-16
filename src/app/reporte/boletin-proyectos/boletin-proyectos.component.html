@@ -42,24 +42,16 @@
                 <br>
             </div>
             <div style="overflow:auto; display:block">
-                <table class="table" *ngIf="!cargando">
+                <table class="table" *ngIf="lista_datos.length > 0">
                     <thead>
-                        <!--<tr>
-                            <th colspan="13">{{ tema_seleccionado }}</th>
-                        </tr>-->
+                       
                         <tr>
                             <th>TEMA</th>
                             <th>VERIFICACIONES</th>
                             <th>MUESTRAS</th>
-                            <!--<th>MUESTRAS (ACUMULADO)</th>-->
                             <th>DICTAMENES</th>
-                            <!--<th>NOTIFICACIONES</th>
-                            <th>CITATORIOS</th>
-                            <th>RESOLUCIONES</th>
-                            <th>AMONESTACIONES</th>
-                            <th>MULTAS</th>-->
+                            
                             <th>CAPACITACIONES</th>
-                            <!--<th>MATERIAL DIFUCIÓN</th>-->
                             <th>REACCIONES ADVERSAS</th>
                         </tr>
                     </thead>
@@ -78,7 +70,35 @@
                         </tr>
                     </tbody>
                     
-                </table>     
+                </table>
+                <table class="table" *ngIf="lista_detalles.length > 0">
+                        <thead>
+                            
+                            <tr>
+                                <th>MUESTRAS DETRO DE ESPECIFICACIONES</th>
+                                <th>NOTIFICACIONES</th>
+                                <th>CITATORIOS</th>
+                                <th>RESOLUCIONES</th>
+                                <th>AMONESTACIONES</th>
+                                <th>MULTAS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of lista_detalles; let i=index">
+                                <td style="vertical-align: middle;cursor:pointer;" > {{ item.muestra_detalles }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOTIFICACIONES }}</td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.CITATORIOS }}</td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.RESOLUCIONES }}</td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.AMONESTACIONES }}</td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.MULTAS }}</td>
+                               
+                            </tr>
+                            <tr *ngIf="lista_detalles.length == 0">
+                                <td colspan="8" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                            </tr>
+                        </tbody>
+                        
+                    </table>     
                 <table  class="table">
                     
                     <tbody>

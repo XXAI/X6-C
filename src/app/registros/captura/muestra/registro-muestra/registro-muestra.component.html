@@ -221,6 +221,10 @@
                           <label class="label">Subir Archivo </label>
                           <input type="file" (change)="fileChanged($event)" formControlName="archivo" accept="application/pdf">
                     </p>
+                    <p class="control is-expanded  has-icon has-icon-right" *ngIf="(id_editar!=0)">
+                        <i class="fa fa-download"></i><a target="_blank" (click)="descargar_archivo()">{{ nombre_archivo }}</a>    
+                        
+                    </p>
                 </div>
                 
             <br>

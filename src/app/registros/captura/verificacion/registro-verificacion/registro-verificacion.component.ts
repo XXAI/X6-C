@@ -32,6 +32,7 @@ export class RegistroVerificacionComponent implements OnInit {
   cargando: boolean = false;
   showDialog:boolean = false;
   showAgregarTema:boolean = false;
+  nombre_archivo:string = "";
 
   // # SECCION: Esta sección es para mostrar mensajes
   mensajeError: Mensaje = new Mensaje();
@@ -310,6 +311,12 @@ export class RegistroVerificacionComponent implements OnInit {
       var self = this;
       var download = window.open(`${environment.API_URL}/descargar-verificacion/${obj.id}?${query}`);  
   }
+
+  descargar_archivo() {
+    var query = "token="+localStorage.getItem('token');
+    var self = this;
+    var download = window.open(`${environment.API_URL}/descargar-verificacion/${this.id_editar}?${query}`);  
+}
 error_descargar(obj)
 {
   this.mensajeError = new Mensaje(true);
@@ -407,6 +414,7 @@ error_descargar(obj)
       this.registrosModule.patchValue({folio: obj.folio, establecimiento:obj.establecimiento, giro: obj.giro, medida_seguridad:obj.medida_seguridad});
       this.registrosModule.patchValue({descripcion_medida: obj.descripcion_medida, informativa:obj.informativa, mes: obj.mes, anio: this.local.anio});
       this.id_editar = obj.id;
+      this.nombre_archivo = obj.archivo;
     }
 
     paginaSiguiente():void {

@@ -22,6 +22,7 @@ export class BoletinProyectosComponent implements OnInit {
   tamano = document.body.clientHeight;
   total_graficas:number = 0;
   lista_datos:any[] = [];
+  lista_detalles:any[] = [];
 
   cargando: boolean = false;
   busquedaActivada:boolean = false;
@@ -52,13 +53,15 @@ export class BoletinProyectosComponent implements OnInit {
     this.options_reaccion_total = {};
     this.total_graficas = 0;
     this.lista_datos = [];
+    this.lista_detalles = [];
     
     
     this.reporteService.lista(id_tema).subscribe(
         response => {
           let i = 0;
           this.lista_datos = response.table;
-          console.log(this.lista_datos);
+          this.lista_detalles = response.detalles;
+          
           for(i= 0; i< response.datos.length; i++)
           {
            

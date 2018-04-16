@@ -1,27 +1,104 @@
-# Serguimiento2
+# X6-C
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0.
+- Angular 2
+- Bulma.io
+- Angular Cli
 
-## Development server
+## Instrucciones para publicar en producción
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Crear el directorio en el servidor donde se va alojar:
 
-## Code scaffolding
+```
+mkdir mi_proyecto  && cd mi_proyecto
+```
+- Inicializar repositorio apuntando al proyecto cambiamos la palabra **origin** por **github** para saber de donde viene:
+```
+git init
+git remote add -f github https://github.com/XXAI/X6-C.git
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Configuramos para que solo baje la carpeta de distribucion:
+```
+git config core.sparsecheckout true
+echo dist/ >> .git/info/sparse-checkout
+echo dist/assets >> .git/info/sparse-checkout
+echo dist/scripts >> .git/info/sparse-checkout
+echo dist/web-workers >> .git/info/sparse-checkout
+```
 
-## Build
+- La configuración anterior solo es al inicio y una sola vez, a partir de aqui, solo hacemos pull y nada mas bajaremos el directorio de distribución de angular cli.
+```
+git pull github master
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+- La estructura interna de nuestra carpeta quedaría como sigue
+```
+.
++-- .git
++-- dist/
+|   +-- assets/
+|   |   +-- *.*
+|   +-- scripts/
+|   |   +-- *.*
+|   +-- web-workers/
+|   |   +-- *.*
+|   +-- favicon.ico
+|   +-- index.html
+|   +-- *.*
+```
 
-## Running unit tests
+- Configurar el archivo de apache **httpd.conf** para que apunte a la carpeta **dist/** del proyecto
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+<VirtualHost *:80>
+    ServerAdmin john@doe.com
+    DocumentRoot /var/www/html/mi_proyecto/dist
+    ServerName mi.proyecto.com
+    ErrorLog logs/error_log
+    CustomLog logs/access_log combined
+    <Directory /var/www/html/mi_proyecto/dist>
+        RewriteEngine on
 
-## Running end-to-end tests
+        # No reescribir archivos o directorios
+        RewriteCond %{REQUEST_FILENAME} -f [OR]
+        RewriteCond %{REQUEST_FILENAME} -d
+        RewriteRule ^ - [L]
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+        # Reescribir todo lo demas a index.html para permitir html5 state links
+        RewriteRule ^ index.html [L]
+    </Directory>
+</VirtualHost>
+```
 
-## Further help
+<VirtualHost *:80>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+        #Angular
+        DocumentRoot /var/www/html/cliente/dist-offline
+
+        #Laravel
+        Alias /api /var/www/html/api/public
+
+        <Directory /var/www/html/cliente/dist-offline>
+                RewriteEngine on
+
+                # No reescribir archivos o directorios
+                RewriteCond %{REQUEST_FILENAME} -f [OR]
+                RewriteCond %{REQUEST_FILENAME} -d
+                RewriteRule ^ - [L]
+
+                # Reescribir todo lo demas a index.html para permitir html5 state links
+                RewriteRule ^ index.html [L]
+        </Directory>
+
+        <Location /api>
+                RewriteEngine On
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^ /api/index.php [L]
+                RewriteCond %{HTTP:Authorization} .
+                RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+        </Location>
+</VirtualHost>
+```
+
+Nótese que también se agrega la configuración para la **api** puesto están en el mismo servidor.
