@@ -42,6 +42,11 @@
                 <br>
             </div>
             <div style="overflow:auto; display:block">
+                <table class="table" *ngIf="lista_datos.length == 0 && lista_detalles.length == 0 && !cargando">
+                    <thead>
+                        <th>No Existen Datos con la consulta seleccionada</th>
+                    </thead>
+                </table>    
                 <table class="table" *ngIf="lista_datos.length > 0">
                     <thead>
                        
@@ -99,7 +104,7 @@
                         </tbody>
                         
                     </table>     
-                <table  class="table">
+                <table  class="table" *ngIf="lista_datos.length > 0 && lista_detalles.length > 0 && !cargando">
                     
                     <tbody>
                         <tr>

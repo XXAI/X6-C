@@ -31,21 +31,25 @@ export class EditarComponent implements OnInit {
   cambiarPassword:boolean = false;
   respuestaRequerida:boolean = false;
 
-  datosCargados: boolean;
+  datosCargados: boolean = false;
   cargando: boolean = false;
   cargandoRoles: boolean = false;
   cargandoCatalogos: boolean = false;
-  cargandoUnidadesMedicas: boolean = false;
+  cargandoTemas: boolean =false;
+  cargandoJurisdicciones: boolean =false;
+  /*cargandoUnidadesMedicas: boolean = false;*/
 
   catalogosCargados:number = 0;
   
   roles: Rol[] = [];
-  unidadesMedicas: any[] = [];
+  /*unidadesMedicas: any[] = [];
   medicos: any[] = [];
-  unidadesMedicasEdicion:any[]  = [];
+  unidadesMedicasEdicion:any[]  = [];*/
 
   jurisdicciones: Rol[] = [];
-  temas: Rol[] = [];
+  temas: any[] = [];
+  temasAgregados: any[] = [];
+  temasAgragadas: any[] = [];
   jurisdiccion: any[] = [];
 
    // # SECCION: Esta sección es para mostrar mensajes
@@ -88,9 +92,10 @@ export class EditarComponent implements OnInit {
     });
 
     this.cargarRoles();
-    this.cargarCatalogos();
-
+    this.cargarTemas();
+    this.cargarJurisdicciones();
     
+    this.cargandoCatalogos = false;
   }
   
 
@@ -120,7 +125,6 @@ export class EditarComponent implements OnInit {
     this.usuariosService.editar(this.id,this.usuario.value).subscribe(
         usuario => {
           this.cargando = false;
-          console.log("Usuario editado.");
 
           this.respuestaRequerida = false;
           
@@ -158,7 +162,7 @@ export class EditarComponent implements OnInit {
                     this.usuarioInvalido = true;
                   }
                   if(input == 'respuesta' && e.error[input][i] == 'required'){
-                    console.log("deberia entrar")
+                    
                     this.respuestaRequerida = true;
                   }
                 }                      
@@ -177,42 +181,64 @@ export class EditarComponent implements OnInit {
       );
   }
 
-  cargarCatalogos(){
-    this.cargandoCatalogos = true;
-    this.usuariosService.carga_catalogos().subscribe(
-      resultado => {
-        this.temas = resultado.tema;
-        this.jurisdiccion = resultado.jurisdiccion;
+
+cargarJurisdicciones(){
+  this.cargandoJurisdicciones = true;
+  this.usuariosService.carga_catalogos().subscribe(
+    resultado => {
+      this.jurisdiccion = resultado.jurisdiccion;
+      this.cargandoJurisdicciones = false;
+      this.catalogosCargados++;
+      
+      if(this.catalogosCargados >1 ){
         this.cargarDatos();
-        this.cargandoCatalogos = false;
-      error => {
-        this.cargandoCatalogos = false;
       }
+    }, error => {
+      this.cargandoJurisdicciones = false;
     }
+
+  );
+}
+
+cargarTemas(){
+  this.cargandoTemas = true;
+  this.usuariosService.carga_catalogos().subscribe(
+    resultado => {
+      this.temas = resultado.tema;
+      this.cargandoTemas = false;
+      this.catalogosCargados++;
+      if(this.catalogosCargados >1 ){
+        this.cargarDatos();
+      }
+    }, error => {
+      this.cargandoTemas = false;
+    }
+
   );
 }
 
   cargarDatos() {
     this.cargando = true; 
-    console.log("entra"); 
+    
     this.usuariosService.ver(this.id).subscribe(
         usuario => {
-          this.cargando = false;
           this.datosCargados = true;
-          console.log("cargando datos");
-          console.log(usuario);
-          /*if(usuario.medico_id == null){
-            usuario.medico_id = '-1';
-          }
-          console.log(usuario.medico_id)
+          
           this.usuario.patchValue(usuario);
-          this.unidadesMedicasEdicion = usuario.unidades_medicas_objs;
-          console.log("Usuario cargado.");
-          */
+          
+          console.log(usuario);
+          this.temasAgregados = usuario.usuario_tema;
+          
+          for(var i in this.temasAgregados){
+                //this.temasAgragadas.push(this.temasAgregados[i].id);
+                this.usuario.controls['temas'].setValue(this.temasAgregados);  
+          }
+          this.cargando = false; 
+        
         },
         error => {
           this.cargando = false;
-
+          
           this.mensajeError = new Mensaje(true);
           this.mensajeError = new Mensaje(true);
           this.mensajeError.mostrar;
@@ -241,21 +267,15 @@ export class EditarComponent implements OnInit {
     this.cargandoRoles = true;
     this.rolesService.lista().subscribe(
         roles => {
-          
           this.cargandoRoles = false;
-          this.roles = roles;
 
+          this.roles = roles;
           if (this.roles.length == 0){
             this.mensajeAdvertencia = new Mensaje(true);
             this.mensajeAdvertencia.texto = `
             No hay roles registrados en el sistema, póngase en contacto con un administrador.`;
             this.mensajeAdvertencia.mostrar = true;
           }
-
-            
-          
-
-          
         },
         error => {
           this.cargandoRoles = false;
@@ -295,5 +315,7 @@ export class EditarComponent implements OnInit {
   regresar(){
     this.location.back();
   }
+
+
 
 }

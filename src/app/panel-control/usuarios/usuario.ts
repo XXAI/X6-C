@@ -8,12 +8,11 @@ export class Usuario {
     servidor_id: string;
     avatar:string;
     roles: string[];
-    unidades_medicas: string[];
-    unidades_medicas_objs: any[];
-    almacenes: string[];
+    usuario_tema: string[];
+    jurisdiccion_id:number;
+
     su: boolean;
     cargando:boolean = false;
-    medico_id: string;
 }
 
 export interface Usuario {
@@ -24,8 +23,7 @@ export interface Usuario {
     confirmarPassword: string;
     avatar:string;
     roles: string[];
-    unidades_medicas: string[];
-    unidades_medicas_objs: any[];
-    almacenes: string[];
-    medico_id: string;
+    usuario_tema: string[];
+    jurisdiccion_id:number;
+
 }

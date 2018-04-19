@@ -23,25 +23,27 @@
                 <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
             </div>
             <section class="section">
-            <panel-control-usuarios-form *ngIf="datosCargados"
+                <!--*ngIf="datosCargados"-->
+            <panel-control-usuarios-form 
                 [mostrarCambiarPassword]="true"
                 [usuario]="usuario"             
                 [roles]="roles" 
                 [jurisdiccion]="jurisdiccion" 
                 [temas]="temas"  
-                
-                
+                [temasAgregados] = "temasAgregados"
                 [usuarioRepetido]="usuarioRepetido"
                 [usuarioInvalido]="usuarioInvalido"
                 [respuestaRequerida]="respuestaRequerida"
                 [cargando]="cargando"
                 [cargandoRoles]="cargandoRoles"
-                [cargandoMedicos]="cargandoMedicos"
+                
                 (onEnviar)="enviar()"
                 (onRegresar)="regresar()"
                 (onToggleCambiarPassword)="toggleCambiarPassword()"
                 (onCargarRoles)="cargarRoles()"
-                (onCargarMedicos)="cargarMedicos()"
+                
+                (onCargarJurisdicciones)="cargarJurisdicciones()"
+                
             ></panel-control-usuarios-form>
             </section>
             <!--[unidadesMedicasEdicion] = "unidadesMedicasEdicion"-->

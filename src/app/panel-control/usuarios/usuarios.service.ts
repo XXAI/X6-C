@@ -28,28 +28,28 @@ export class UsuariosService {
   ver(id:any): Observable<Usuario>{
     return this.jwtRequest.get(UsuariosService.URL,id,{}).map( (response: Response) => {
      
+      
        let jsonData = response.json().data;
+       console.log(response.json().data);
         var roles:string[] = []
         jsonData.roles.map(item => {
           roles.push(""+item.id)
         })
 
-        var unidades_medicas:string[] = []
-        jsonData.unidades_medicas.map(item => {
-          unidades_medicas.push(item.clues)
+        
+        
+        var temas_agregados:string[] = []
+        jsonData.usuario_tema.map(item => {
+          temas_agregados.push(item)
         })
 
-        var almacenes:string[] = []
-        jsonData.almacenes.map(item => {
-          almacenes.push(item.id)
-        })
+        
 
         var usuario = jsonData as Usuario;
         usuario.roles = roles;
-        usuario.unidades_medicas_objs = usuario.unidades_medicas;
-        usuario.unidades_medicas = unidades_medicas;
-        
-        usuario.almacenes = almacenes;
+
+        usuario.usuario_tema = temas_agregados;
+
         return usuario;
       }) as Observable<Usuario>;
   }

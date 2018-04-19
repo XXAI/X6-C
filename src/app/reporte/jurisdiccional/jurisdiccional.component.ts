@@ -71,6 +71,7 @@ export class JurisdiccionalComponent implements OnInit {
         response => {
           
           this.lista_jurisdiccional = response;
+          console.log(response);
           let i = 0;
           
           for(i= 0; i< response.length; i++)

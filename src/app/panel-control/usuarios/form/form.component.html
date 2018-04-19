@@ -64,16 +64,7 @@
                   <span class="help is-danger" *ngIf="respuestaRequerida">Si escribe una pregunta secreta, la respuesta es obligatoria.</span>
                 </p>
 
-              <!--<h2 class="subtitle">Roles</h2>
-              <div class="control" [ngClass]="{'is-loading': cargandoRoles}">
- 
-                  <select  name="roles" formControlName="roles" multiple class="bulma-select-multiple" [ngClass]="{'is-warning': roles?.length ==0 }">
-                    <option *ngFor="let item of roles" value="{{item.id}}">{{ item.nombre }}</option>
-                  </select>
-                  <span class="help is-danger" *ngIf="usuario.get('roles').hasError('required') && usuario.get('roles').touched">Debe elegir por lo menos un rol.</span>
-                  <span class="help " *ngIf="roles?.length == 0"><b>La lista de roles está vacía.</b> <a (click)="cargarRoles()"><span class="icon is-small"><i class="fa fa-refresh"></i></span> <span>Actualizar</span></a></span>
-              </div>
--->
+              
               
               <h2 class="subtitle">Configuración</h2>
               <div class="tabs is-centered">
@@ -119,33 +110,16 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="cursor:pointer;" *ngFor="let item of temasAgregados; let i = index" (click)="unidadMedicaSeleccionada=item" [ngClass]="{'is-selected':unidadMedicaSeleccionada && unidadMedicaSeleccionada.clues==item.clues }">
-                          <td>{{ item.descripcion}}</td>
+                        <tr style="cursor:pointer;" *ngFor="let item of temasAgregados; let i = index" >
+                          <td>{{ item.descripcion }}</td>
                           <td style="width:1em;">
-                            <a (click)="eliminarTema($event,item,index)"><span class="icon is-small"><i class="fa fa-trash"></i></span> </a>
+                            <a (click)="eliminarTema($event,item,i)"><span class="icon is-small"><i class="fa fa-trash"></i></span> </a>
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                  <!--<div class="column">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <td colspan="2">ALMACENES</td>
-                        </tr>
-                      </thead>
-                      <tbody *ngIf="unidadMedicaSeleccionada">
-                        <tr style="cursor:pointer;"*ngFor="let item of unidadMedicaSeleccionada.almacenes; let i = index" (click)="toggleAlmacen(item)" >
-                          
-                          <td style="width:1em;">
-                            <span class="icon"><i class="fa" [ngClass]="{'fa-circle-thin': !item.seleccionado, 'fa-check-circle': item.seleccionado}" ></i></span>                            
-                          </td>
-                          <td>{{ item.nombre}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>-->
+                 
                 </div>
                                 
               </div>

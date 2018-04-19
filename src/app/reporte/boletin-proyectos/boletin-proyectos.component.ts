@@ -58,6 +58,7 @@ export class BoletinProyectosComponent implements OnInit {
     
     this.reporteService.lista(id_tema).subscribe(
         response => {
+          console.log(response);
           let i = 0;
           this.lista_datos = response.table;
           this.lista_detalles = response.detalles;

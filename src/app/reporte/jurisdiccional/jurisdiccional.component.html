@@ -40,7 +40,7 @@
                 <br>
             </div>
             <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
-                <table class="table" *ngIf="!cargando">
+                <table class="table" *ngIf="(lista_jurisdiccional.length > 0 && !cargando)">
                     <thead>
                         <tr>
                             <th colspan="13">{{ tema_seleccionado }}</th>
@@ -93,7 +93,7 @@
                     </tbody>
                     
                 </table>        
-                <table  class="table">
+                <table  class="table" *ngIf="(lista_jurisdiccional.length > 0 && !cargando)">
                     
                     <tbody>
                         <tr>
@@ -180,7 +180,10 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tbody *ngIf="(total_graficas == 0 && !cargando)">
+                    
+                </table>
+                <table class="table" *ngIf="(lista_jurisdiccional.length == 0 && !cargando)">
+                    <tbody>
                         <tr>
                             <td>
                                 No Existen Datos con las Variables de consulta Ingresados

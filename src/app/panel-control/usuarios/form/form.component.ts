@@ -15,6 +15,7 @@ export class FormComponent implements OnInit {
 
   @Input() roles: Rol[];
   @Input() temas: any[];
+  @Input() temasUsuario: any = [];
   @Input() jurisdiccion: any[];
   @Input() usuario:FormGroup;
 
@@ -30,37 +31,20 @@ export class FormComponent implements OnInit {
   @Output() onRegresar = new EventEmitter<void>();
   @Output() onToggleCambiarPassword = new EventEmitter<void>();
   @Output() onCargarRoles = new EventEmitter<void>();
-  @Output() onCargarMedicos = new EventEmitter<void>();
+  @Output() onCargarTemas = new EventEmitter<void>();
+  @Output() onCargarJurisdicciones = new EventEmitter<void>();
 
   // # Esto es solo para listar las unidades medicas que ya estan relacionadas
   // al usuario, en el modulo de edicion
-  @Input() temasEdicion = null;
+  @Input() temasAgregados: any[];
 
   tab:number = 1;
-  temasAgregados: any[] = [];
-  temasAgragadas: string[] = [];
-  unidadMedicaSeleccionada = null;
-
-
-
-  idsAlmacenesSeleccionados: string[] = [];
 
   /**
    * Método que inicializa y obtiene valores para el funcionamiento del componente.
    */
   ngOnInit() {
-    
-    //var ums:FormArray = this.usuario.get('unidades_medicas') as FormArray;
-    //var almacenes:FormArray = this.usuario.get('almacenes') as FormArray;
-    console.log(this.usuario.get('jurisdiccion_id'))
-    //this.usuario.get('jurisdiccion_id');
-
-
-    /*this.cluesAgregadas = ums.value;
-
-    this.idsAlmacenesSeleccionados = almacenes.value;*/
-
-    
+    this.temasAgregados = this.temasUsuario;
   }
 
   enviar() {
@@ -69,9 +53,13 @@ export class FormComponent implements OnInit {
   cargarRoles(){
      this.onCargarRoles.emit();
   }
-  cargarMedicos(){
-    this.onCargarMedicos.emit();
+  cargarTemas(){
+    this.onCargarTemas.emit();
  }
+
+ cargarJurisdicciones(){
+  this.onCargarJurisdicciones.emit();
+}
 
   regresar() {
     this.onRegresar.emit();
@@ -97,12 +85,9 @@ export class FormComponent implements OnInit {
         if(ban == 0)
         {
           this.temasAgregados.push(this.temas[i]);
-          this.temasAgragadas.push(tema);
-          this.usuario.controls['temas'].setValue(this.temasAgragadas);  
+          
+          this.usuario.controls['temas'].setValue(this.temasAgregados);  
         }
-        //this.temasAgregados.push(this.temas[i]);
-        //this.cluesAgregadas.push(clues);
-        //this.usuario.controls['temas'].setValue(tema);
       }
     }
     
@@ -111,29 +96,12 @@ export class FormComponent implements OnInit {
   eliminarTema(event,item,index){
     event.preventDefault();
     event.stopPropagation();
+    confirm("¿Realmente desea eliminar el tema?")
+    {
+      this.temasAgregados.splice(index, 1);
+      this.usuario.controls['temas'].setValue(this.temasAgregados); 
+    }
   }
 
-  toggleAlmacen(item){
-    var bandera = false;
-    for(var i = 0; i < this.idsAlmacenesSeleccionados.length; i++){
-      if(this.idsAlmacenesSeleccionados[i]== item.id){
-        this.idsAlmacenesSeleccionados.splice(i,1);
-        item.seleccionado = false;
-        bandera = true;
-        break;
-      }
-    }
-    if(!bandera) {
-      this.idsAlmacenesSeleccionados.push(item.id)
-      item.seleccionado = true;
-    }
-
-    this.usuario.controls['almacenes'].setValue(this.idsAlmacenesSeleccionados);
-
-  }
-
-
-
-
-
+  
 }
