@@ -12,6 +12,8 @@ import { CapturaDictamenComponent } from './captura/dictamen/captura-dictamen/ca
 import { RegistroDictamenComponent } from './captura/dictamen/registro-dictamen/registro-dictamen.component';
 import { CapturaReaccionComponent } from './captura/reaccion/captura-reaccion/captura-reaccion.component';
 import { RegistroReaccionComponent } from './captura/reaccion/registro-reaccion/registro-reaccion.component';
+import { CapturaDeterminacionComponent } from './captura/determinacion/captura-determinacion/captura-determinacion.component';
+import { RegistroDeterminacionComponent } from './captura/determinacion/registro-determinacion/registro-determinacion.component';
 
 const routes: Routes = [
   {
@@ -27,7 +29,9 @@ const routes: Routes = [
        { path: 'dictamen', component: CapturaDictamenComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
        { path: 'dictamen/:id1/:id2/:id3', component: RegistroDictamenComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
        { path: 'reaccion', component: CapturaReaccionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
-       { path: 'reaccion/:id1/:id2/:id3', component: RegistroReaccionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} }
+       { path: 'reaccion/:id1/:id2/:id3', component: RegistroReaccionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'determinacion', component: CapturaDeterminacionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} },
+       { path: 'determinacion/:id1/:id2/:id3', component: RegistroDeterminacionComponent, canActivate: [PermisosGuard], data: { key: 'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'} }
     ],
     canActivate: [AuthGuard]
   }

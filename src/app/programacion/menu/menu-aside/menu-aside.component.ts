@@ -32,10 +32,11 @@ export class MenuAsideComponent implements OnInit {
         titulo: 'Programación de Metas',
         modulos: [
           { icono: 'fa-server', titulo: 'Verificación', url: '/programacion_metas/verificacion' },
+          { icono: 'fa-server', titulo: 'Dictamen', url: '/programacion_metas/dictamen' },
           { icono: 'fa-server', titulo: 'Muestra', url: '/programacion_metas/muestra' },
           { icono: 'fa-server', titulo: 'Capacitación', url: '/programacion_metas/capacitacion' },
-          { icono: 'fa-server', titulo: 'Dictamen', url: '/programacion_metas/dictamen' },
           { icono: 'fa-server', titulo: 'Reacción Adversa  ', url: '/programacion_metas/reaccion' },
+          { icono: 'fa-server', titulo: 'Determinacion  ', url: '/programacion_metas/determinacion' },
         ]
       }];
     

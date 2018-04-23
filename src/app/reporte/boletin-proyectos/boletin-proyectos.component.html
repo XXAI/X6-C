@@ -58,6 +58,7 @@
                             
                             <th>CAPACITACIONES</th>
                             <th>REACCIONES ADVERSAS</th>
+                            <th>DETERMINACIONES</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +69,7 @@
                             <td style="vertical-align: middle;cursor:pointer;"> {{ item.dictamen.total }} <br> <p class="acumulado">{{ item.dictamen.acumulado }}</p> </td>
                             <td style="vertical-align: middle;cursor:pointer;"> {{ item.capacitacion.total }} <br> <p class="acumulado">{{ item.capacitacion.acumulado }}</p> </td>
                             <td style="vertical-align: middle;cursor:pointer;"> {{ item.reaccion.total }} <br> <p class="acumulado">{{ item.reaccion.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.determinacion.total }} <br> <p class="acumulado">{{ item.determinacion.acumulado }}</p> </td>
                             
                         </tr>
                         <tr *ngIf="lista_datos.length == 0">
@@ -81,6 +83,7 @@
                             
                             <tr>
                                 <th>MUESTRAS DETRO DE ESPECIFICACIONES</th>
+                                <th>DETERMIANACIONES DETRO DE ESPECIFICACIONES</th>
                                 <th>NOTIFICACIONES</th>
                                 <th>CITATORIOS</th>
                                 <th>RESOLUCIONES</th>
@@ -91,6 +94,7 @@
                         <tbody>
                             <tr *ngFor="let item of lista_detalles; let i=index">
                                 <td style="vertical-align: middle;cursor:pointer;" > {{ item.muestra_detalles }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;" > {{ item.determinacion_detalles }} </td>
                                 <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOTIFICACIONES }}</td>
                                 <td style="vertical-align: middle;cursor:pointer;"> {{ item.CITATORIOS }}</td>
                                 <td style="vertical-align: middle;cursor:pointer;"> {{ item.RESOLUCIONES }}</td>
@@ -142,6 +146,14 @@
                                     <chart [options]="options_reaccion_total"></chart>
                                 </div>
                                 
+                            </div>
+                            <div class="columns" *ngIf="options_determinacion_total['series']">
+                                <div class="column">
+                                    <chart [options]="options_determinacion_total"></chart>
+                                </div>
+                                <div class="column">
+                                    <chart [options]="options_determinacion_especificaciones"></chart>
+                                </div>
                             </div>
                                    
                             </td>

@@ -67,7 +67,7 @@ export class CapturaMuestraComponent implements OnInit {
     private muestraService:MuestraService) { }
 
     ngOnInit() {
-      this.title.setTitle("Registro Capacitación");
+      this.title.setTitle("Registro Muestra");
       this.mensajeError = new Mensaje();
       this.mensajeExito = new Mensaje();
   

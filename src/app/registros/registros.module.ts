@@ -23,6 +23,9 @@ import { RegistroReaccionService } from './captura/reaccion/registro-reaccion.se
 import { DictamenService } from './captura/dictamen/dictamen.service';
 import { RegistroDictamenService } from './captura/dictamen/registro-dictamen.service';
 
+import { DeterminacionService } from './captura/determinacion/determinacion.service';
+import { RegistroDeterminacionService } from './captura/determinacion/registro-determinacion.service';
+
 import { RegistrosRoutingModule } from './registros-routing.module';
 import { CapturaVerificacionComponent } from './captura/verificacion/captura-verificacion/captura-verificacion.component';
 import { RegistroVerificacionComponent } from './captura/verificacion/registro-verificacion/registro-verificacion.component';
@@ -34,6 +37,8 @@ import { RegistroDictamenComponent } from './captura/dictamen/registro-dictamen/
 import { CapturaDictamenComponent } from './captura/dictamen/captura-dictamen/captura-dictamen.component';
 import { CapturaReaccionComponent } from './captura/reaccion/captura-reaccion/captura-reaccion.component';
 import { RegistroReaccionComponent } from './captura/reaccion/registro-reaccion/registro-reaccion.component';
+import { CapturaDeterminacionComponent } from './captura/determinacion/captura-determinacion/captura-determinacion.component';
+import { RegistroDeterminacionComponent } from './captura/determinacion/registro-determinacion/registro-determinacion.component';
 
 @NgModule({
   imports: [
@@ -43,7 +48,7 @@ import { RegistroReaccionComponent } from './captura/reaccion/registro-reaccion/
     PaginacionModule,
     MenuModule
   ],
-  declarations: [CapturaVerificacionComponent, RegistroVerificacionComponent, RegistroMuestraComponent, CapturaMuestraComponent, CapturaCapacitacionComponent, RegistroCapacitacionComponent, RegistroDictamenComponent, CapturaDictamenComponent, CapturaReaccionComponent, RegistroReaccionComponent],
-  providers: [ AuthService, VerificacionService, RegistroVerificacionService, MuestraService, RegistroMuestraService, CapacitacionService, RegistroCapacitacionService, ReaccionService, RegistroReaccionService, DictamenService, RegistroDictamenService ],
+  declarations: [CapturaVerificacionComponent, RegistroVerificacionComponent, RegistroMuestraComponent, CapturaMuestraComponent, CapturaCapacitacionComponent, RegistroCapacitacionComponent, RegistroDictamenComponent, CapturaDictamenComponent, CapturaReaccionComponent, RegistroReaccionComponent, CapturaDeterminacionComponent, RegistroDeterminacionComponent],
+  providers: [ AuthService, VerificacionService, RegistroVerificacionService, MuestraService, RegistroMuestraService, CapacitacionService, RegistroCapacitacionService, ReaccionService, RegistroReaccionService, DictamenService, RegistroDictamenService, DeterminacionService, RegistroDeterminacionService ],
 })
 export class RegistrosModule { }

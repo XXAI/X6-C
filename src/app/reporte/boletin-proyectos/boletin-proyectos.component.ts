@@ -14,6 +14,8 @@ export class BoletinProyectosComponent implements OnInit {
   muestras: any[] = [];
   options_muestra_total: Object = {};
   options_muestra_especificaciones: Object = {};
+  options_determinacion_total: Object = {};
+  options_determinacion_especificaciones: Object = {};
   options_verificacion_total: Object = {};
   options_capacitacion_total: Object = {};
   options_dictamen_total: Object = {};
@@ -47,6 +49,8 @@ export class BoletinProyectosComponent implements OnInit {
     this.cargando = true;
     this.options_muestra_total = {};
     this.options_muestra_especificaciones = {};
+    this.options_determinacion_total = {};
+    this.options_determinacion_especificaciones = {};
     this.options_verificacion_total = {};
     this.options_capacitacion_total = {};
     this.options_dictamen_total = {};
@@ -161,6 +165,36 @@ export class BoletinProyectosComponent implements OnInit {
                 }
                 this.total_graficas++;
                 
+            }
+
+            if(response.datos[i].id_tipo_programacion == 6)
+            {
+              //console.log(response[0].total);
+                this.options_determinacion_total = {
+                    title : { text : response.datos[i].tema },
+                    subtitle: { text:  response.datos[i].tipo },
+                    yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                    chart: { type: 'column' },
+                    xAxis: { categories: ["Meta", "Acumulado"] },
+                    //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: false, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                    legend: { enabled: false},
+                    plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                    series: [{ name: "Determinación", data : [ parseInt(response.datos[i].total) ,  parseInt(response.datos[i].acumulado) ] }]
+                }
+
+                this.options_determinacion_especificaciones = {
+                  title : { text : response.datos[i].tema },
+                  subtitle: { text:  response.datos[i].tipo +" Acumulado" },
+                  chart: { type: 'column' },
+                  yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                  xAxis: { categories: ["Dentro de Especificaciones", "Fuera de Especificaciones"] },
+                  //legend: { align: 'right',x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                  legend: { enabled: false},
+                  plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                  series: [{ name: "Determinación Acumuladas", data : [ parseInt(response.datos[i].dentro_especificaciones),parseInt(response.datos[i].fuera_especificaciones) ] }]
+              }
+              this.total_graficas++;
+              
             }
             
           }

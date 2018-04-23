@@ -14,15 +14,16 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 
 import { Mensaje } from '../../../../mensaje';
-import { VerificacionService } from '../verificacion.service';
-import { Verificacion } from '../verificacion';
+import { DeterminacionService } from '../determinacion.service';
+import { Determinacion } from '../determinacion';
+
 
 @Component({
-  selector: 'app-captura-verificacion',
-  templateUrl: './captura-verificacion.component.html',
-  styleUrls: ['./captura-verificacion.component.css']
+  selector: 'app-captura-determinacion',
+  templateUrl: './captura-determinacion.component.html',
+  styleUrls: ['./captura-determinacion.component.css']
 })
-export class CapturaVerificacionComponent implements OnInit {
+export class CapturaDeterminacionComponent implements OnInit {
 
   tamano = document.body.clientHeight;
 
@@ -38,7 +39,7 @@ export class CapturaVerificacionComponent implements OnInit {
 
   // # SECCION: Lista de porgramacion
   busqueda: any = {buscarText:'', id_jurisdiccion: '0'};
-  verificacion: Verificacion[] = [];
+  verificacion: Determinacion[] = [];
   catalogo_jurisdicciones: string[] = [];
   tema: string[] = [];
   tipoProgramacion: string[] = [];
@@ -53,7 +54,7 @@ export class CapturaVerificacionComponent implements OnInit {
   // # SECCION: Resultados de búsqueda
   ultimoTerminoBuscado = "";
   terminosBusqueda = new Subject<string>();
-  resultadosBusqueda: Verificacion[] = [];
+  resultadosBusqueda: Determinacion[] = [];
   busquedaActivada:boolean = false;
   paginaActualBusqueda = 1;
   resultadosPorPaginaBusqueda = 25;
@@ -61,12 +62,12 @@ export class CapturaVerificacionComponent implements OnInit {
   paginasTotalesBusqueda = 0;
   indicePaginasBusqueda:number[] = [];
   showAgregarProgramacion:boolean = false;
-
+  
   constructor(private title: Title,
-              private verificacionService:VerificacionService) { }
+    private determinacionService:DeterminacionService) { }
 
   ngOnInit() {
-    this.title.setTitle("Registro Verificaciones");
+    this.title.setTitle("Registro Determinacion");
     this.mensajeError = new Mensaje();
     this.mensajeExito = new Mensaje();
 
@@ -76,10 +77,10 @@ export class CapturaVerificacionComponent implements OnInit {
     var self = this;
 
     var busquedaSubject = this.terminosBusqueda
-	    .debounceTime(300) // Esperamos 300 ms pausando eventos
-	    .distinctUntilChanged() // Ignorar si la busqueda es la misma que la ultima
-	    .switchMap((term:string)  =>  { 
-	      
+      .debounceTime(300) // Esperamos 300 ms pausando eventos
+      .distinctUntilChanged() // Ignorar si la busqueda es la misma que la ultima
+      .switchMap((term:string)  =>  { 
+        
         this.busquedaActivada = true;
 
         let bandera:boolean = false;
@@ -90,56 +91,56 @@ export class CapturaVerificacionComponent implements OnInit {
           bandera = true;
         }
 
-	      this.ultimoTerminoBuscado = term;
-	      this.paginaActualBusqueda = 1;
+        this.ultimoTerminoBuscado = term;
+        this.paginaActualBusqueda = 1;
         this.cargando = true;
         if(bandera)
-          return term  ? this.verificacionService.buscar_detalle(term, this.paginaActualBusqueda, this.resultadosPorPaginaBusqueda, this.busqueda.id_jurisdiccion) : Observable.of<any>({data:[]});
+          return term  ? this.determinacionService.buscar_detalle(term, this.paginaActualBusqueda, this.resultadosPorPaginaBusqueda, this.busqueda.id_jurisdiccion) : Observable.of<any>({data:[]});
         else
-	        return this.verificacionService.buscar_detalle(term, this.paginaActualBusqueda, this.resultadosPorPaginaBusqueda, this.busqueda.id_jurisdiccion);
-	    }
-	      
-	    
-	    ).catch( function handleError(error){ 
-	     
-	      self.cargando = false;      
-	      self.mensajeError.mostrar = true;
-	      self.ultimaPeticion = function(){self.listarBusqueda(self.ultimoTerminoBuscado,self.paginaActualBusqueda);};//OJO
-	      try {
-	        let e = error.json();
-	        if (error.status == 401 ){
-	          self.mensajeError.texto = "No tiene permiso para hacer esta operación.";
-	        }
-	      } catch(e){
-	        console.log("No se puede interpretar el error");
-	        
-	        if (error.status == 500 ){
-	          self.mensajeError.texto = "500 (Error interno del servidor)";
-	        } else {
-	          self.mensajeError.texto = "No se puede interpretar el error. Por favor contacte con soporte técnico si esto vuelve a ocurrir.";
-	        }            
-	      }
-	      // Devolvemos el subject porque si no se detiene el funcionamiento del stream 
-	      return busquedaSubject
-	    
-	    });
+          return this.determinacionService.buscar_detalle(term, this.paginaActualBusqueda, this.resultadosPorPaginaBusqueda, this.busqueda.id_jurisdiccion);
+      }
+        
+      
+      ).catch( function handleError(error){ 
+        
+        self.cargando = false;      
+        self.mensajeError.mostrar = true;
+        self.ultimaPeticion = function(){self.listarBusqueda(self.ultimoTerminoBuscado,self.paginaActualBusqueda);};//OJO
+        try {
+          let e = error.json();
+          if (error.status == 401 ){
+            self.mensajeError.texto = "No tiene permiso para hacer esta operación.";
+          }
+        } catch(e){
+          console.log("No se puede interpretar el error");
+          
+          if (error.status == 500 ){
+            self.mensajeError.texto = "500 (Error interno del servidor)";
+          } else {
+            self.mensajeError.texto = "No se puede interpretar el error. Por favor contacte con soporte técnico si esto vuelve a ocurrir.";
+          }            
+        }
+        // Devolvemos el subject porque si no se detiene el funcionamiento del stream 
+        return busquedaSubject
+      
+      });
 
-	    busquedaSubject.subscribe(
-	      resultado => {
-	        this.cargando = false;
-	        this.resultadosBusqueda = resultado.data as Verificacion[];
-	        this.totalBusqueda = resultado.total | 0;
-	        this.paginasTotalesBusqueda = Math.ceil(this.totalBusqueda / this.resultadosPorPaginaBusqueda);
+      busquedaSubject.subscribe(
+        resultado => {
+          this.cargando = false;
+          this.resultadosBusqueda = resultado.data as Determinacion[];
+          this.totalBusqueda = resultado.total | 0;
+          this.paginasTotalesBusqueda = Math.ceil(this.totalBusqueda / this.resultadosPorPaginaBusqueda);
 
-	        this.indicePaginasBusqueda = [];
-	        for(let i=0; i< this.paginasTotalesBusqueda; i++){
-	          this.indicePaginasBusqueda.push(i+1);
-	        }
-	        
-	        console.log("Búsqueda cargada.");
-	      }
+          this.indicePaginasBusqueda = [];
+          for(let i=0; i< this.paginasTotalesBusqueda; i++){
+            this.indicePaginasBusqueda.push(i+1);
+          }
+          
+          console.log("Búsqueda cargada.");
+        }
 
-	    );
+      );
   }
 
   buscar(term: string): void {
@@ -151,11 +152,11 @@ export class CapturaVerificacionComponent implements OnInit {
     this.paginaActualBusqueda = pagina;
 
     this.cargando = true;
-    this.verificacionService.buscar_detalle(term, pagina, this.resultadosPorPaginaBusqueda, this.busqueda.id_jurisdiccion).subscribe(
+    this.determinacionService.buscar_detalle(term, pagina, this.resultadosPorPaginaBusqueda, this.busqueda.id_jurisdiccion).subscribe(
         resultado => {
           this.cargando = false;
 
-          this.resultadosBusqueda = resultado.data as Verificacion[];
+          this.resultadosBusqueda = resultado.data as Determinacion[];
 
           this.totalBusqueda = resultado.total | 0;
           this.paginasTotalesBusqueda = Math.ceil(this.totalBusqueda / this.resultadosPorPaginaBusqueda);
@@ -190,7 +191,7 @@ export class CapturaVerificacionComponent implements OnInit {
   }
 
   filtro(id:number, value:string):void
-     {
+      {
         switch (id) {
           case 1:
             this.busqueda.id_jurisdiccion = value;
@@ -206,11 +207,11 @@ export class CapturaVerificacionComponent implements OnInit {
         else
         {
           this.busquedaActivada = true;
-          this.verificacionService.buscar(this.ultimoTerminoBuscado, this.busqueda, 1, this.resultadosPorPaginaBusqueda).subscribe(
+          this.determinacionService.buscar(this.ultimoTerminoBuscado, this.busqueda, 1, this.resultadosPorPaginaBusqueda).subscribe(
               resultado => {
                 this.cargando = false;
 
-                this.resultadosBusqueda = resultado.data as Verificacion[];
+                this.resultadosBusqueda = resultado.data as Determinacion[];
 
                 this.totalBusqueda = resultado.total | 0;
                 this.paginasTotalesBusqueda = Math.ceil(this.totalBusqueda / this.resultadosPorPaginaBusqueda);
@@ -242,10 +243,10 @@ export class CapturaVerificacionComponent implements OnInit {
               }
             );
         }
-     }
+      }
 
   cargar_catalogos():void{
-    this.verificacionService.carga_catalogos().subscribe(
+    this.determinacionService.carga_catalogos().subscribe(
         resultado => {
           this.catalogo_jurisdicciones = resultado.jurisdiccion;
           this.tema = resultado.tema;
@@ -278,11 +279,11 @@ export class CapturaVerificacionComponent implements OnInit {
     this.paginaActual = pagina;
     
     this.cargando = true;
-    this.verificacionService.lista(pagina,this.resultadosPorPagina).subscribe(
+    this.determinacionService.lista(pagina,this.resultadosPorPagina).subscribe(
         resultado => {
           
           this.cargando = false;
-          this.verificacion = resultado.data as Verificacion[];
+          this.verificacion = resultado.data as Determinacion[];
           this.total = resultado.total | 0;
           this.paginasTotales = Math.ceil(this.total / this.resultadosPorPagina);
 
@@ -316,7 +317,7 @@ export class CapturaVerificacionComponent implements OnInit {
     }
 
     paginaSiguiente():void {
-	    this.listar(this.paginaActual+1);
+      this.listar(this.paginaActual+1);
     }
     paginaAnterior():void {
         this.listar(this.paginaActual-1);

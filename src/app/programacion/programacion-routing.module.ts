@@ -8,6 +8,7 @@ import { ListaMuestraComponent } from './metas/muestra/lista-muestra/lista-muest
 import { ListaCapacitacionComponent } from './metas/capacitacion/lista-capacitacion/lista-capacitacion.component';
 import { ListaDictamenComponent } from './metas/dictamen/lista-dictamen/lista-dictamen.component';
 import { ListaReaccionComponent } from './metas/reaccion/lista-reaccion/lista-reaccion.component';
+import { ListaDeterminacionComponent } from './metas/determinacion/lista-determinacion/lista-determinacion.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
        { path: 'muestra', component: ListaMuestraComponent, canActivate: [PermisosGuard], data: { key: 'XWJov5DR90tIuFYeMj3LorKUHVnb2E9D'} },
        { path: 'capacitacion', component: ListaCapacitacionComponent, canActivate: [PermisosGuard], data: { key: 'XWJov5DR90tIuFYeMj3LorKUHVnb2E9D'} },
        { path: 'dictamen', component: ListaDictamenComponent, canActivate: [PermisosGuard], data: { key: 'XWJov5DR90tIuFYeMj3LorKUHVnb2E9D'} },
-       { path: 'reaccion', component: ListaReaccionComponent, canActivate: [PermisosGuard], data: { key: 'XWJov5DR90tIuFYeMj3LorKUHVnb2E9D'} }
+       { path: 'reaccion', component: ListaReaccionComponent, canActivate: [PermisosGuard], data: { key: 'XWJov5DR90tIuFYeMj3LorKUHVnb2E9D'} },
+       { path: 'determinacion', component: ListaDeterminacionComponent, canActivate: [PermisosGuard], data: { key: 'XWJov5DR90tIuFYeMj3LorKUHVnb2E9D'} }
     ],
     canActivate: [AuthGuard]
   }

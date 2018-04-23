@@ -18,10 +18,14 @@ export class BoletinAmbitoRiesgoComponent implements OnInit {
   options_capacitacion_total: Object = {};
   options_dictamen_total: Object = {};
   options_reaccion_total: Object = {};
+  options_determinacion_total: Object = {};
+  options_determinacion_especificaciones: Object = {};
   catalogo_ambito: string[];
   tamano = document.body.clientHeight;
   total_graficas:number = 0;
-
+  lista_datos:any[] = [];
+  lista_detalles:any[] = [];
+  
   cargando: boolean = false;
   busquedaActivada:boolean = false;
 
@@ -49,106 +53,142 @@ export class BoletinAmbitoRiesgoComponent implements OnInit {
     this.options_capacitacion_total = {};
     this.options_dictamen_total = {};
     this.options_reaccion_total = {};
+    this.options_determinacion_total = {};
+    this.options_determinacion_especificaciones = {};
     this.total_graficas = 0;
+    this.lista_datos = [];
+    this.lista_detalles = [];
 
     this.reporteService.lista_ambito(id_ambito).subscribe(
         response => {
           
-          
+          console.log(response);
           let i = 0;
+          this.lista_datos = response.table;
+          this.lista_detalles = response.detalles;
           
-          for(i= 0; i< response.length; i++)
+          for(i= 0; i< response.datos.length; i++)
           {
-            if(response[i].id_tipo_programacion == 1)
+            if(response.datos[i].id_tipo_programacion == 1)
             {
                 this.options_verificacion_total = {
-                    title : { text : response[i].ambito_riesgo },
-                    subtitle: { text:  response[i].tipo },
+                    title : { text : response.datos[i].ambito_riesgo },
+                    subtitle: { text:  response.datos[i].tipo },
                     chart: { type: 'column' },
                     yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
                     xAxis: { categories: ["Metas", "Acumulado"] },
                     //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: false, borderColor: '#CCC', borderWidth: 1, shadow: false },
                     legend: { enabled: false},
                     plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
-                    series: [{ name: "Verificaciones", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                    series: [{ name: "Verificaciones", data : [ parseInt(response.datos[i].total),parseInt(response.datos[i].acumulado) ] }]
                 }
                 this.total_graficas++;
             }
-            if(response[i].id_tipo_programacion == 2)
+            if(response.datos[i].id_tipo_programacion == 2)
             {
               //console.log(response[0].total);
                 this.options_muestra_total = {
-                    title : { text : response[i].ambito_riesgo },
-                    subtitle: { text:  response[i].tipo },
+                    title : { text : response.datos[i].ambito_riesgo },
+                    subtitle: { text:  response.datos[i].tipo },
                     yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
                     chart: { type: 'column' },
                     xAxis: { categories: ["Meta", "Acumulado"] },
                     //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: false, borderColor: '#CCC', borderWidth: 1, shadow: false },
                     legend: { enabled: false},
                     plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
-                    series: [{ name: "Muestras", data : [ parseInt(response[i].total) ,  parseInt(response[i].acumulado) ] }]
+                    series: [{ name: "Muestras", data : [ parseInt(response.datos[i].total) ,  parseInt(response.datos[i].acumulado) ] }]
                 }
 
                 this.options_muestra_especificaciones = {
-                  title : { text : response[i].ambito_riesgo },
-                  subtitle: { text:  response[i].tipo +" Acumulado" },
+                  title : { text : response.datos[i].ambito_riesgo },
+                  subtitle: { text:  response.datos[i].tipo +" Acumulado" },
                   chart: { type: 'column' },
                   yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
                   xAxis: { categories: ["Dentro de Especificaciones", "Fuera de Especificaciones"] },
                   //legend: { align: 'right',x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
                   legend: { enabled: false},
                   plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
-                  series: [{ name: "Muestras Acumuladas", data : [ parseInt(response[i].dentro_especificaciones),parseInt(response[i].fuera_especificaciones) ] }]
+                  series: [{ name: "Muestras Acumuladas", data : [ parseInt(response.datos[i].dentro_especificaciones),parseInt(response.datos[i].fuera_especificaciones) ] }]
               }
               this.total_graficas++;
             }
-            if(response[i].id_tipo_programacion == 3)
+            if(response.datos[i].id_tipo_programacion == 3)
             {
               //console.log(response[0].total);
                 this.options_capacitacion_total = {
-                    title : { text : response[i].ambito_riesgo },
-                    subtitle: { text:  response[i].tipo },
+                    title : { text : response.datos[i].ambito_riesgo },
+                    subtitle: { text:  response.datos[i].tipo },
                     chart: { type: 'column' },
                     yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
                     xAxis: { categories: ["Metas", "Acumulado"] },
                     //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
                     legend: { enabled: false},
                     plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
-                    series: [{ name: "Capacitaciones", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                    series: [{ name: "Capacitaciones", data : [ parseInt(response.datos[i].total),parseInt(response.datos[i].acumulado) ] }]
                 }
                 this.total_graficas++;
             }
-            if(response[i].id_tipo_programacion == 4)
+            if(response.datos[i].id_tipo_programacion == 4)
             {
               //console.log(response[0].total);
                 this.options_dictamen_total = {
-                    title : { text : response[i].ambito_riesgo },
-                    subtitle: { text:  response[i].tipo },
+                    title : { text : response.datos[i].ambito_riesgo },
+                    subtitle: { text:  response.datos[i].tipo },
                     chart: { type: 'column' },
                     yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
                     xAxis: { categories: ["Metas", "Acumulado"] },
                     //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
                     legend: { enabled: false},
                     plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
-                    series: [{ name: "Dictamenes", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                    series: [{ name: "Dictamenes", data : [ parseInt(response.datos[i].total),parseInt(response.datos[i].acumulado) ] }]
                 }
                 this.total_graficas++;
             }
-            if(response[i].id_tipo_programacion == 5)
+            if(response.datos[i].id_tipo_programacion == 5)
             {
               //console.log(response[0].total);
                 this.options_reaccion_total = {
-                    title : { text : response[i].ambito_riesgo },
+                    title : { text : response.datos[i].ambito_riesgo },
                     chart: { type: 'column' },
-                    subtitle: { text:  response[i].tipo },
+                    subtitle: { text:  response.datos[i].tipo },
                     yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
                     xAxis: { categories: ["Metas", "Acumulado"] },
                     //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
                     legend: { enabled: false},
                     plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
-                    series: [{ name: "Reacciones Adversas", data : [ parseInt(response[i].total),parseInt(response[i].acumulado) ] }]
+                    series: [{ name: "Reacciones Adversas", data : [ parseInt(response.datos[i].total),parseInt(response.datos[i].acumulado) ] }]
                 }
                 this.total_graficas++;
+            }
+
+            if(response.datos[i].id_tipo_programacion == 6)
+            {
+              //console.log(response[0].total);
+                this.options_determinacion_total = {
+                    title : { text : response.datos[i].tema },
+                    subtitle: { text:  response.datos[i].tipo },
+                    yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                    chart: { type: 'column' },
+                    xAxis: { categories: ["Meta", "Acumulado"] },
+                    //legend: { align: 'right', x: -30, verticalAlign: 'top', y: 25, floating: false, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                    legend: { enabled: false},
+                    plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                    series: [{ name: "Determinación", data : [ parseInt(response.datos[i].total) ,  parseInt(response.datos[i].acumulado) ] }]
+                }
+
+                this.options_determinacion_especificaciones = {
+                  title : { text : response.datos[i].tema },
+                  subtitle: { text:  response.datos[i].tipo +" Acumulado" },
+                  chart: { type: 'column' },
+                  yAxis: { min: 0, title: { text: 'Total' }, stackLabels: { enabled: true,  style: { fontWeight: 'bold', color: 'gray' }}},
+                  xAxis: { categories: ["Dentro de Especificaciones", "Fuera de Especificaciones"] },
+                  //legend: { align: 'right',x: -30, verticalAlign: 'top', y: 25, floating: true, borderColor: '#CCC', borderWidth: 1, shadow: false },
+                  legend: { enabled: false},
+                  plotOptions: { series: { dataLabels: { align: 'center', enabled: true }}},
+                  series: [{ name: "Determinación Acumuladas", data : [ parseInt(response.datos[i].dentro_especificaciones),parseInt(response.datos[i].fuera_especificaciones) ] }]
+              }
+              this.total_graficas++;
+              
             }
             
           }

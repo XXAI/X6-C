@@ -17,6 +17,7 @@ import { ListaMuestraComponent } from './metas/muestra/lista-muestra/lista-muest
 import { ListaCapacitacionComponent } from './metas/capacitacion/lista-capacitacion/lista-capacitacion.component';
 import { ListaDictamenComponent } from './metas/dictamen/lista-dictamen/lista-dictamen.component';
 import { ListaReaccionComponent } from './metas/reaccion/lista-reaccion/lista-reaccion.component';
+import { ListaDeterminacionComponent } from './metas/determinacion/lista-determinacion/lista-determinacion.component';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { ListaReaccionComponent } from './metas/reaccion/lista-reaccion/lista-re
     PaginacionModule,
     MenuModule
   ],
-  declarations: [ListaComponent, ListaVerificacionComponent, ListaMuestraComponent, ListaCapacitacionComponent, ListaDictamenComponent, ListaReaccionComponent],
+  declarations: [ListaComponent, ListaVerificacionComponent, ListaMuestraComponent, ListaCapacitacionComponent, ListaDictamenComponent, ListaReaccionComponent, ListaDeterminacionComponent],
   providers: [ AuthService, MetasService ],
 })
 export class ProgramacionModule { }
