@@ -80,7 +80,7 @@
               <div  [ngClass]="{ 'is-hidden': tab != 1}">
                 <div class="control" [ngClass]="{'is-loading': cargandoRoles}">
 
-                  <select  name="roles" formControlName="roles" multiple class="bulma-select-multiple" [ngClass]="{'is-warning': roles?.length ==0 }">
+                  <select  name="roles" formControlName="roles" multiple class="bulma-select-multiple" [ngClass]="{'is-warning': roles?.length ==0 }"  size="8">
                     <option *ngFor="let item of roles" value="{{item.id}}">{{ item.nombre }}</option>
                   </select>
                   <span class="help is-danger" *ngIf="usuario.get('roles').hasError('required') && usuario.get('roles').touched">Debe elegir por lo menos un rol.</span>

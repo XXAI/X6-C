@@ -41,12 +41,7 @@ export class MenuAsideComponent implements OnInit {
       }
     ],
     this.menuAutorizado = [
-      /*{
-        titulo: 'Sincronización con servidor principal',
-        modulos: [
-          { icono: 'fa-server', titulo: 'Estatus', url: '/panel-control/sync/estatus' },
-        ]
-      },*/
+     
 
     ];
 

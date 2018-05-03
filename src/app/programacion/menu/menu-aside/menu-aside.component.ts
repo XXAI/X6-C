@@ -18,27 +18,28 @@ export class MenuAsideComponent implements OnInit {
 
     this.menu = [
       {
-        titulo: 'Registro',
+        titulo: 'Programación de Metas',
         modulos: [
-          /*{ permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Verificaciones', url: '/programacion/verificacion' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Muestras', url: '/programacion/muestra' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Capacitaciones', url: '/programacion/capacitacion' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Dictamenes', url: '/programacion/dictamen' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Reacciones Adversas', url: '/programacion/reaccion' },*/
+          { permiso: 'A7GvzrNXlnZgHv3cSqQUtl501cxajGIF', icono: 'fa-server', titulo: 'Verificación', url: '/programacion_metas/verificacion' },
+          { permiso: 'cY23gDtk33ssuubq5y5TxMGmyXgQ9GAT', icono: 'fa-server', titulo: 'Dictamen', url: '/programacion_metas/dictamen' },
+          { permiso: 'U9XHLqqTKlgU8ZWgQzDbhwzVNtF9hP79', icono: 'fa-server', titulo: 'Muestra', url: '/programacion_metas/muestra' },
+          { permiso: 'QPTGZZjSgfaVgL3oCbxsr5qeej152Uky', icono: 'fa-server', titulo: 'Capacitación', url: '/programacion_metas/capacitacion' },
+          { permiso: 'g2jzmIMoXb5LD181GtGBqiAxuR07tTwO', icono: 'fa-server', titulo: 'Reacción Adversa  ', url: '/programacion_metas/reaccion' },
+          { permiso: 'd0MxfILgS3AVWktchJszfeHpzxEiSOwI', icono: 'fa-server', titulo: 'Determinacion  ', url: '/programacion_metas/determinacion' }
         ]
       }];
     this.menuProgramacion = [
-      {
+      /*{
         titulo: 'Programación de Metas',
         modulos: [
-          { icono: 'fa-server', titulo: 'Verificación', url: '/programacion_metas/verificacion' },
-          { icono: 'fa-server', titulo: 'Dictamen', url: '/programacion_metas/dictamen' },
-          { icono: 'fa-server', titulo: 'Muestra', url: '/programacion_metas/muestra' },
-          { icono: 'fa-server', titulo: 'Capacitación', url: '/programacion_metas/capacitacion' },
-          { icono: 'fa-server', titulo: 'Reacción Adversa  ', url: '/programacion_metas/reaccion' },
-          { icono: 'fa-server', titulo: 'Determinacion  ', url: '/programacion_metas/determinacion' },
+          { permiso: 'A7GvzrNXlnZgHv3cSqQUtl501cxajGIF', icono: 'fa-server', titulo: 'Verificación', url: '/programacion_metas/verificacion' },
+          { permiso: 'cY23gDtk33ssuubq5y5TxMGmyXgQ9GAT', icono: 'fa-server', titulo: 'Dictamen', url: '/programacion_metas/dictamen' },
+          { permiso: 'U9XHLqqTKlgU8ZWgQzDbhwzVNtF9hP79', icono: 'fa-server', titulo: 'Muestra', url: '/programacion_metas/muestra' },
+          { permiso: 'QPTGZZjSgfaVgL3oCbxsr5qeej152Uky', icono: 'fa-server', titulo: 'Capacitación', url: '/programacion_metas/capacitacion' },
+          { permiso: 'g2jzmIMoXb5LD181GtGBqiAxuR07tTwO', icono: 'fa-server', titulo: 'Reacción Adversa  ', url: '/programacion_metas/reaccion' },
+          { permiso: 'd0MxfILgS3AVWktchJszfeHpzxEiSOwI', icono: 'fa-server', titulo: 'Determinacion  ', url: '/programacion_metas/determinacion' }
         ]
-      }];
+      }*/];
     
 
     

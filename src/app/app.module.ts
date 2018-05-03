@@ -39,6 +39,7 @@ import { OpcionesAvanzadasModule  } from './panel-control/opciones-avanzadas/opc
 import { ProgramacionModule } from './programacion/programacion.module';
 import { RegistrosModule } from './registros/registros.module';
 import { ReporteModule } from './reporte/reporte.module';
+import { CatalogoModule } from './catalogo/catalogo.module';
 
 
 import { CrudModule } from './crud/crud.module';
@@ -85,6 +86,7 @@ export function highchartsFactory() {
     ProgramacionModule,
     RegistrosModule,
     ReporteModule,
+    CatalogoModule,
     // Animations need to be imported in to your project to use the library
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),

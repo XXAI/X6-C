@@ -36,7 +36,13 @@ export class HubComponent implements OnInit {
       permisos: [
         'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'
       ]
-    },
+    }/*,
+    {
+      title: 'Configuración Catálogos', routerLink: '/catalogos/temas', icono: 'assets/catalogos.svg',
+      permisos: [
+        'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'
+      ]
+    }*/,
     {
       title: 'Reportes', routerLink: '/reportes/proyecto', icono: 'assets/hub-reportes.svg',
       permisos: [
