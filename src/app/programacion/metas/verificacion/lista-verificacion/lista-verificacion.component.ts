@@ -37,6 +37,7 @@ export class ListaVerificacionComponent implements OnInit {
   mensajeExito: Mensaje = new Mensaje();
   ultimaPeticion:any;
   programacion_jurisdiccional: FormGroup;
+  lista_programacion: FormGroup;
   // # FIN SECCION
 
   // # SECCION: Lista de porgramacion
@@ -90,6 +91,10 @@ export class ListaVerificacionComponent implements OnInit {
       noviembre: ['', [Validators.required]],
       diciembre: ['', [Validators.required]],
   
+    });
+
+    this.lista_programacion = this.fb.group({
+      validacion: this.fb.array([])
     });
 
     this.title.setTitle("Programación Metas");
@@ -375,6 +380,79 @@ export class ListaVerificacionComponent implements OnInit {
       }
     }
 
+    validar_programacion(obj):void{
+      if(confirm("¿Realmente desea validar esta programación?"))
+      {
+          this.cargando = true;
+          this.metaService.valida_programacion(obj.id).subscribe(
+          resultado => {
+            this.cargando = false;
+            this.listar(1);
+            this.mensajeExito = new Mensaje(true);
+            this.mensajeExito.mostrar = true;
+            this.mensajeExito.texto = "Se ha validado satisfactoriamente la programación";
+          },
+          error => {
+            this.cargando = false;
+            this.mensajeError = new Mensaje(true);
+            this.mensajeError.mostrar = true;
+            try {
+              let e = error.json();
+              if (error.status == 401 ){
+                this.mensajeError.texto = "No tiene permiso para hacer esta operación.";
+              }
+            } catch(e){
+              
+              
+              if (error.status == 500 ){
+                this.mensajeError.texto = "500 (Error interno del servidor)";
+              } else {
+                this.mensajeError.texto = "No se puede interpretar el error. Por favor contacte con soporte técnico si esto vuelve a ocurrir.";
+              }            
+            }
+
+          }
+        );
+      }
+    }
+
+    quitar_validacion(obj):void{
+      if(confirm("¿Realmente desea eliminar la validación de esta programación?"))
+      {
+          this.cargando = true;
+          this.metaService.elimina_validacion(obj.id).subscribe(
+          resultado => {
+            this.cargando = false;
+            this.listar(1);
+            this.mensajeExito = new Mensaje(true);
+            this.mensajeExito.mostrar = true;
+            this.mensajeExito.texto = "Se ha validado satisfactoriamente la programación";
+          },
+          error => {
+            this.cargando = false;
+            this.mensajeError = new Mensaje(true);
+            this.mensajeError.mostrar = true;
+            try {
+              let e = error.json();
+              if (error.status == 401 ){
+                this.mensajeError.texto = "No tiene permiso para hacer esta operación.";
+              }
+            } catch(e){
+              
+              
+              if (error.status == 500 ){
+                this.mensajeError.texto = "500 (Error interno del servidor)";
+              } else {
+                this.mensajeError.texto = "No se puede interpretar el error. Por favor contacte con soporte técnico si esto vuelve a ocurrir.";
+              }            
+            }
+
+          }
+        );
+      }
+    }
+
+    
     eliminar_programacion(id:string):void
     {
         if(confirm("¿Realmente desea eliminar esta programación?"))
@@ -392,13 +470,16 @@ export class ListaVerificacionComponent implements OnInit {
               this.cargando = false;
               this.mensajeError = new Mensaje(true);
               this.mensajeError.mostrar = true;
+              
               try {
                 let e = error.json();
                 if (error.status == 401 ){
                   this.mensajeError.texto = "No tiene permiso para hacer esta operación.";
                 }
+                if (error.status == 500 ){
+                  this.mensajeError.texto = e.error;
+                }
               } catch(e){
-                
                 
                 if (error.status == 500 ){
                   this.mensajeError.texto = "500 (Error interno del servidor)";

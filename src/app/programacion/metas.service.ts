@@ -40,6 +40,14 @@ export class MetasService {
       }) as Observable<any>;
   }
 
+  valida_programacion(id:any): Observable<any>{
+    return this.jwtRequest.post('validar-programacion',{"id": id}).map( (response: Response) => response.json().data) as Observable<any>;
+  }
+
+  elimina_validacion(id:any): Observable<any>{
+    return this.jwtRequest.post('elimina-validacion',{"id": id}).map( (response: Response) => response.json().data) as Observable<any>;
+  }
+
   editar_programacion(id:any, programacion: Programacion): Observable<Programacion> {
     return this.jwtRequest.put(MetasService.URL,id, programacion).map( (response: Response) => response.json().data) as Observable<Programacion>;
   }
