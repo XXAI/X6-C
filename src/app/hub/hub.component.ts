@@ -13,7 +13,7 @@ export class HubComponent implements OnInit {
 
   itemsProtegidos = [
     {
-      title: 'Panel de control', routerLink: '/panel-control', icono: 'assets/hub-panel-control.svg',
+      title: 'Panel de control', routerLink: '/panel-control/usuarios', icono: 'assets/hub-panel-control.svg',
       permisos: [
         'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', // Ver usuarios
         'ICmOKw3HxhgRna4a78OP0QmKrIX0bNsp', // Ver roles
@@ -36,13 +36,13 @@ export class HubComponent implements OnInit {
       permisos: [
         'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'
       ]
-    }/*,
+    },
     {
       title: 'Configuración Catálogos', routerLink: '/catalogos/temas', icono: 'assets/catalogos.svg',
       permisos: [
-        'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'
+        'jiUvnacE7X6RwdktZhjx6w3rnNff7BBA'
       ]
-    }*/,
+    },
     {
       title: 'Reportes', routerLink: '/reportes/proyecto', icono: 'assets/hub-reportes.svg',
       permisos: [

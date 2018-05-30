@@ -9,7 +9,7 @@ import { MenuModule } from './menu/menu.module';
 import { CatalogoRoutingModule } from './catalogo-routing.module';
 
 import { ListaCatalogoComponent } from './lista-catalogo/lista-catalogo.component';
-
+import { CatalogoService } from './catalogo.service';
 
 @NgModule({
   imports: [
@@ -20,6 +20,6 @@ import { ListaCatalogoComponent } from './lista-catalogo/lista-catalogo.componen
     MenuModule
   ],
   declarations: [ListaCatalogoComponent],
-  providers: [ AuthService],
+  providers: [ AuthService, CatalogoService],
 })
 export class CatalogoModule { }

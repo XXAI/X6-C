@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 
-import { AuthService } from 'app/auth.service';
+import { AuthService } from '../auth.service';
 import { BloquearPantallaService }     from '../bloquear-pantalla/bloquear-pantalla.service';
 import { CambiarEntornoService }     from '../perfil/cambiar-entorno.service';
 import { EditarPerfilService }     from '../perfil/editar-perfil.service';
 
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-perfil',

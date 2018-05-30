@@ -22,7 +22,7 @@ export class MenuAsideComponent implements OnInit {
         modulos: [
           { permiso: 'A7GvzrNXlnZgHv3cSqQUtl501cxajGIF', icono: 'fa-server', titulo: 'Verificación', url: '/programacion_metas/verificacion' },
           { permiso: 'cY23gDtk33ssuubq5y5TxMGmyXgQ9GAT', icono: 'fa-server', titulo: 'Dictamen', url: '/programacion_metas/dictamen' },
-          { permiso: 'U9XHLqqTKlgU8ZWgQzDbhwzVNtF9hP79', icono: 'fa-server', titulo: 'Muestra', url: '/programacion_metas/muestra' },
+          { permiso: 'U9XHLqqTKlgU8ZWgQzDbhwzVNtF9hP79', icono: 'fa-server', titulo: 'Monitoreo', url: '/programacion_metas/muestra' },
           { permiso: 'QPTGZZjSgfaVgL3oCbxsr5qeej152Uky', icono: 'fa-server', titulo: 'Capacitación', url: '/programacion_metas/capacitacion' },
           { permiso: 'g2jzmIMoXb5LD181GtGBqiAxuR07tTwO', icono: 'fa-server', titulo: 'Reacción Adversa  ', url: '/programacion_metas/reaccion' },
           { permiso: 'd0MxfILgS3AVWktchJszfeHpzxEiSOwI', icono: 'fa-server', titulo: 'Determinacion  ', url: '/programacion_metas/determinacion' }

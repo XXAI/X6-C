@@ -56,7 +56,7 @@ export class TableroComponent implements OnInit {
       },
       {
         permiso: 'U9XHLqqTKlgU8ZWgQzDbhwzVNtF9hP79',
-        icono: 'assets/modulo.svg', titulo: 'Muestras',
+        icono: 'assets/modulo.svg', titulo: 'Monitoreo',
         url: '/programacion_metas/muestra'
       },
       {

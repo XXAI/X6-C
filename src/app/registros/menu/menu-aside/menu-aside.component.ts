@@ -33,7 +33,7 @@ export class MenuAsideComponent implements OnInit {
         modulos: [
           { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Verificaciones', url: '/captura_registros/verificacion' },
           { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Dictamenes', url: '/captura_registros/dictamen' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Muestras', url: '/captura_registros/muestra' },
+          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Monitoreo', url: '/captura_registros/muestra' },
           { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Capacitaciones', url: '/captura_registros/capacitacion' },
           { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Reacciones Adversas', url: '/captura_registros/reaccion' },
           { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Determinaciones', url: '/captura_registros/determinacion' }
