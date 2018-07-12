@@ -40,7 +40,7 @@ export class HubComponent implements OnInit {
     {
       title: 'Registros Seguimientos', routerLink: '/captura_seguimiento', icono: 'assets/icono-pagina-lista.svg',
       permisos: [
-        'OHDYRToKLymGxFKepWuZ6WzdCXfCt9pF'
+        'tzMUrHY700DXVoDrG0zsNcDCFwnOcoiu'
       ]
     },
     {

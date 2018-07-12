@@ -48,37 +48,37 @@ export class TableroComponent implements OnInit {
 
     this.modulos = [
       {
-        permiso: 'A7GvzrNXlnZgHv3cSqQUtl501cxajGIF',
+        permiso: '6XhHmrGZK8hlU4U2DoyidoAQFM4ReRkL',
         icono: 'assets/modulo.svg', titulo: 'Verificaciones Sanitarias',
         url: '/captura_seguimiento/verificacion_sanitaria'
       },
       {
-        permiso: 'U9XHLqqTKlgU8ZWgQzDbhwzVNtF9hP79',
+        permiso: '6XhHmrGZK8hlU4U2DoyidoAQFM4ReRkL',
         icono: 'assets/modulo.svg', titulo: 'Dictámenes Técnicos',
         url: '/captura_seguimiento/dictamen_tecnico'
       },
       {
-        permiso: 'cY23gDtk33ssuubq5y5TxMGmyXgQ9GAT',
+        permiso: '6XhHmrGZK8hlU4U2DoyidoAQFM4ReRkL',
         icono: 'assets/modulo.svg', titulo: 'Resoluciones Administrativas',
         url: '/captura_seguimiento/resolucion_administrativa'
       },
       {
-        permiso: 'QPTGZZjSgfaVgL3oCbxsr5qeej152Uky',
+        permiso: '6XhHmrGZK8hlU4U2DoyidoAQFM4ReRkL',
         icono: 'assets/modulo.svg', titulo: 'Notificaciones',
         url: '/captura_seguimiento/notificacion'
       },
       {
-        permiso: 'g2jzmIMoXb5LD181GtGBqiAxuR07tTwO',
+        permiso: '6XhHmrGZK8hlU4U2DoyidoAQFM4ReRkL',
         icono: 'assets/modulo.svg', titulo: 'Licencias Sanitarias',
         url: '/captura_seguimiento/licencia_sanitaria'
       },
       {
-        permiso: 'd0MxfILgS3AVWktchJszfeHpzxEiSOwI',
+        permiso: '6XhHmrGZK8hlU4U2DoyidoAQFM4ReRkL',
         icono: 'assets/modulo.svg', titulo: 'Avisos de Funcionamiento',
         url: '/captura_seguimiento/aviso_funcionamiento'
       },
       {
-        permiso: 'd0MxfILgS3AVWktchJszfeHpzxEiSOwI',
+        permiso: '6XhHmrGZK8hlU4U2DoyidoAQFM4ReRkL',
         icono: 'assets/modulo.svg', titulo: 'Publicidad',
         url: '/captura_seguimiento/publicidad'
       }
