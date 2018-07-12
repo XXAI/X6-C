@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth-guard.service';
 import { PermisosGuard } from '../permisos.guard';
-import { ListaComponent } from './lista/lista.component';
 import { ListaVerificacionComponent } from './metas/verificacion/lista-verificacion/lista-verificacion.component';
 import { ListaMuestraComponent } from './metas/muestra/lista-muestra/lista-muestra.component';
 import { ListaCapacitacionComponent } from './metas/capacitacion/lista-capacitacion/lista-capacitacion.component';

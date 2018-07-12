@@ -40,6 +40,7 @@ import { ProgramacionModule } from './programacion/programacion.module';
 import { RegistrosModule } from './registros/registros.module';
 import { ReporteModule } from './reporte/reporte.module';
 import { CatalogoModule } from './catalogo/catalogo.module';
+import { SeguimientoModule } from './seguimiento/seguimiento.module';
 
 
 import { CrudModule } from './crud/crud.module';
@@ -87,6 +88,7 @@ export function highchartsFactory() {
     RegistrosModule,
     ReporteModule,
     CatalogoModule,
+    SeguimientoModule,
     // Animations need to be imported in to your project to use the library
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),

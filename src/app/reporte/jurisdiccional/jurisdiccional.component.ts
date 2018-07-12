@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpModule,Http }   from '@angular/http';
+import { Title } from '@angular/platform-browser';
 
 import { ReporteService } from '../reporte.service';
 import { Mensaje } from '../../mensaje';
@@ -38,7 +39,8 @@ export class JurisdiccionalComponent implements OnInit {
   mensajeExito: Mensaje = new Mensaje();
 
   constructor(
-    private http: Http,
+      private title: Title,
+      private http: Http,
       private reporteService: ReporteService
      ) { }
 //options_muestra_total: Object;
@@ -46,6 +48,7 @@ export class JurisdiccionalComponent implements OnInit {
   ngOnInit() {
     this.cargar_catalogos();
     console.log(this.lista_jurisdiccional.length);
+    this.title.setTitle("Reporte Jurisdiccional");
   }
 
   listar(id_tema:number):void{

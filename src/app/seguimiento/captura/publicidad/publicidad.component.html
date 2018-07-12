@@ -1,0 +1,260 @@
+<menu-seguimiento></menu-seguimiento>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column is-one-quarter is-hidden-mobile">
+        <seguimiento-menu-aside></seguimiento-menu-aside>
+    </div>
+    <div class="column" style="padding:2em; overflow:auto;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero" [ngClass] = " {'is-dark': busquedaActivada, 'is-primary': !busquedaActivada } " >
+                
+                <div class="hero-body" style="position:relative;">
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="busquedaActivada=false;searchBox.value='';resultadosBusqueda=[]"><span class="icon "><i class="fa fa-close"></i></span></a>
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:3.5em;" (click)="listarBusqueda(searchBox.value,1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <a class="button  is-primary" *ngIf="!busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="listar(1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title" *ngIf="!busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-user"></i></span> Registro publicidad
+                        </h1>
+                        <h1 class="title" *ngIf="busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
+                        </h1>
+                        <div class="columns">
+                            <div class="column"  [ngClass]="{'is-three-quarters': filter }">
+                                <label class="label" style="color: #FFF">Buscar Responsable</label>
+                                <input class="input is-medium" type="text" placeholder="Buscar" #searchBox id="search-box" (keyup)="buscar(searchBox.value)">
+                            </div>
+                            
+                            
+                            <div class="column" *ngIf="!filter">
+                                <label class="label" style="color: #FFF">Resolución</label>
+                                <select class="select redondear" #resolucion (change)='filtro(2, resolucion.value)'>
+                                    <option value="0">- Todos -</option>
+                                    <option  *ngFor="let item of CatalogoResolucionAdministrativa; let i=index" value='{{ i + 1}}'>{{ item }}</option>
+                                </select>
+                            </div>
+                            <div class="column" align='right'>
+                                <a class="button is-medium is-primary is-inverted " (click)='crear_nuevo()'>
+                                    <span class="icon"><i class="fa fa-plus"></i></span><span>Nuevo</span>
+                                </a>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+            <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                <table class="table" *ngIf="!cargando">
+                    <thead>
+                        <tr>
+                            
+                            <th>No. Verificación</th>
+                            <th>Dictamen</th>
+                            <th>Medida Seguridad</th>
+                            <th>Resolución</th>
+                            <th>Responsable</th>
+
+                            <th></th>
+                        </tr>
+                       
+                    </thead>
+                    <tbody  *ngIf="!busquedaActivada">
+                        <tr *ngFor="let item of lista_publicidad; let i=index">
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ item.no_informe_verificacion }}</th>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ CatalogoDictamen[item.id_dictamen-1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ CatalogoMedidaSeguridad[item.id_medida_seguridad-1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ CatalogoResolucionAdministrativa[item.id_resolucion_administrativa-1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ item.usuario_responsable }}</td>
+
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar(item.id)"></i></td>
+                            
+                        </tr>
+                        <tr *ngIf="lista_publicidad.length == 0">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="busquedaActivada">
+                        <tr *ngFor="let item of resultadosBusqueda; let i=index">
+                            <th style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ item.no_informe_verificacion }}</th>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ CatalogoDictamen[item.id_dictamen-1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ CatalogoMedidaSeguridad[item.id_medida_seguridad-1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ CatalogoResolucionAdministrativa[item.id_resolucion_administrativa-1] }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)">{{ item.usuario_responsable }}</td>
+
+                            <td style="vertical-align: middle;cursor:pointer;" (click)="cargar_registro(item)"><i class="fa fa-trash" style="cursor:pointer" (click)="eliminar(item.id)"></i></td>
+                              
+                        </tr>
+                        <tr *ngIf="resultadosBusqueda.length == 0">
+                            <td colspan="5" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Paginación para la lista  -->
+            <paginacion 
+                [total]="total" 
+                [paginasTotales]="paginasTotales" 
+                [resultadosPorPagina]="resultadosPorPagina" 
+                [paginaActual]="paginaActual" 
+                [indicePaginas]="indicePaginas"
+                (onSiguiente)="paginaSiguiente()" 
+                (onAnterior)="paginaAnterior()" 
+                (onListar)="listar($event)" 
+                *ngIf="total>0 && total > resultadosPorPagina && !busquedaActivada"></paginacion>
+            <paginacion 
+                [total]="totalBusqueda" 
+                [paginasTotales]="paginasTotalesBusqueda" 
+                [resultadosPorPagina]="resultadosPorPaginaBusqueda" 
+                [paginaActual]="paginaActualBusqueda" 
+                [indicePaginas]="indicePaginasBusqueda"
+                (onSiguiente)="paginaSiguienteBusqueda(searchBox.value)" 
+                (onAnterior)="paginaAnteriorBusqueda(searchBox.value)" 
+                (onListar)="listarBusqueda(searchBox.value,$event)" 
+                *ngIf="totalBusqueda > 0 && totalBusqueda > resultadosPorPaginaBusqueda && busquedaActivada"></paginacion>
+        </div>
+        
+    </div>
+</div>
+
+<div id="modal-form" class="modal is-active" [ngClass]="{'is-active': showForm}">
+    <div class="modal-background"  (click)="showForm = !showForm"></div>
+    <div class="modal-card" style="width:60%; height: auto;">
+      <header class="modal-card-head" style="background-color: #00d1b2" >
+        <div class="container is-fluid"  style="width:100%;">
+            <h1 class="title" style="color:#FFF;">
+              <span class="icon is-medium"><i class="fa fa-user"></i></span> Agregar Registro
+            </h1>
+        </div>            
+        <a class="button  is-primary" style="position:absolute; top:1em; right:1em;" (click)="showForm = !showForm"><span class="icon "><i class="fa fa-close"></i></span></a>
+      </header>
+      <section class="section">
+          
+          <form name="form" [formGroup]="registrosModule" (ngSubmit)="agregar_registro()" style="overflow:hidden">   
+              <section class="section" style="padding: 1rem 1.5rem; background-color: #EFEFEF">
+                  <div class="container">
+                    <div class="heading">
+                      <h1 class="title">Publicidad</h1>
+                    </div>
+                  </div>
+              </section> 
+            <div class="control is-grouped">
+                  <p class="control is-expanded  has-icon has-icon-right">
+                      <label class="label">No. de Verificación</label>
+                      <input class="input"  type="text" formControlName="no_informe_verificacion">
+                      <span class="icon is-small" *ngIf="registrosModule.get('no_informe_verificacion').hasError('required') && registrosModule.get('no_informe_verificacion').touched">
+                          <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger" *ngIf="registrosModule.get('no_informe_verificacion').hasError('required') && registrosModule.get('no_informe_verificacion').touched">Este campo es requerido.</span>
+                  
+                    </p>  
+
+                    <p class="control is-expanded  has-icon has-icon-right">
+                        <label class="label">Medio Utilizado</label>
+                          <select class="select" formControlName="id_medio_utilizado">
+                          <option  *ngFor="let item of CatalogoMedioUtilizado; let i=index" value='{{i+1}}'>{{ item }}</option>
+                          </select>
+                          <span class="icon is-small" *ngIf="registrosModule.get('id_medio_utilizado').hasError('required') && registrosModule.get('id_medio_utilizado').touched">
+                              <i class="fa fa-warning"></i>
+                          </span>
+                          <span class="help is-danger" *ngIf="registrosModule.get('id_medio_utilizado').hasError('required') && registrosModule.get('id_medio_utilizado').touched">Este campo es requerido.</span>
+                      </p>
+
+                      <p class="control is-expanded  has-icon has-icon-right">
+                          <label class="label">Responsable</label>
+                          <input class="input"  type="text" formControlName="usuario_responsable">
+                          <span class="icon is-small" *ngIf="registrosModule.get('usuario_responsable').hasError('required') && registrosModule.get('usuario_responsable').touched">
+                              <i class="fa fa-warning"></i>
+                          </span>
+                          <span class="help is-danger" *ngIf="registrosModule.get('usuario_responsable').hasError('required') && registrosModule.get('usuario_responsable').touched">Este campo es requerido.</span>
+                      
+                      </p>    
+                      <p class="control is-expanded  has-icon has-icon-right">
+                          <label class="label">Dictamen</label>
+                            <select class="select" formControlName="id_dictamen">
+                            <option  *ngFor="let item of CatalogoDictamen; let i=index" value='{{i+1}}'>{{ item }}</option>
+                            </select>
+                            <span class="icon is-small" *ngIf="registrosModule.get('id_dictamen').hasError('required') && registrosModule.get('id_dictamen').touched">
+                                <i class="fa fa-warning"></i>
+                            </span>
+                            <span class="help is-danger" *ngIf="registrosModule.get('id_dictamen').hasError('required') && registrosModule.get('id_dictamen').touched">Este campo es requerido.</span>
+                      </p>    
+            </div>
+            <div class="control is-grouped">
+                <p class="control is-expanded  has-icon has-icon-right">
+                    <label class="label">Medida de Seguridad</label>
+                      <select class="select" formControlName="id_medida_seguridad">
+                      <option  *ngFor="let item of CatalogoMedidaSeguridad; let i=index" value='{{i+1}}'>{{ item }}</option>
+                      </select>
+                      <span class="icon is-small" *ngIf="registrosModule.get('id_medida_seguridad').hasError('required') && registrosModule.get('id_medida_seguridad').touched">
+                          <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger" *ngIf="registrosModule.get('id_medida_seguridad').hasError('required') && registrosModule.get('id_medida_seguridad').touched">Este campo es requerido.</span>
+                </p>
+                <p class="control is-expanded  has-icon has-icon-right">
+                    <label class="label">Resolución Administrativa</label>
+                      <select class="select" formControlName="id_resolucion_administrativa">
+                      <option  *ngFor="let item of CatalogoResolucionAdministrativa; let i=index" value='{{i+1}}'>{{ item }}</option>
+                      </select>
+                      <span class="icon is-small" *ngIf="registrosModule.get('id_resolucion_administrativa').hasError('required') && registrosModule.get('id_resolucion_administrativa').touched">
+                          <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger" *ngIf="registrosModule.get('id_resolucion_administrativa').hasError('required') && registrosModule.get('id_resolucion_administrativa').touched">Este campo es requerido.</span>
+                </p>
+                <p class="control is-expanded  has-icon has-icon-right">
+                    <label class="label">Sanción Administrativa</label>
+                      <select class="select" formControlName="id_sancion_administrativa">
+                      <option  *ngFor="let item of CatalogoMulta; let i=index" value='{{i+1}}'>{{ item }}</option>
+                      </select>
+                      <span class="icon is-small" *ngIf="registrosModule.get('id_sancion_administrativa').hasError('required') && registrosModule.get('id_sancion_administrativa').touched">
+                          <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger" *ngIf="registrosModule.get('id_sancion_administrativa').hasError('required') && registrosModule.get('id_sancion_administrativa').touched">Este campo es requerido.</span>
+                </p>
+               
+                <p class="control is-expanded  has-icon has-icon-right">
+                    <label class="label">Fecha Emisión</label>
+                    
+                    <input class="input"  type="date" formControlName="fecha_emision">
+                    <span class="icon is-small" *ngIf="registrosModule.get('fecha_emision').hasError('required') && registrosModule.get('fecha_emision').touched">
+                        <i class="fa fa-warning"></i>
+                    </span>
+                    <span class="help is-danger" *ngIf="registrosModule.get('fecha_emision').hasError('required') && registrosModule.get('fecha_emision').touched">Este campo es requerido.</span>
+                </p>
+                    
+            </div>
+
+            <br>
+            <div class="control is-grouped">
+              <p class="control">
+                <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registrosModule.invalid">Guardar</button>
+                <button class="button is-primary" type="button" (click)='ver_campos()'>ver variables</button>
+                
+              </p>
+            </div>
+        </form>
+      </section>
+      <footer class="" style="position:relative; padding:1em;background: #FFF; border-top:0px solid #EEE; border-radius:0 0 0.8em 0.8em " >
+      </footer>
+    </div>
+  </div>
+
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>

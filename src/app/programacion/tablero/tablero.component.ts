@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title }     from '@angular/platform-browser';
 
-import { BuscarModuloPipe } from '../../pipes/buscar-modulo.pipe';
-
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',

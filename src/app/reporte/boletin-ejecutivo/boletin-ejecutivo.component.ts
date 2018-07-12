@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpModule,Http }   from '@angular/http';
+import { Title } from '@angular/platform-browser';
 
 import { ReporteService } from '../reporte.service';
 import { Mensaje } from '../../mensaje';
@@ -34,13 +35,15 @@ export class BoletinEjecutivoComponent implements OnInit {
   mensajeExito: Mensaje = new Mensaje();
 
   constructor(
-    private http: Http,
+      private title: Title,
+      private http: Http,
       private reporteService: ReporteService
      ) { }
 //options_muestra_total: Object;
 
   ngOnInit() {
     this.cargar_catalogos();
+    this.title.setTitle("Reporte Ejecutivo");
     
   }
 
