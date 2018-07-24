@@ -1,0 +1,210 @@
+<menu-programacion></menu-programacion>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column is-one-quarter is-hidden-mobile">
+        <programacion-menu-aside></programacion-menu-aside>
+    </div>
+    <div class="column" style="padding:2em; overflow:auto;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero" [ngClass] = " {'is-dark': busquedaActivada, 'is-primary': !busquedaActivada } " >
+                
+                <div class="hero-body" style="position:relative;">
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="busquedaActivada=false;searchBox.value='';resultadosBusqueda=[]"><span class="icon "><i class="fa fa-close"></i></span></a>
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:3.5em;" (click)="listarBusqueda(searchBox.value,1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <a class="button  is-primary" *ngIf="!busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="listar(1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title" *ngIf="!busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-edit"></i></span> Reporte Jurisdiccional
+                        </h1>
+                        <h1 class="title" *ngIf="busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
+                        </h1>
+                        <div class="columns">
+                            <div class="column">
+                                <label class="label" style="color: #FFF">TEMAS</label>
+                                <select class="select redondear" #id_tema (change)='filtro(id_tema.value)'>
+                                    <option value="0">- TEMA -</option>
+                                    <option  *ngFor="let item of catalogo_tema; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+            <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+                <table class="table" *ngIf="(lista_jurisdiccional.length > 0 && !cargando)">
+                    <thead>
+                        <tr>
+                            <th colspan="13">{{ tema_seleccionado }}</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">Jurisdicción</th>
+                            <th colspan="3">1re. Timestre</th>
+                            <th colspan="3">2do. Timestre</th>
+                            <th colspan="3">3er. Timestre</th>
+                            <th colspan="3">4to. Timestre</th>
+                            <th>Total</th>
+                            
+                        </tr>
+                        <tr>
+                            <th>ENE</th>
+                            <th>FEB</th>
+                            <th>MAR</th>
+                            <th>ABR</th>
+                            <th>MAY</th>
+                            <th>JUN</th>
+                            <th>JUL</th>
+                            <th>AGO</th>
+                            <th>SEP</th>
+                            <th>OCT</th>
+                            <th>NOV</th>
+                            <th>DIC</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody  *ngIf="!busquedaActivada">
+                        <tr *ngFor="let item of lista_jurisdiccional; let i=index">
+                            <th style="vertical-align: middle;cursor:pointer;" > {{ item.jurisdiccion.descripcion }} </th>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.enero }} <br> <p class="acumulado">{{ item.enero_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.febrero }} <br> <p class="acumulado">{{ item.febrero_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.marzo }} <br> <p class="acumulado">{{ item.marzo_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.abril }} <br> <p class="acumulado">{{ item.abril_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.mayo }} <br> <p class="acumulado">{{ item.mayo_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.junio }} <br> <p class="acumulado">{{ item.junio_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.julio }} <br> <p class="acumulado">{{ item.julio_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.agosto }} <br> <p class="acumulado">{{ item.agosto_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.septiembre }} <br> <p class="acumulado">{{ item.septiembre_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.octubre }} <br> <p class="acumulado">{{ item.octubre_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.noviembre }} <br> <p class="acumulado">{{ item.noviembre_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.diciembre }} <br> <p class="acumulado">{{ item.diciembre_acumulado }}</p></td>
+                            <td style="vertical-align: middle;cursor:pointer;" >{{ item.total_acumulado }} <br> ({{ ((item.total_acumulado / item.total ) * 100) | number : '1.2-2' }} %) </td>       
+                        </tr>
+                        <tr *ngIf="lista_jurisdiccional.length == 0">
+                            <td colspan="13" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    
+                </table>        
+                <table  class="table" *ngIf="(lista_jurisdiccional.length > 0 && !cargando)">
+                    
+                    <tbody>
+                        <tr>
+                            <td>
+                            <div class="columns" *ngIf="options_jurisdiccion_1['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_1"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_2['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_2"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_3['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_3"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_4['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_4"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_4['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_4"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_5['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_5"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_6['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_6"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_7['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_7"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_8['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_8"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_9['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_9"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_10['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_10"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_11['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_11"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_jurisdiccion_12['series']">
+                                <div class="column">
+                                    <chart [options]="options_jurisdiccion_12"></chart>
+                                </div>
+                                
+                            </div>
+                                   
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                <table class="table" *ngIf="(lista_jurisdiccional.length == 0 && !cargando)">
+                    <tbody>
+                        <tr>
+                            <td>
+                                No Existen Datos con las Variables de consulta Ingresados
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>

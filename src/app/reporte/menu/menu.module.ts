@@ -9,6 +9,7 @@ import { BloquearPantallaModule } from '../../bloquear-pantalla/bloquear-pantall
 
 import { MenuComponent } from './menu.component';
 import { MenuAsideComponent } from './menu-aside/menu-aside.component';
+import { MenuSeguimientoComponent } from './menu-seguimiento/menu-seguimiento.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { MenuAsideComponent } from './menu-aside/menu-aside.component';
     PerfilModule,
     BloquearPantallaModule,
   ],
-  declarations: [MenuComponent, MenuAsideComponent],
-  exports: [MenuComponent, MenuAsideComponent]
+  declarations: [MenuComponent, MenuAsideComponent, MenuSeguimientoComponent],
+  exports: [MenuComponent, MenuAsideComponent, MenuSeguimientoComponent]
 })
 export class MenuModule { }

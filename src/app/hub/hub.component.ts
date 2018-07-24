@@ -50,7 +50,7 @@ export class HubComponent implements OnInit {
       ]
     },
     {
-      title: 'Reportes', routerLink: '/reportes/proyecto', icono: 'assets/hub-reportes.svg',
+      title: 'Reportes', routerLink: '/reportes', icono: 'assets/hub-reportes.svg',
       permisos: [
         'CHPlR9tEFF69AT5qBHrSW26nDzGlcG4y'//esZVkmjOfAuCTja8FzJ1ihSVNEU29lUj' // Ver usuarios
       ]

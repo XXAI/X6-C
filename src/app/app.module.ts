@@ -45,8 +45,6 @@ import { SeguimientoModule } from './seguimiento/seguimiento.module';
 
 import { CrudModule } from './crud/crud.module';
 
-
-
 //import { CrudModule } from './crud/crud.module';
 export function highchartsFactory() {
   

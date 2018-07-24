@@ -27,10 +27,10 @@ export class MenuAsideComponent implements OnInit {
       {
         titulo: 'Reportes',
         modulos: [
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Boletín de Proyecto', url: '/reportes/proyecto' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Boletín de Ambito de Riesgo', url: '/reportes/ambito-riesgo' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Boletín ejecutivo', url: '/reportes/ejecutivo' },
-          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Jurisdiccional', url: '/reportes/jurisdiccion' }
+          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Boletín de Proyecto', url: '/reportes/programacion_metas/proyecto' },
+          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Boletín de Ambito de Riesgo', url: '/reportes/programacion_metas/ambito-riesgo' },
+          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Boletín ejecutivo', url: '/reportes/programacion_metas/ejecutivo' },
+          { permiso: 'mGKikN0aJaeF2XrHwwYK3XNw0f9CSZDe', icono: 'fa-edit', titulo: 'Jurisdiccional', url: '/reportes/programacion_metas/jurisdiccion' }
         ]
       }];
     

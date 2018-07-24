@@ -1,0 +1,339 @@
+<menu-programacion></menu-programacion>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column is-one-quarter is-hidden-mobile">
+        <reporte-menu-seguimiento></reporte-menu-seguimiento>
+    </div>
+    <div class="column" style="padding:2em; overflow:auto;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero" [ngClass] = " {'is-dark': busquedaActivada, 'is-primary': !busquedaActivada } " >
+                
+                <div class="hero-body" style="position:relative;">
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="busquedaActivada=false;searchBox.value='';resultadosBusqueda=[]"><span class="icon "><i class="fa fa-close"></i></span></a>
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:3.5em;" (click)="listarBusqueda(searchBox.value,1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <a class="button  is-primary" *ngIf="!busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="listar(1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title" *ngIf="!busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-edit"></i></span> Reporte Notificación
+                        </h1>
+                        <h1 class="title" *ngIf="busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
+                        </h1>
+                        <div class="columns">
+                           
+                            
+                            <div class="column">
+                                <label class="label" style="color: #FFF">Area Operativa</label>
+                                <select class="select redondear" #area_operativa (change)='filtro(area_operativa.value)'>
+                                    <option value="0">- AREA OPERATIVA -</option>
+                                    <option  *ngFor="let item of catalogo_area_operativa; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+            <div style="overflow:auto; display:block">
+                <table  class="table" *ngIf="!cargando">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="columns">
+                                    <div class="column">
+                                        <chart [options]="options_tipo_notificacion" class="is-fullwidth is-12"  ></chart>
+                                    </div>
+                                </div>
+                            </td>    
+                        </tr>
+                    </tbody>
+                </table>        
+                <table  class="table" *ngIf="!cargando">
+                    <thead>
+                       
+                        <tr>
+                            <th>TIPO NOTIFICACIÓN</th>
+                            <th>ENERO</th>
+                            <th>FEBRERO</th>
+                            <th>MARZO</th>
+                            <th>ABRIL</th>
+                            <th>MAYO</th>
+                            <th>JUNIO</th>
+                            <th>JULIO</th>
+                            <th>AGOSTO</th>
+                            <th>SEPTIEMBRE</th>
+                            <th>OCTUBRE</th>
+                            <th>NOVIEMBRE</th>
+                            <th>DICIEMBRE</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tabla_tipo_notificacion; let i=index">
+                            <td style="vertical-align: middle;cursor:pointer;" > {{ item.descripcion }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.ENERO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.FEBRERO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.MARZO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.ABRIL }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.MAYO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.JUNIO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.JULIO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.AGOSTO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.SEPTIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.OCTUBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOVIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.DICIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.TOTAL }} </td>
+                            
+                        </tr>
+                        <tr *ngIf="tabla_tipo_notificacion.length == 0">
+                            <td colspan="14">NO HAY DATOS</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table  class="table" *ngIf="!cargando">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="columns">
+                                    <div class="column">
+                                        <chart [options]="options_area_operativa" class="is-fullwidth is-12"  ></chart>
+                                    </div>
+                                </div>
+                            </td>    
+                        </tr>
+                    </tbody>
+                </table>        
+                <table  class="table" *ngIf="!cargando">
+                    <thead>
+                       
+                        <tr>
+                            <th>ÁREA OPERATIVA</th>
+                            <th>ENERO</th>
+                            <th>FEBRERO</th>
+                            <th>MARZO</th>
+                            <th>ABRIL</th>
+                            <th>MAYO</th>
+                            <th>JUNIO</th>
+                            <th>JULIO</th>
+                            <th>AGOSTO</th>
+                            <th>SEPTIEMBRE</th>
+                            <th>OCTUBRE</th>
+                            <th>NOVIEMBRE</th>
+                            <th>DICIEMBRE</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tabla_area_operativa; let i=index">
+                            <td style="vertical-align: middle;cursor:pointer;" > {{ item.descripcion }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.ENERO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.FEBRERO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.MARZO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.ABRIL }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.MAYO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.JUNIO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.JULIO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.AGOSTO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.SEPTIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.OCTUBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOVIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.DICIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.TOTAL }} </td>
+                            
+                        </tr>
+                        <tr *ngIf="tabla_area_operativa.length == 0">
+                            <td colspan="14">NO HAY DATOS</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="overflow:auto; display:block">
+                    <table  class="table" *ngIf="!cargando">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="columns">
+                                        <div class="column">
+                                            <chart [options]="options_procedimiento_notificacion" class="is-fullwidth is-12"  ></chart>
+                                        </div>
+                                    </div>
+                                </td>    
+                            </tr>
+                        </tbody>
+                    </table>        
+                    <table  class="table" *ngIf="!cargando">
+                        <thead>
+                           
+                            <tr>
+                                <th>PROCEDIMIENTO NOTIFICACIÓN</th>
+                                <th>ENERO</th>
+                                <th>FEBRERO</th>
+                                <th>MARZO</th>
+                                <th>ABRIL</th>
+                                <th>MAYO</th>
+                                <th>JUNIO</th>
+                                <th>JULIO</th>
+                                <th>AGOSTO</th>
+                                <th>SEPTIEMBRE</th>
+                                <th>OCTUBRE</th>
+                                <th>NOVIEMBRE</th>
+                                <th>DICIEMBRE</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tabla_procedimiento_notificacion; let i=index">
+                                <td style="vertical-align: middle;cursor:pointer;" > {{ item.descripcion }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.ENERO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.FEBRERO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.MARZO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.ABRIL }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.MAYO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.JUNIO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.JULIO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.AGOSTO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.SEPTIEMBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.OCTUBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOVIEMBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.DICIEMBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.TOTAL }} </td>
+                                
+                            </tr>
+                            <tr *ngIf="tabla_procedimiento_notificacion.length == 0">
+                                <td colspan="14">NO HAY DATOS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                <div style="overflow:auto; display:block">
+                    <table  class="table" *ngIf="!cargando">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="columns">
+                                        <div class="column">
+                                            <chart [options]="options_emitidas" class="is-fullwidth is-12"  ></chart>
+                                        </div>
+                                    </div>
+                                </td>    
+                            </tr>
+                        </tbody>
+                    </table>        
+                    <table  class="table" *ngIf="!cargando">
+                        <thead>
+                            
+                            <tr>
+                                <th>NOTIFICACIONES EMITIDAS</th>
+                                <th>ENERO</th>
+                                <th>FEBRERO</th>
+                                <th>MARZO</th>
+                                <th>ABRIL</th>
+                                <th>MAYO</th>
+                                <th>JUNIO</th>
+                                <th>JULIO</th>
+                                <th>AGOSTO</th>
+                                <th>SEPTIEMBRE</th>
+                                <th>OCTUBRE</th>
+                                <th>NOVIEMBRE</th>
+                                <th>DICIEMBRE</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tabla_emitidas; let i=index">
+                                <td style="vertical-align: middle;cursor:pointer;" > {{ item.descripcion }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.ENERO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.FEBRERO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.MARZO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.ABRIL }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.MAYO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.JUNIO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.JULIO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.AGOSTO }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.SEPTIEMBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.OCTUBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOVIEMBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.DICIEMBRE }} </td>
+                                <td style="vertical-align: middle;cursor:pointer;"> {{ item.TOTAL }} </td>
+                                
+                            </tr>
+                            <tr *ngIf="tabla_emitidas.length == 0">
+                                <td colspan="14">NO HAY DATOS</td>
+                            </tr>
+                        </tbody>
+                    </table>    
+    
+                
+
+                
+                <table  class="table" *ngIf="!cargando">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="columns">
+                                    <div class="column">
+                                        <chart [options]="options_trabajador" class="is-fullwidth is-12"  ></chart>
+                                    </div>
+                                </div>
+                            </td>    
+                        </tr>
+                    </tbody>
+                </table>  
+
+                <table  class="table" *ngIf="!cargando">
+                    <thead>
+                       
+                        <tr>
+                            <th>NOTIFICADOR</th>
+                            <th>ENERO</th>
+                            <th>FEBRERO</th>
+                            <th>MARZO</th>
+                            <th>ABRIL</th>
+                            <th>MAYO</th>
+                            <th>JUNIO</th>
+                            <th>JULIO</th>
+                            <th>AGOSTO</th>
+                            <th>SEPTIEMBRE</th>
+                            <th>OCTUBRE</th>
+                            <th>NOVIEMBRE</th>
+                            <th>DICIEMBRE</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tabla_trabajador; let i=index">
+                            <td style="vertical-align: middle;cursor:pointer;" > {{ item.descripcion }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.ENERO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.FEBRERO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.MARZO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.ABRIL }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.MAYO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.JUNIO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.JULIO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.AGOSTO }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.SEPTIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.OCTUBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOVIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.DICIEMBRE }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.TOTAL }} </td>
+                            
+                        </tr>
+                        <tr *ngIf="tabla_trabajador.length == 0">
+                            <td colspan="14">NO HAY DATOS</td>
+                        </tr>
+                    </tbody>
+                </table>
+              
+            </div>        
+        </div>
+    </div>        
+</div>    

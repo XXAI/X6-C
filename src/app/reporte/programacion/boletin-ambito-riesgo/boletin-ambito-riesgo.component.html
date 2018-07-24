@@ -1,0 +1,189 @@
+<menu-programacion></menu-programacion>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column is-one-quarter is-hidden-mobile">
+        <programacion-menu-aside></programacion-menu-aside>
+    </div>
+    <div class="column" style="padding:2em; overflow:auto;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero" [ngClass] = " {'is-dark': busquedaActivada, 'is-primary': !busquedaActivada } " >
+                
+                <div class="hero-body" style="position:relative;">
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="busquedaActivada=false;searchBox.value='';resultadosBusqueda=[]"><span class="icon "><i class="fa fa-close"></i></span></a>
+                    <a class="button  is-dark" *ngIf="busquedaActivada" style="position:absolute; top:1em; right:3.5em;" (click)="listarBusqueda(searchBox.value,1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <a class="button  is-primary" *ngIf="!busquedaActivada" style="position:absolute; top:1em; right:1em;" (click)="listar(1)"><span class="icon "><i class="fa fa-refresh"></i></span></a>
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title" *ngIf="!busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-edit"></i></span> Reporte Boletín Ambito Riesgo
+                        </h1>
+                        <h1 class="title" *ngIf="busquedaActivada">
+                            <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
+                        </h1>
+                        <div class="columns">
+                            <!--<div class="column"  [ngClass]="{'is-three-quarters': filter }">
+                                <label class="label" style="color: #FFF">Buscar Tema</label>
+                                <input class="input is-medium" type="text" placeholder="Buscar" #searchBox id="search-box" (keyup)="buscar(searchBox.value)">
+                            </div>-->
+                            
+                            <div class="column">
+                                <label class="label" style="color: #FFF">Ambito Riesgo</label>
+                                <select class="select redondear" #id_ambito (change)='filtro(id_ambito.value)'>
+                                    <option value="0">- AMBITO RIESGO -</option>
+                                    <option  *ngFor="let item of catalogo_ambito; let i=index" value='{{item.id}}'>{{ item.descripcion }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+            <div style="overflow:auto; display:block">
+                <table class="table" *ngIf="lista_datos.length == 0 && lista_detalles.length == 0 && !cargando">
+                    <thead>
+                        <th>No Existen Datos con la consulta seleccionada</th>
+                    </thead>
+                </table>    
+                <table class="table" *ngIf="lista_datos.length > 0">
+                    <thead>
+                        
+                        <tr>
+                            <th>TEMA</th>
+                            <th>VERIFICACIONES</th>
+                            <th>MONITOREO</th>
+                            <th>DICTAMENES</th>
+                            
+                            <th>CAPACITACIONES</th>
+                            <th>REACCIONES ADVERSAS</th>
+                            <th>DETERMINACIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of lista_datos; let i=index">
+                            <td style="vertical-align: middle;cursor:pointer;" > {{ item.tema }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.verificaciones.total }} <br> <p class="acumulado">{{ item.verificaciones.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.muestra.total }} <br> <p class="acumulado">{{ item.muestra.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.dictamen.total }} <br> <p class="acumulado">{{ item.dictamen.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.capacitacion.total }} <br> <p class="acumulado">{{ item.capacitacion.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.reaccion.total }} <br> <p class="acumulado">{{ item.reaccion.acumulado }}</p> </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.determinacion.total }} <br> <p class="acumulado">{{ item.determinacion.acumulado }}</p> </td>
+                            
+                        </tr>
+                        <tr *ngIf="lista_datos.length == 0">
+                            <td colspan="8" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                <table class="table" *ngIf="lista_detalles.length > 0">
+                    <thead>
+                        
+                        <tr>
+                            <th>MUESTRAS DENTRO DE ESPECIFICACIONES</th>
+                            <th>DETERMIANACIONES DENTRO DE ESPECIFICACIONES</th>
+                            <th>NOTIFICACIONES</th>
+                            <th>CITATORIOS</th>
+                            <th>RESOLUCIONES</th>
+                            <th>AMONESTACIONES</th>
+                            <th>MULTAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of lista_detalles; let i=index">
+                            <td style="vertical-align: middle;cursor:pointer;" > {{ item.muestra_detalles }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;" > {{ item.determinacion_detalles }} </td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.NOTIFICACIONES }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.CITATORIOS }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.RESOLUCIONES }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.AMONESTACIONES }}</td>
+                            <td style="vertical-align: middle;cursor:pointer;"> {{ item.MULTAS }}</td>
+                            
+                        </tr>
+                        <tr *ngIf="lista_detalles.length == 0">
+                            <td colspan="8" style="vertical-align: middle;cursor:pointer; color:#888;">Esta lista está vacía.</td>                    
+                        </tr>
+                    </tbody>
+                    
+                </table>     
+                <table  class="table">
+                    
+                    <tbody>
+                        <tr>
+                            <td>
+                            <div class="columns" *ngIf="options_verificacion_total['series']">
+                                <div class="column">
+                                    <chart [options]="options_verificacion_total"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_muestra_total['series']">
+                                <div class="column">
+                                    <chart [options]="options_muestra_total"></chart>
+                                </div>
+                                <div class="column">
+                                        <chart [options]="options_muestra_especificaciones"></chart>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="columns" *ngIf="options_capacitacion_total['series']">
+                                <div class="column">
+                                    <chart [options]="options_capacitacion_total"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_dictamen_total['series']">
+                                <div class="column">
+                                    <chart [options]="options_dictamen_total"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_reaccion_total['series']">
+                                <div class="column">
+                                    <chart [options]="options_reaccion_total"></chart>
+                                </div>
+                                
+                            </div>
+                            <div class="columns" *ngIf="options_determinacion_total['series']">
+                                <div class="column">
+                                    <chart [options]="options_determinacion_total"></chart>
+                                </div>
+                                <div class="column">
+                                    <chart [options]="options_determinacion_especificaciones"></chart>
+                                </div>
+                            </div>
+                                   
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="(total_graficas == 0 && !cargando)">
+                        <tr>
+                            <td>
+                                No Existen Datos con las Variables de consulta Ingresados
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>
