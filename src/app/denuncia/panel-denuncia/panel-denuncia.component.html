@@ -1,0 +1,80 @@
+<div class="container base_panel">
+  <div class="columns">
+    <div class="column is-2">
+      <img src="assets/logo_estatal.jpg" width="280px" alt="Image">
+    </div>
+    <div class="column has-text-centered">
+      <div class="HeadPanel primer_cabecera">INSTITUTO DE SALUD DEL ESTADO DE CHIAPAS</div>
+      <div class="HeadPanel segunda_cabecera">DIRECCIÓN DE PROTECCIÓN CONTRA RIESGOS SANITARIOS</div>
+      <div class="HeadPanel tercera_cabecera">DENUNCIAS</div>
+     
+    </div>
+    <div class="column is-2">
+      <img src="assets/logo_federal.jpg" width="280px" alt="Image">
+    </div>
+  </div>
+  <div class="columns">
+      <div class="column is-12"> 
+        <!--<p>nkdjanfpijad bijfbdjifijdp fjdjifpidsajifdsjfj iasdjfsajdfj dsjfnjsdanfij sndjnsdajndsajn kdjanfpijadbi jfbdjifijdpfjdji fpidsajifdsjfjiasdjfsa jdfjdsjfnjsdanf ijsndjnsda jndsajnkdjanfpij adbijfbdjifijdpfjdji   fpidsajifdsjfji asdjfsajdfjds jfnjsdan fijsndj nsdajnds ajnkdjanfpijadbijfbd jifijdpfj djifpidsajifdsjfjias  djfsajdfjdsjfnjsdanfijsndjnsdajndsajnkdjanfpijadbijfbdjifijdpfjdjifpidsajifdsjfjiasdjfsajdfjdsjfnjsdan
+          fijsn djnsdajndsa jnkdjanfpij adbijfbdjifijdp fjdjifpid sajifdsjfj iasdjfsajd fjdsjfnjs danfijs ndjnsdajndsajnkd
+          </p>-->
+      </div>
+  </div>  
+  <div class="columns">
+      <div class="column is-3 is-offset-2"> 
+        <button type="button" class="button is-primary is-large is-fullwidth" routerLink="nuevo"><i class="fa fa-file-o"></i> &nbsp; Crear denuncia</button>
+      </div>
+      <div class="column is-3 is-offset-2"> 
+          <button type="button" class="button is-primary is-large is-fullwidth" (click)="verBuscarFolio = true"><i class="fa fa-search"></i>  &nbsp;Buscar denuncia</button>
+      </div>
+  </div>  
+  
+  <div class="notification">
+      Instituto de Salud del Estado de Chiapas
+    </div>
+  
+</div>
+
+<div id="modal-seguimiento" class="modal is-active" [ngClass]="{'is-active': verBuscarFolio}" style="background-color:white">
+  <div class="modal-background"  (click)="showDialog = !showAgregarTema"></div>
+  <div class="modal-card" style="width:60%; height: auto;">
+    <header class="modal-card-head" style="background-color: #00d1b2" >
+      <div class="container is-fluid"  style="width:100%;">
+          <h1 class="title" style="color:#FFF;">
+            <span class="icon is-medium"><i class="fa fa-user"></i></span> Seguimiento de denuncia
+          </h1>
+      </div>            
+      <a class="button  is-primary" style="position:absolute; top:1em; right:1em;" (click)="verBuscarFolio = !verBuscarFolio"><span class="icon "><i class="fa fa-close"></i></span></a>
+    </header>
+    <div class="modal-content"> 
+      <form name="form" [formGroup]="seguimientoModule" (ngSubmit)="buscarFolio()" style="overflow:hidden">   
+        <div class="control is-grouped">
+          <p class="control is-expanded  has-icon has-icon-right">
+              <label class="label">Folio de seguimiento</label>
+              <input class="input"  type="text"  placeholder="Folio" formControlName="folio">
+              <span class="icon is-small" *ngIf="seguimientoModule.get('folio').hasError('required') && seguimientoModule.get('folio').touched">
+                <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="seguimientoModule.get('folio').hasError('required') && seguimientoModule.get('folio').touched">Este campo es requerido.</span>
+          </p>
+        </div> 
+        <footer class="" style="position:relative; padding:1em;background: #FFF; border-top:0px solid #EEE; border-radius:0 0 0.8em 0.8em " >
+          <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="seguimientoModule.invalid"><i class="fa fa-search"></i> &nbsp;BUSCAR</button>
+        </footer>  
+      </form>
+    </div>  
+  </div>
+</div>
+
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em; z-index: 100000000000;" *ngIf="mensajeError.mostrar">
+  <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+  <b>Error:</b> {{ mensajeError.texto }}<br><br>
+  <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+  <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+  <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+  <br>
+  <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>

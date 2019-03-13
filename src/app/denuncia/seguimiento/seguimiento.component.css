@@ -1,0 +1,47 @@
+/*.HeadPanel
+{
+    font-weight: bold;
+}
+
+.primer_cabecera
+{
+    font-size: 16pt;
+}
+
+.segunda_cabecera
+{
+    font-size: 14pt;
+}
+
+.tercer_cabecera
+{
+    font-size: 12pt;
+}
+
+.base_panel
+{
+    background-color: white;
+}
+
+P{
+    text-align: justify;
+    padding: 50px;
+}*/
+
+.base_panel
+{
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+.tag.is-link
+{
+    background-color: #3273dc;
+    color: #fff;
+}
+
+.tag.is-link
+{
+    background-color: #3273dc;
+    color: #fff;
+}

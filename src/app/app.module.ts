@@ -12,6 +12,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+//import { InicioComponent } from './denuncia/inicio/inicio.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 
@@ -34,6 +35,7 @@ import { RolesModule    } from './panel-control/roles/roles.module';
 import { PermisosModule     } from './panel-control/permisos/permisos.module';
 import { SyncModule     } from './panel-control/sync/sync.module';
 import { OpcionesAvanzadasModule  } from './panel-control/opciones-avanzadas/opciones-avanzadas.module';
+import { DenunciaModule  } from './denuncia/denuncia.module';
 
 //modulo programacion
 import { ProgramacionModule } from './programacion/programacion.module';
@@ -63,6 +65,7 @@ export function highchartsFactory() {
     LoginComponent,
     DashboardComponent,
     NotFoundComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -87,6 +90,7 @@ export function highchartsFactory() {
     ReporteModule,
     CatalogoModule,
     SeguimientoModule,
+    DenunciaModule,
     // Animations need to be imported in to your project to use the library
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),

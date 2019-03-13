@@ -1,0 +1,448 @@
+<div class="container base_panel">
+  <div class="columns">
+    <div class="column is-2">
+      <img src="assets/logo_estatal.jpg" width="280px" alt="Image">
+    </div>
+    <div class="column has-text-centered">
+      <div class="HeadPanel primer_cabecera">INSTITUTO DE SALUD DEL ESTADO DE CHIAPAS</div>
+      <div class="HeadPanel segunda_cabecera">DIRECCIÓN DE PROTECCIÓN CONTRA RIESGOS SANITARIOS</div>
+      <div class="HeadPanel tercera_cabecera">DENUNCIAS CIUDADANAS</div>
+     
+    </div>
+    <div class="column is-2">
+      <img src="assets/logo_federal.jpg" width="280px" alt="Image">
+    </div>
+  </div>
+  <div class="level-right">
+    <a class="button is-success is-medium" routerLink="../../denuncia">REGRESAR AL PANEL PRINCIPAL</a>
+  </div>  
+  <div class="formulario" *ngIf="formulario_activo">
+    <div class="tabs">
+      <ul>
+        <li [ngClass]="{'is-active': datos_generales == 1}">
+          <a (click)="tab_datos(1)">
+            <span class="icon is-small"><i class="fa fa-user" aria-hidden="true"></i></span>
+            <span>DATOS GENERALES</span>
+          </a>
+        </li>
+        <li [ngClass]="{'is-active': datos_denuncia == 1}">
+          <a (click)="tab_datos(2)" >
+            <span class="icon is-small"><i class="fa fa-file-text" aria-hidden="true"></i></span>
+            <span>DATOS DE LA DENUNCIA</span>
+          </a>
+        </li>
+      
+      </ul>
+    </div>
+    <form name="form" [formGroup]="registro_denuncia"   (ngSubmit)="agregar_denuncia()" style="overflow:hidden"> 
+
+      <div class='datos_generales' *ngIf="datos_generales == 1">
+        <div class="columns">
+            <div class="column is-12"> 
+              <div class="field-label is-normal">
+                <label class="label">DENUNCIA *</label>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <select class="select" #denuncia (change)="cambiar_datos(denuncia.value)"  formControlName="anonimo">
+                    <option value="1">ANONIMA</option>
+                    <option value="2" selected>NO ANONIMA</option>
+                  </select>
+                </p>
+              </div>
+            </div>
+        </div>
+        <div class="columns">
+          <div class="column is-12"> 
+            <div class="field-label is-normal">
+              <label class="label">FECHA DE REGISTRO</label>
+            </div>
+            <div class="field">
+              <p class="control">
+                {{ fecha_actual }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="datos_personales">
+          
+          <div class="columns">
+            <div class="column is-4"> 
+                <div class="field-label is-normal">
+                  <label class="label">NOMBRE</label>
+                </div>
+                <div class="field">
+                  <p class="control">
+                    <input class="input" type="text" placeholder="NOMBRE"  formControlName="nombre"  [ngClass]="{ 'is-disabled' : datos_personales == 1  }">
+                  </p>
+                  
+              </div>
+            </div>
+            <div class="column is-2"> 
+              <div class="field-label is-normal">
+                <label class="label">PRIMER APELLIDO</label>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <input class="input" type="text" placeholder="PRIMER APELLIDO"  formControlName="apellido_paterno" [ngClass]="{ 'is-disabled' : datos_personales == 1  }">
+                </p>
+              </div>
+            </div>
+            <div class="column is-2"> 
+              <div class="field-label is-normal">
+                  <label class="label">SEGUNDO APELLIDO</label>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <input class="input" type="text" placeholder="SEGUNDO APELLIDO"  formControlName="apellido_materno" [ngClass]="{ 'is-disabled' : datos_personales == 1  }">
+                </p>
+              </div>
+            </div>
+            <div class="column is-2"> 
+              <div class="field-label is-normal">
+                <label class="label">SEXO</label>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <select class="select" [ngClass]="{ 'is-disabled' : datos_personales == 1  }"  formControlName="sexo">
+                    <option value="1">MASCULINO</option>
+                    <option value="2">FEMENINO</option>
+                  </select>
+                </p>
+              </div>
+            </div>
+            <div class="column is-2"> 
+              <div class="field-label is-normal">
+                <label class="label">EDAD</label>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <input class="input" type="number" placeholder="edad"  [ngClass]="{ 'is-disabled' : datos_personales == 1  }"  formControlName="edad">
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            
+          </div>
+        </div>  
+
+        <div class="columns">
+          <div class="column is-5"> 
+            <div class="field-label is-normal">
+              <label class="label">CORREO ELECTRÓNICO *</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="CORREO"  formControlName="correo">
+              <span class="icon is-small" *ngIf="registro_denuncia.get('correo').hasError('required') && registro_denuncia.get('correo').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('correo').hasError('required') && registro_denuncia.get('correo').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+          <div class="column is-5"> 
+            <div class="field-label is-normal">
+              <label class="label">TELÉFONO *</label>
+            </div>
+            <div class="field">
+              <div class="columns">
+                <div class="column is-3">
+                  <input class="input" type="text" placeholder="LADA"  formControlName="lada">
+                  <span class="icon is-small" *ngIf="registro_denuncia.get('lada').hasError('required') && registro_denuncia.get('lada').touched">
+                      <i class="fa fa-warning"></i>
+                  </span>
+                  <span class="help is-danger" *ngIf="registro_denuncia.get('lada').hasError('required') && registro_denuncia.get('lada').touched">Este campo es requerido.</span>
+                </div>
+                <div class="column is-6">
+                  <input class="input" type="text" placeholder="TELEFONO"  formControlName="telefono">
+                  <span class="icon is-small" *ngIf="registro_denuncia.get('telefono').hasError('required') && registro_denuncia.get('telefono').touched">
+                      <i class="fa fa-warning"></i>
+                  </span>
+                  <span class="help is-danger" *ngIf="registro_denuncia.get('telefono').hasError('required') && registro_denuncia.get('telefono').touched">Este campo es requerido.</span>
+                </div>
+                <div class="column is-3">
+                  <input class="input" type="text" placeholder="EXT." formControlName="ext">                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-2"> 
+            <div class="field-label is-normal">
+              <label class="label">CÓDIGO POSTAL </label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="C.P."  formControlName="cp_persona">
+            </div>
+          </div>
+        </div> 
+        <div class="columns">
+          <div class="column is-4"> 
+            <div class="field-label is-normal">
+              <label class="label">ESTADO *</label>
+            </div>
+            <div class="field">
+              <select class="select" #entidad_datos_persona (change)="seleccion_estado(entidad_datos_persona.value)"  formControlName="estado_persona">
+                <option value="">ESTADO</option>
+                <option *ngFor="let item of estado_persona; let i=index"  value="{{ item.id }}">{{ item.nombre | uppercase }}</option>
+              </select>
+              <span class="icon is-small" *ngIf="registro_denuncia.get('estado_persona').hasError('required') && registro_denuncia.get('estado_persona').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('estado_persona').hasError('required') && registro_denuncia.get('estado_persona').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+          <div class="column is-4"> 
+            <div class="field-label is-normal">
+              <label class="label">MUNICIPIO *</label>
+            </div>
+            <div class="field">
+              <select class="select" #municipio_datos_persona (change)="seleccion_municipio(municipio_datos_persona.value)"  formControlName="municipio_persona">
+                <option value="">MUNICIPIO</option>
+                <option *ngFor="let item of municipio_persona; let i=index"  value="{{ item.id }}">{{ item.nombre | uppercase }}</option>
+              </select>
+              <span class="icon is-small" *ngIf="registro_denuncia.get('municipio_persona').hasError('required') && registro_denuncia.get('municipio_persona').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('municipio_persona').hasError('required') && registro_denuncia.get('municipio_persona').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+          <div class="column is-4"> 
+            <div class="field-label is-normal">
+              <label class="label">LOCALIDAD *</label>
+            </div>
+            <div class="field">
+              <select class="select"  formControlName="localidad_persona">
+                <option value="">LOCALIDAD</option>
+                <option *ngFor="let item of localidad_persona; let i=index"  value="{{ item.id }}">{{ item.clave }} - {{ item.nombre | uppercase }}</option>
+              </select>
+              <span class="icon is-small" *ngIf="registro_denuncia.get('localidad_persona').hasError('required') && registro_denuncia.get('localidad_persona').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('localidad_persona').hasError('required') && registro_denuncia.get('localidad_persona').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+        </div>
+          
+        <div class="columns">
+          <div class="column is-2"> 
+            <div class="field-label is-normal">
+              <label class="label">COLONIA</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="COLONIA"  formControlName="colonia_persona">
+            </div>
+          </div>
+          <div class="column is-6"> 
+            <div class="field-label is-normal">
+              <label class="label">CALLE</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="CALLE" formControlName="calle_persona">
+            </div>
+          </div>
+          <div class="column is-2"> 
+            <div class="field-label is-normal">
+              <label class="label">NUM. EXT.</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="NUM. EXT."  formControlName="ext_persona">
+            </div>
+          </div>
+          <div class="column is-2"> 
+            <div class="field-label is-normal">
+              <label class="label">NUM. INT.</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="Num. Int." formControlName="int_persona">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="datos_denuncia" *ngIf="datos_denuncia == 1">
+        <div class="columns">
+            <div class="column is-12"> 
+              <div class="field-label is-normal">
+                <label class="label">TIPO DE DENUNCIA *</label>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <select class="select" #tipodenuncia (change)="cambiar_tipo(tipodenuncia.value)"  formControlName="tipo_denuncia">
+                    <option value="1">ESTABLECIMIENTO</option>
+                    <option value="2" selected>FUNCIONARIO PÚBLICO</option>
+                  </select>
+                </p>
+              </div>
+            </div>
+        </div>
+        <div class="columns">
+          <div class="column is-12"> 
+            <div class="field-label is-normal">
+              <label class="label">NOMBRE O RAZÓN SOCIAL *</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="NOMBRE O RAZÓN SOCIAL"  formControlName="razon_social">
+              <span class="icon is-small" *ngIf="registro_denuncia.get('razon_social').hasError('required') && registro_denuncia.get('razon_social').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('razon_social').hasError('required') && registro_denuncia.get('razon_social').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-12"> 
+            <div class="field-label is-normal">
+              <label class="label">GIRO O ESTABLECIMIENTO *</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="GIRO O ESTABLECIMIENTO"  formControlName="giro">
+              <span class="icon is-small" *ngIf="registro_denuncia.get('giro').hasError('required') && registro_denuncia.get('giro').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('giro').hasError('required') && registro_denuncia.get('giro').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="columns">
+          <div class="column is-12"> 
+            <div class="field-label is-normal">
+              <label class="label">ESPECIFICAR PRODUCTO O SERVICIO</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" [ngClass]="{ 'is-disabled' : tipo_denuncia == 2  }" placeholder="ESPECIFICAR PRODUCTO O SERVICIO" formControlName="producto">
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-6"> 
+            <div class="field-label is-normal">
+              <label class="label">ESTADO *</label>
+            </div>
+            <div class="field">
+              <select class="select"  #entidad_datos_denuncia (change)="seleccion_estado_denuncia(entidad_datos_denuncia.value)"  formControlName="estado_denuncia">
+                  <option value="">ESTADO</option>
+                <option *ngFor="let item of estado_denuncia; let i=index"  value="{{ item.id }}">{{ item.nombre }}</option>
+              </select>
+              <span class="icon is-small" *ngIf="registro_denuncia.get('estado_denuncia').hasError('required') && registro_denuncia.get('estado_denuncia').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('estado_denuncia').hasError('required') && registro_denuncia.get('estado_denuncia').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+          <div class="column is-6"> 
+            <div class="field-label is-normal">
+              <label class="label">MUNICIPIO *</label>
+            </div>
+            <div class="field">
+              <select class="select" formControlName="municipio_denuncia">
+                  <option value="">MUNICIPIO</option>
+                <option *ngFor="let item of municipio_denuncia; let i=index"  value="{{ item.id }}">{{ item.nombre }}</option>
+              </select>
+              <span class="icon is-small" *ngIf="registro_denuncia.get('municipio_denuncia').hasError('required') && registro_denuncia.get('municipio_denuncia').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('municipio_denuncia').hasError('required') && registro_denuncia.get('municipio_denuncia').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-6"> 
+            <div class="field-label is-normal">
+              <label class="label">Calle</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="CALLE" formControlName="calle_denuncia">
+            </div>
+          </div>
+          <div class="column is-1"> 
+            <div class="field-label is-normal">
+              <label class="label">NUM.</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="NUM" formControlName="ext_denuncia">
+            </div>
+          </div>
+          <div class="column is-2"> 
+            <div class="field-label is-normal">
+              <label class="label">CÓDIGO POSTAL</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="C.P." formControlName="cp_denuncia">
+            </div>
+          </div>
+          <div class="column is-3"> 
+            <div class="field-label is-normal">
+              <label class="label">COLONIA</label>
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="COLONIA" formControlName="colonia_denuncia">
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-12"> 
+            <div class="field-label is-normal">
+              <label class="label">NARRACIÓN DE LOS HECHOS QUE DIERON LUGAR A LA DENUNCIA (ESPECIFICAR PRODUCTO O SERVICIO ) *</label>
+            </div>
+            <div class="field">
+              <textarea class="textarea" formControlName="narracion"></textarea>
+              <span class="icon is-small" *ngIf="registro_denuncia.get('narracion').hasError('required') && registro_denuncia.get('narracion').touched">
+                  <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="registro_denuncia.get('narracion').hasError('required') && registro_denuncia.get('narracion').touched">Este campo es requerido.</span>
+            </div>
+          </div>
+        </div>
+        <div class="control is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="registro_denuncia.invalid"><i class="fa fa-edit"></i>Enviar</button>
+          </p>
+        </div>
+      </div>
+    </form>  
+    
+    * Campos Obligatorios
+    <hr>
+  </div> 
+  <div *ngIf="!formulario_activo">
+    <article class="message">
+      <div class="message-header">
+        <p>DIRECCIÓN DE PROTECCIÓN CONTRA RIESGOS SANITARIOS</p>
+        
+      </div>
+      <div class="message-body is-centered">
+        Se ha registrado exitosamente su denuncia, se le otorga un folio para su seguimiento:<br>
+        <div>
+          <h1 class="title is-1 is-centered">{{ codigo_seguiimiento }}</h1>
+        </div>
+        <br>
+        Guarde este folio porque con este podrá verificar las actividades, avances y resolución que haya tenido su denuncia.
+        <br>
+        <button class="button is-success is-centered"  routerLink="../../denuncia"  >Regresar al panel inicial</button>
+      </div>
+    </article>
+    <BR>
+  </div> 
+  <div class="notification">
+      Instituto de Salud del Estado de Chiapas
+    </div>
+  
+</div>
+<div class="notification is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>

@@ -1,0 +1,11 @@
+.fondo
+{
+    background-color: white;
+    padding: 15px;
+}
+
+.tag.is-link
+{
+    background-color: #3273dc;
+    color: #fff;
+}

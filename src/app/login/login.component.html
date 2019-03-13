@@ -8,10 +8,27 @@
                         <div class="container has-text-centered">
                             <!--<figure class="image" style="height:60px">
                                 <img src="assets/sial.svg" style="height:60px">
-                            </figure>-->
+                            </figure>
+                            <h5 style="font-size:30pt">DIPRIS</h5><br>
                             <h5 style="font-size:30pt">TECPRIS</h5><br>
                             <h5 style="font-size:15pt">Tablero Estratégico de Control de Prevención de Riesgos Sanitarios</h5>
-                            <small>Cliente Versión {{cliente_version}}</small>
+                            <small>Cliente Versión {{cliente_version}}</small>-->
+                        </div>
+                        <div class="columns is-mobile">
+                            <div class="column rigth">
+                                <figure class="image" style="max-width:170px">
+                                    <img src="assets/logo_federal.jpg">
+                                </figure>
+                            </div>
+                            <div class="column">
+                                <h5 style="font-size:30pt">DIPRIS</h5>
+                            </div>
+                            <div class="column" style="text-align:center">
+                                <figure class="image" style="max-width:170px">
+                                    <img src="assets/logo_estatal.jpg">
+                                </figure>
+                            </div>
+                            
                         </div>
                         
                     </div>
@@ -48,39 +65,39 @@
                     <p class="control" *ngIf="saludIdDisponible">
                         <button class="button is-info is-large is-fullwidth">Conectar con Salud ID</button>
                     </p>
-                    <p class="control">
+                    <!--<p class="control">
                         <a class="button is-white is-fullwidth" (click)="mostrarRecuperarPassword=true">Olvidé mi contraseña</a>
-                    </p>
+                    </p>-->
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<footer class="footer" style="position:absolute; bottom:0px; width:100%; max-height:128px;">
-        <div class="container">
-            <div class="content has-text-centered">
-                <div class="columns is-mobile">
-                    <div class="column center">
-                        <figure class="image" style="max-width:170px">
-                            <img src="assets/ssa.png">
-                        </figure>
-                    </div>
-                    <div class="column">
-                        <figure class="image" style="max-width:170px">
-                            <img src="assets/chiapas-une.svg">
-                        </figure>
-                    </div>
-                    <div class="column" style="text-align:center">
-                        <figure class="image" style="max-width:170px">
-                            <img src="assets/gob_estado.png">
-                        </figure>
-                    </div>
-                    
+<!--<footer class="footer" style="position:absolute; bottom:0px; width:100%; max-height:128px;">
+    <div class="container">
+        <div class="content has-text-centered">
+            <div class="columns is-mobile">
+                <div class="column rigth">
+                    <figure class="image" style="max-width:170px">
+                        <img src="assets/logo-federal.png">
+                    </figure>
                 </div>
+                <div class="column">
+                    <figure class="image" style="max-width:170px">
+                        <img src="assets/chiapas-une.svg">
+                    </figure>
+                </div>
+                <div class="column" style="text-align:center">
+                    <figure class="image" style="max-width:170px">
+                        <img src="assets/logo_estatal.jpg">
+                    </figure>
+                </div>
+                
             </div>
         </div>
-    </footer>
+    </div>
+</footer>-->
 
 <!--<!<app-reset-password *ngIf="mostrarRecuperarPassword"
 [resetPasswordViaToken]="resetPasswordViaToken"

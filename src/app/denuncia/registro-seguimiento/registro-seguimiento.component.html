@@ -1,0 +1,427 @@
+<menu-denuncia></menu-denuncia>
+<div style="height:50px;"></div>
+<div class="contenedor columns " style="height:100%; ">
+    <div class="column" style="padding:2em;;">
+        <div style="background: #FFF; border-radius: 1em; overflow: hidden;">
+            <section class="hero is-primary">
+                
+                <div class="hero-body" style="position:relative;">
+                    <div class="container is-fluid">
+                        
+                        <h1 class="title">
+                            <span class="icon is-medium"><i class="fa fa-edit"></i></span> Registro Seguimiento
+                        </h1>
+                    </div>
+                </div>
+            </section>
+            <div class="is-fullwidth has-text-centered" *ngIf="cargando">
+                <br>
+                <span class="tag is-primary is-large "><span class="icon"><i class="fa fa-refresh fa-spin"></i></span> &nbsp;<span>Cargando...</span></span>
+                <br>
+                <br>
+            </div>
+        </div>
+        <div class="fondo"  *ngIf="!cargando">
+          <div class="tabs">
+              <ul>
+                <li [ngClass]="{'is-active': tabs == 1}">
+                  <a (click)="tab_datos(1)">
+                    <span class="icon is-small"><i class="fa fa-user" aria-hidden="true"></i></span>
+                    <span>DATOS DENUNCIANTE</span>
+                  </a>
+                </li>
+                <li [ngClass]="{'is-active': tabs == 2}">
+                  <a (click)="tab_datos(2)">
+                    <span class="icon is-small"><i class="fa fa-file-text" aria-hidden="true"></i></span>
+                    <span>DATOS DENUNCIA</span>
+                  </a>
+                </li>
+                <li [ngClass]="{'is-active': tabs == 3}">
+                  <a (click)="tab_datos(3)" >
+                    <span class="icon is-small"><i class="fa fa-edit" aria-hidden="true"></i></span>
+                    <span>SEGUIMIENTO</span>
+                  </a>
+                </li>
+              
+              </ul>
+            </div>
+            
+              <div *ngIf="tabs == 1">
+                <div class="columns">
+                    <div class="column is-4"> 
+                      <div class="field-label is-normal">
+                        <label class="label">DENUNCIA </label>
+                      </div>
+                      <div class="field">
+                        <p class="control">
+                          {{ obj_denuncia.denunciante }}
+                        </p>
+                      </div>
+                    </div>
+                
+                  <div class="column is-4"> 
+                    <div class="field-label is-normal">
+                      <label class="label">FECHA DE REGISTRO</label>
+                    </div>
+                    <div class="field">
+                      <p class="control">
+                        {{ obj_denuncia.created_at }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column is-4">
+                    <div class="field-label is-normal">
+                      <label class="label">ESTATUS GENERAL</label>
+                    </div> 
+                  <span class="tag" [ngClass]="{'is-primary': obj_denuncia.idEstatus == 1, 'is-link': obj_denuncia.idEstatus == 2, 'is-success': obj_denuncia.idEstatus == 3, 'is-danger': obj_denuncia.idEstatus == 4 }" >{{ obj_denuncia.EstatusDenuncia }}</span>
+                  </div>
+                </div>
+                <div class="datos_personaes">
+                  
+                  <div class="columns">
+                    <div class="column is-4"> 
+                        <div class="field-label is-normal">
+                          <label class="label">NOMBRE COMPLETO</label>
+                        </div>
+                        <div class="field">
+                          <p class="control">
+                            {{ obj_denuncia.nombre | uppercase }} {{ obj_denuncia.apellido_paterno | uppercase }} {{ obj_denuncia.apellido_materno | uppercase }}
+                          </p>
+                          
+                      </div>
+                    </div>
+                    
+                    <div class="column is-1"> 
+                      <div class="field-label is-normal">
+                        <label class="label">SEXO</label>
+                      </div>
+                      <div class="field">
+                        <p class="control">
+                          {{ obj_denuncia.sexo | uppercase }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="column is-1"> 
+                      <div class="field-label is-normal">
+                        <label class="label">EDAD</label>
+                      </div>
+                      <div class="field">
+                        <p class="control">
+                          {{ obj_denuncia.edad }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="column is-3"> 
+                      <div class="field-label is-normal">
+                        <label class="label">CORREO ELECTRÓNICO </label>
+                      </div>
+                      <div class="field">
+                        {{ obj_denuncia.correo | uppercase }}
+                        
+                      </div>
+                    </div>
+                    <div class="column is-3"> 
+                      <div class="field-label is-normal">
+                        <label class="label">TELÉFONO </label>
+                      </div>
+                      <div class="field">
+                          {{ obj_denuncia.lada }} {{ obj_denuncia.telefono }} {{ obj_denuncia.ext }}
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>  
+          
+                <div class="columns">
+                  <div class="column is-4"> 
+                    <div class="field-label is-normal">
+                      <label class="label">CALLE</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.calle_persona | uppercase }}
+                    </div>
+                  </div>
+                  <div class="column is-2"> 
+                    <div class="field-label is-normal">
+                      <label class="label">NUM. EXT.</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.ext_persona | uppercase }}
+                    </div>
+                  </div>
+                  <div class="column is-2"> 
+                    <div class="field-label is-normal">
+                      <label class="label">NUM. INT.</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.int_persona | uppercase }}
+                    </div>
+                  </div>
+                  <div class="column is-2"> 
+                    <div class="field-label is-normal">
+                      <label class="label">COLONIA</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.colonia_persona | uppercase }}
+                    </div>
+                  </div>
+                  <div class="column is-2"> 
+                    <div class="field-label is-normal">
+                      <label class="label">CÓDIGO POSTAL </label>
+                    </div>
+                    <div class="field">
+                      {{ obj_denuncia.cp_persona }}
+                    </div>
+                  </div>
+                </div> 
+                <div class="columns">
+                  <div class="column is-4"> 
+                    <div class="field-label is-normal">
+                      <label class="label">ESTADO </label>
+                    </div>
+                    <div class="field">
+                      {{ obj_denuncia.EntidadPersona  | uppercase }}
+                      
+                    </div>
+                  </div>
+                  <div class="column is-4"> 
+                    <div class="field-label is-normal">
+                      <label class="label">MUNICIPIO </label>
+                    </div>
+                    <div class="field">
+                      {{ obj_denuncia.MunicipioPersona | uppercase  }}
+                      
+                    </div>
+                  </div>
+                  <div class="column is-4"> 
+                    <div class="field-label is-normal">
+                      <label class="label">LOCALIDAD</label>
+                    </div>
+                    <div class="field">
+                      {{ obj_denuncia.LocalidadPersona | uppercase }}
+                      
+                    </div>
+                  </div>
+                </div>
+                <br>
+                
+              </div>
+              
+              <div class="datos_denuncia" *ngIf="tabs == 2">
+                <div class="columns">
+                    <div class="column is-12"> 
+                      <div class="field-label is-normal">
+                        <label class="label">TIPO DE DENUNCIA </label>
+                      </div>
+                      <div class="field">
+                        <p class="control">
+                            {{ obj_denuncia.tipo_denuncia }}
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="columns">
+                  <div class="column is-12"> 
+                    <div class="field-label is-normal">
+                      <label class="label">NOMBRE O RAZÓN SOCIAL </label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.razon_social | uppercase }}
+                      
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="columns">
+                  <div class="column is-12"> 
+                    <div class="field-label is-normal">
+                      <label class="label">GIRO O ESTABLECIMIENTO </label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.giro | uppercase }}
+                      
+                    </div>
+                  </div>
+                </div>
+          
+                
+                <div class="columns">
+                  <div class="column is-12"> 
+                    <div class="field-label is-normal">
+                      <label class="label">ESPECIFICAR PRODUCTO O SERVICIO</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.producto | uppercase }}
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="columns">
+                  <div class="column is-6"> 
+                    <div class="field-label is-normal">
+                      <label class="label">ESTADO </label>
+                    </div>
+                    <div class="field">
+                      {{ obj_denuncia.EntidadPersona | uppercase }}
+                      
+                    </div>
+                  </div>
+                  <div class="column is-6"> 
+                    <div class="field-label is-normal">
+                      <label class="label">MUNICIPIO </label>
+                    </div>
+                    <div class="field">
+                      {{ obj_denuncia.MunicipioDenuncia | uppercase }}
+                    
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="columns">
+                  <div class="column is-6"> 
+                    <div class="field-label is-normal">
+                      <label class="label">Calle</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.calle_denuncia | uppercase }}
+                    </div>
+                  </div>
+                  <div class="column is-1"> 
+                    <div class="field-label is-normal">
+                      <label class="label">NUM.</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.ext_denuncia | uppercase }}
+                    </div>
+                  </div>
+                  <div class="column is-2"> 
+                    <div class="field-label is-normal">
+                      <label class="label">CÓDIGO POSTAL</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.cp_denuncia | uppercase }}
+                    </div>
+                  </div>
+                  <div class="column is-3"> 
+                    <div class="field-label is-normal">
+                      <label class="label">COLONIA</label>
+                    </div>
+                    <div class="field">
+                        {{ obj_denuncia.colonia_denuncia | uppercase }}
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="columns">
+                  <div class="column is-12"> 
+                    <div class="field-label is-normal">
+                      <label class="label">NARRACIÓN DE LOS HECHOS QUE DIERON LUGAR A LA DENUNCIA (ESPECIFICAR PRODUCTO O SERVICIO ) *</label>
+                    </div>
+                    <div class="field">
+                      {{ obj_denuncia.narracion | uppercase }}
+                      
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <div *ngIf="tabs == 3">
+                <div class="level-right">
+                  <a class="button is-info is-medium" (click)="modalSeguimiento = true">AGREGAR SEGUIMIENTO</a>
+                </div>  
+                <br>
+                <article class="message">
+                  <div class="message-header">
+                    <p>SEGUIMIENTO DE DENUNCIA</p>
+                    
+                  </div>
+                  <div class="message-body is-centered">
+                    <div class="box"  *ngFor="let item of obj_denuncia.seguimiento; let i=index">
+                      <article class="media">
+                        <div class="media-left">
+                          <figure class="image is-64x64">
+                            <i class="fa fa-edit" style="font-size:55px"></i>
+                          </figure>
+                        </div>
+                        <div class="media-content">
+                          <div class="content">
+                            <p>
+                              <strong>{{ item.usuario.nombre }} {{ item.usuario.apellidos }}</strong>  <small>{{ item.created_at }}</small>
+                              <br>
+                              {{ item.seguimiento }}
+                            </p>
+                          </div>
+                          <nav class="level is-mobile">
+                            <div class="level-left">
+                                <span class="tag" [ngClass]="{'is-primary': item.idEstatus == 1, 'is-link': item.idEstatus == 2, 'is-success': item.idEstatus == 3, 'is-danger': item.idEstatus == 4 }" >{{ obj_estatus[item.idEstatus].descripcion }}</span> 
+                            </div>
+                          </nav>
+                        </div>
+                      </article>
+                    </div>
+                  
+                  </div>
+                </article>
+              </div>
+        </div>
+      </div>
+</div>
+
+<div class="modal" class="modal is-active" [ngClass]="{'is-active': modalSeguimiento}">
+  <div class="modal-background" (click)="modalSeguimiento = !modalSeguimiento"></div>
+  <div class="modal-card">
+    <header class="modal-card-head"  style="background-color: #00d1b2">
+      <p class="modal-card-title" style="color:white">
+          <span class="icon is-medium"  style="color:white"><i class="fa fa-edit"  style="color:white"></i></span> AGREGAR SEGUIMIENTO
+        
+      </p>
+      <a class="button  is-primary" style="position:absolute; top:1em; right:1em;" (click)="modalSeguimiento = !modalSeguimiento"><span class="icon "><i class="fa fa-close"></i></span></a>
+    </header>
+    <section class="modal-card-body">
+      <form name="form" [formGroup]="seguimientoModule" (ngSubmit)="actualizar()" style="overflow:hidden">   
+        <div class="control is-grouped">
+            <p class="control is-expanded  has-icon has-icon-right">
+                <label class="label">Seguimiento</label>
+                <textarea class="textarea" formControlName="seguimiento"></textarea>
+                <span class="icon is-small" *ngIf="seguimientoModule.get('seguimiento').hasError('required') && seguimientoModule.get('seguimiento').touched">
+                  <i class="fa fa-warning"></i>
+                </span>
+                <span class="help is-danger" *ngIf="seguimientoModule.get('seguimiento').hasError('required') && seguimientoModule.get('seguimiento').touched">Este campo es requerido.</span>
+            </p>
+        </div> 
+        <div class="control is-grouped">
+          <p class="control is-expanded  has-icon has-icon-right">
+              <label class="label">Estatus</label>
+              <select class="select"  formControlName="idEstatus">
+                <option value="2" selected="selected">EN PROCESO</option>
+                <option value="3">CONCLUIDO</option>
+                <option value="4">NO PROCEDE</option>
+              </select>
+              <span class="icon is-small" *ngIf="seguimientoModule.get('idEstatus').hasError('required') && seguimientoModule.get('idEstatus').touched">
+                <i class="fa fa-warning"></i>
+              </span>
+              <span class="help is-danger" *ngIf="seguimientoModule.get('idEstatus').hasError('required') && seguimientoModule.get('idEstatus').touched">Este campo es requerido.</span>
+          </p>
+        </div> 
+          
+        <footer class="modal-card-foot">
+          <button class="button is-primary" type="submit" [ngClass]="{'is-loading': cargando}" [disabled]="seguimientoModule.invalid"><i class="fa fa-save"></i> &nbsp;ACTUALIZAR</button>
+        </footer>
+      </form>
+    </section>
+    
+  </div>
+</div>
+
+<div class="notification notification_mensaje is-danger" style="position:fixed; left:1em;  bottom:1em;" *ngIf="mensajeError.mostrar">
+    <button class="delete" (click)="mensajeError.mostrar = false"></button>        
+    <b>Error:</b> {{ mensajeError.texto }}<br><br>
+    <p style="text-align:center" ><a  class="button is-danger is-inverted" (click)="ultimaPeticion(); mensajeError.mostrar = false"> <span class="icon"><i class="fa fa-refresh"></i></span> <span>Volver a intentar</span></a></p>        
+</div>
+
+<div class="notification notification_mensaje is-success" style="position:fixed; left:1em;  bottom:1em; width: auto" *ngIf="mensajeExito.mostrar">       
+    <button class="delete" (click)="mensajeExito.mostrar = false"></button>
+    <p><span class="icon" style="margin-right: 0.5em;"><i class="fa fa-check-circle"></i></span> <span>{{ mensajeExito.texto }}</span></p>
+    <br>
+    <p style="text-align: center;"><small >Este mensaje desaparecerá en {{ mensajeExito.cuentaAtras }} segundos.</small></p>       
+</div>

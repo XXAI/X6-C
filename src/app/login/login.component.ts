@@ -3,12 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription }   from 'rxjs/Subscription';
 
-import { AuthService } from 'app/auth.service';
+import { AuthService } from '../../app/auth.service';
 import { BloquearPantallaService }     from '../bloquear-pantalla/bloquear-pantalla.service';
 
 
-import { ESTA_SALUD_ID_DISPONIBLE } from 'app/config';
-import { environment } from 'environments/environment';
+import { ESTA_SALUD_ID_DISPONIBLE } from '../../app/config';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',

@@ -1,0 +1,394 @@
+<div class="container base_panel">
+  <div class="columns">
+    <div class="column is-2">
+      <img src="assets/logo_estatal.jpg" width="280px" alt="Image">
+    </div>
+    <div class="column has-text-centered">
+      <div class="HeadPanel primer_cabecera">INSTITUTO DE SALUD DEL ESTADO DE CHIAPAS</div>
+      <div class="HeadPanel segunda_cabecera">DIRECCIÓN DE PROTECCIÓN CONTRA RIESGOS SANITARIOS</div>
+      <div class="HeadPanel tercera_cabecera">DENUNCIAS CIUDADANAS</div>
+     
+    </div>
+    <div class="column is-2">
+      <img src="assets/logo_federal.jpg" width="280px" alt="Image">
+    </div>
+  </div>
+  <div class="level-right">
+    <a class="button is-success is-medium" routerLink="../../../denuncia">REGRESAR AL PANEL PRINCIPAL</a>
+  </div>  
+  
+  <div class="tabs">
+    <ul>
+      <li [ngClass]="{'is-active': tabs == 1}">
+        <a (click)="tab_datos(1)">
+          <span class="icon is-small"><i class="fa fa-user" aria-hidden="true"></i></span>
+          <span>DATOS GENERALES</span>
+        </a>
+      </li>
+      <li [ngClass]="{'is-active': tabs == 2}">
+        <a (click)="tab_datos(2)" >
+          <span class="icon is-small"><i class="fa fa-file-text" aria-hidden="true"></i></span>
+          <span>DATOS DE LA DENUNCIA</span>
+        </a>
+      </li>
+      <li [ngClass]="{'is-active': tabs == 3}">
+        <a (click)="tab_datos(3)" >
+          <span class="icon is-small"><i class="fa fa-edit" aria-hidden="true"></i></span>
+          <span>SEGUIMIENTO</span>
+        </a>
+      </li>
+    
+    </ul>
+  </div>
+  
+    <div *ngIf="tabs == 1">
+      <article class="message">
+          <div class="message-header">
+            <p>DATOS GENERALES</p>
+            
+          </div>
+          <div class="message-body is-centered">
+            <div class="box">
+              <article class="media">
+                <div class="media-content">
+                  <div class="content">
+                      <div class="columns">
+                          <div class="column is-4"> 
+                            <div class="field-label is-normal">
+                              <label class="label">DENUNCIA *</label>
+                            </div>
+                            <div class="field">
+                              <p class="control">
+                                {{ obj_denuncia.denunciante }}
+                              </p>
+                            </div>
+                          </div>
+                        <div class="column is-4"> 
+                          <div class="field-label is-normal">
+                            <label class="label">FECHA DE REGISTRO</label>
+                          </div>
+                          <div class="field">
+                            <p class="control">
+                              {{ obj_denuncia.created_at }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="column is-4">
+                          <div class="field-label is-normal">
+                            <label class="label">ESTATUS GENERAL</label>
+                          </div> 
+                         <span class="tag" [ngClass]="{'is-primary': obj_denuncia.idEstatus == 1, 'is-link': obj_denuncia.idEstatus == 2, 'is-success': obj_denuncia.idEstatus == 3, 'is-danger': obj_denuncia.idEstatus == 4 }" >{{ obj_denuncia.EstatusDenuncia }}</span>
+                        </div>
+                      </div>
+                      <div class="datos_personaes">
+                        
+                        <div class="columns">
+                          <div class="column is-4"> 
+                              <div class="field-label is-normal">
+                                <label class="label">NOMBRE</label>
+                              </div>
+                              <div class="field">
+                                <p class="control">
+                                  {{ obj_denuncia.nombre | uppercase }} {{ obj_denuncia.apellido_paterno | uppercase }} {{ obj_denuncia.apellido_materno | uppercase }}
+                                </p>
+                                
+                            </div>
+                          </div>
+                          <div class="column is-1"> 
+                            <div class="field-label is-normal">
+                              <label class="label">SEXO</label>
+                            </div>
+                            <div class="field">
+                              <p class="control">
+                                {{ obj_denuncia.sexo | uppercase }}
+                              </p>
+                            </div>
+                          </div>
+                          <div class="column is-1"> 
+                            <div class="field-label is-normal">
+                              <label class="label">EDAD</label>
+                            </div>
+                            <div class="field">
+                              <p class="control">
+                                {{ obj_denuncia.edad }}
+                              </p>
+                            </div>
+                          </div>
+                          <div class="column is-3"> 
+                            <div class="field-label is-normal">
+                              <label class="label">CORREO ELECTRÓNICO *</label>
+                            </div>
+                            <div class="field">
+                              {{ obj_denuncia.correo | uppercase }}
+                              
+                            </div>
+                          </div>
+                          <div class="column is-3"> 
+                            <div class="field-label is-normal">
+                              <label class="label">TELÉFONO *</label>
+                            </div>
+                            <div class="field">
+                                {{ obj_denuncia.lada }} {{ obj_denuncia.telefono }} {{ obj_denuncia.ext }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="columns">
+                          
+                          <div class="column is-4"> 
+                            <div class="field-label is-normal">
+                              <label class="label">CALLE</label>
+                            </div>
+                            <div class="field">
+                                {{ obj_denuncia.calle_persona | uppercase }}
+                            </div>
+                          </div>
+                          <div class="column is-1"> 
+                            <div class="field-label is-normal">
+                              <label class="label">NUM. EXT.</label>
+                            </div>
+                            <div class="field">
+                                {{ obj_denuncia.ext_persona | uppercase }}
+                            </div>
+                          </div>
+                          <div class="column is-1"> 
+                            <div class="field-label is-normal">
+                              <label class="label">NUM. INT.</label>
+                            </div>
+                            <div class="field">
+                                {{ obj_denuncia.int_persona | uppercase }}
+                            </div>
+                          </div>
+                          <div class="column is-3"> 
+                            <div class="field-label is-normal">
+                              <label class="label">COLONIA</label>
+                            </div>
+                            <div class="field">
+                                {{ obj_denuncia.colonia_persona | uppercase }}
+                            </div>
+                          </div>
+                          <div class="column is-3"> 
+                            <div class="field-label is-normal">
+                              <label class="label">CÓDIGO POSTAL </label>
+                            </div>
+                            <div class="field">
+                              {{ obj_denuncia.cp_persona }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="columns">
+                          <div class="column is-4"> 
+                            <div class="field-label is-normal">
+                              <label class="label">ESTADO *</label>
+                            </div>
+                            <div class="field">
+                              {{ obj_denuncia.EntidadPersona  | uppercase }}
+                              
+                            </div>
+                          </div>
+                          <div class="column is-4"> 
+                            <div class="field-label is-normal">
+                              <label class="label">MUNICIPIO *</label>
+                            </div>
+                            <div class="field">
+                              {{ obj_denuncia.MunicipioPersona | uppercase  }}
+                              
+                            </div>
+                          </div>
+                          <div class="column is-4"> 
+                            <div class="field-label is-normal">
+                              <label class="label">LOCALIDAD *</label>
+                            </div>
+                            <div class="field">
+                              {{ obj_denuncia.LocalidadPersona | uppercase }}
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>              
+                  </div>
+                </div>
+              </article>
+            </div>
+            
+          </div>
+        </article>
+        
+    </div>
+    
+    <div class="datos_denuncia" *ngIf="tabs == 2">
+      <article class="message">
+        <div class="message-header">
+          <p>DATOS DENUNCIA</p>
+          
+        </div>
+        <div class="message-body is-centered">
+          <div class="box">
+            <article class="media">
+              <div class="media-content">
+                <div class="content">
+                    <div class="columns">
+                        <div class="column is-12"> 
+                          <div class="field-label is-normal">
+                            <label class="label">TIPO DE DENUNCIA *</label>
+                          </div>
+                          <div class="field">
+                            <p class="control">
+                                {{ obj_denuncia.tipo_denuncia }}
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                      <div class="column is-12"> 
+                        <div class="field-label is-normal">
+                          <label class="label">NOMBRE O RAZÓN SOCIAL *</label>
+                        </div>
+                        <div class="field">
+                            {{ obj_denuncia.razon_social | uppercase }}
+                          
+                        </div>
+                      </div>
+                    </div>
+              
+                    <div class="columns">
+                      <div class="column is-12"> 
+                        <div class="field-label is-normal">
+                          <label class="label">GIRO O ESTABLECIMIENTO *</label>
+                        </div>
+                        <div class="field">
+                            {{ obj_denuncia.giro | uppercase }}
+                          
+                        </div>
+                      </div>
+                    </div>
+              
+                    
+                    <div class="columns">
+                      <div class="column is-12"> 
+                        <div class="field-label is-normal">
+                          <label class="label">ESPECIFICAR PRODUCTO O SERVICIO</label>
+                        </div>
+                        <div class="field">
+                            {{ obj_denuncia.producto | uppercase }}
+                        </div>
+                      </div>
+                    </div>
+              
+                    <div class="columns">
+                      <div class="column is-6"> 
+                        <div class="field-label is-normal">
+                          <label class="label">ESTADO *</label>
+                        </div>
+                        <div class="field">
+                          {{ obj_denuncia.EntidadPersona | uppercase }}
+                          
+                        </div>
+                      </div>
+                      <div class="column is-6"> 
+                        <div class="field-label is-normal">
+                          <label class="label">MUNICIPIO *</label>
+                        </div>
+                        <div class="field">
+                          {{ obj_denuncia.MunicipioDenuncia | uppercase }}
+                         
+                        </div>
+                      </div>
+                    </div>
+              
+                    <div class="columns">
+                      <div class="column is-6"> 
+                        <div class="field-label is-normal">
+                          <label class="label">Calle</label>
+                        </div>
+                        <div class="field">
+                            {{ obj_denuncia.calle_denuncia | uppercase }}
+                        </div>
+                      </div>
+                      <div class="column is-1"> 
+                        <div class="field-label is-normal">
+                          <label class="label">NUM.</label>
+                        </div>
+                        <div class="field">
+                            {{ obj_denuncia.ext_denuncia | uppercase }}
+                        </div>
+                      </div>
+                      <div class="column is-2"> 
+                        <div class="field-label is-normal">
+                          <label class="label">CÓDIGO POSTAL</label>
+                        </div>
+                        <div class="field">
+                            {{ obj_denuncia.cp_denuncia | uppercase }}
+                        </div>
+                      </div>
+                      <div class="column is-3"> 
+                        <div class="field-label is-normal">
+                          <label class="label">COLONIA</label>
+                        </div>
+                        <div class="field">
+                            {{ obj_denuncia.colonia_denuncia | uppercase }}
+                        </div>
+                      </div>
+                    </div>
+              
+                    <div class="columns">
+                      <div class="column is-12"> 
+                        <div class="field-label is-normal">
+                          <label class="label">NARRACIÓN DE LOS HECHOS QUE DIERON LUGAR A LA DENUNCIA (ESPECIFICAR PRODUCTO O SERVICIO ) *</label>
+                        </div>
+                        <div class="field">
+                          {{ obj_denuncia.narracion | uppercase }}
+                          
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          
+        </div>
+      </article>
+      
+      
+    </div>
+    <div *ngIf="tabs == 3">
+      <article class="message">
+        <div class="message-header">
+          <p>SEGUIMIENTO DE DENUNCIA</p>
+          
+        </div>
+        <div class="message-body is-centered">
+          <div class="box"  *ngFor="let item of obj_denuncia.seguimiento; let i=index">
+            <article class="media">
+              <div class="media-left">
+                <figure class="image is-64x64">
+                  <i class="fa fa-edit" style="font-size:55px"></i>
+                </figure>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <strong>{{ item.usuario.nombre }} {{ item.usuario.apellidos }}</strong>  <small>{{ item.created_at }}</small>
+                    <br>
+                    {{ item.seguimiento }}
+                  </p>
+                </div>
+                <nav class="level is-mobile">
+                  <div class="level-left">
+                      <span class="tag" [ngClass]="{'is-primary': item.idEstatus == 1, 'is-link': item.idEstatus == 2, 'is-success': item.idEstatus == 3, 'is-danger': item.idEstatus == 4 }" >{{ obj_estatus[item.idEstatus].descripcion }}</span> 
+                  </div>
+                </nav>
+              </div>
+            </article>
+          </div>
+         
+        </div>
+      </article>
+    </div>
+    <br>
+    
+    <br><br>
+  <div class="notification">
+    Instituto de Salud del Estado de Chiapas
+  </div>
+</div>  

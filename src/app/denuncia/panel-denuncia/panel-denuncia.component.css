@@ -1,0 +1,35 @@
+.HeadPanel
+{
+    font-weight: bold;
+}
+
+.primer_cabecera
+{
+    font-size: 16pt;
+}
+
+.segunda_cabecera
+{
+    font-size: 14pt;
+}
+
+.tercer_cabecera
+{
+    font-size: 12pt;
+}
+
+.base_panel
+{
+    background-color: white;
+}
+
+P{
+    text-align: justify;
+    padding: 50px;
+}
+
+.modal-content
+{
+    width: 100%;
+    background-color: white;
+}
