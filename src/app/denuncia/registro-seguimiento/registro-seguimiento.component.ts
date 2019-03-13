@@ -151,13 +151,18 @@ export class RegistroSeguimientoComponent implements OnInit {
       this.mensajeExito.texto = "SE HA REGISTRADO CORRECTAMENTE SU SEGUIMIENTO";
       this.mensajeExito.mostrar = true;  
       this.cargar_denuncia(this.folio);
+      this.modalSeguimiento = false;
     },
     error => {
       this.cargando = false;
+      this.modalSeguimiento = false;
       let e = error.json();
       this.mensajeError = new Mensaje(true);
       this.mensajeError.texto = e.error;
-      this.mensajeError.mostrar = true;      
+      this.mensajeError.mostrar = true; 
+      this.seguimientoModule.reset();
+      this.seguimientoModule    
+      this.seguimientoModule.controls['idEstatus'].patchValue(2); 
       
       try {
         let e = error.json();
