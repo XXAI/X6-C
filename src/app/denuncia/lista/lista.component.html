@@ -18,7 +18,7 @@
                             <span class="icon is-medium"><i class="fa fa-search"></i></span> Búsqueda 
                         </h1>
                         <div class="columns">
-                            <div class="column"  [ngClass]="{'is-three-quarters': filter }">
+                            <div class="column" >
                                 <label class="label" style="color: #FFF">Buscar Nombre, Razón Social, Establecimiento, Producto</label>
                                 <input class="input is-medium" type="text" placeholder="Buscar" #searchBox id="search-box" (keyup)="filtro(1, searchBox.value)">
                             </div>
@@ -48,7 +48,7 @@
                 <br>
                 <br>
             </div>
-            <div style="overflow:auto; display:block" [style.maxHeight.px]="tamano-320">
+            <div style="overflow:auto; display:block">
                 <table class="table" *ngIf="!cargando">
                     <thead>
                         <tr>
