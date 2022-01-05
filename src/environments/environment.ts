@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   VERSION: "1.0",
-  //API_URL: "http://localhost/X6-A/public/",
-  API_URL: "http://api.tecpris.saludchiapas.gob.mx/",
+  API_URL: "http://localhost/X6-A/public/",
+  //API_URL: "http://api.tecpris.saludchiapas.gob.mx/",
 
 };
